@@ -1,0 +1,14 @@
+# Ta eventuellt med
+
+Ytterligare en aspekt som kan indikera sårbarhet är hur stor andel av en kommuns befolkning som är i behov av ekonomiskt bistånd, det som i folkmun kallas socialbidrag eller försörjningsstöd. Kommuner där många invånare har det behovet kan tänkas vara mer sårbara för större kriser på arbetsmarknaden. Att man är i behov av försörjningsstöd kan bero på att man saknar jobb och står långt från arbetsmarknaden, men även att man inte har möjlighet att jobba heltid. Oavsett kommer det att påverka kommunens ekonomi och sannolikt förmågan att hantera ekonomiska kriser av olika slag.
+
+I Dalarna var Borlänge den kommun som 2021 med störst andel av invånarna som under året var i behov av ekonomiskt stöd, då ungefär 8 procent av invånarna hade det behovet. Det var den tredje högsta andelen bland Sveriges kommuner det året och nästan dubbelt så stor andel som Dalarnas genomsnitt. Av förklarliga skäl är andelen nära kopplad till hur många som är arbetslösa, de kommuner med högst arbetslöshet (Borlänge, Avesta och Ludvika) har högst andel av befolkningen som är i behov av ekonomiskt stöd, medan det omvända gäller för Gagnef som har Dalarnas lägsta arbetslöshet. Det finns även ett möjligt samband mellan andelen utrikes födda i en kommun och hur stor andel som är i behov av förörjningsstöd. De tre kommuner i Dalarna med högst andel utrikes födda, Borlänge, Avesta och Ludvika, har också högsta andel som är i behov av stöd. Samtidigt är dock andelen som är i behov av stöd i Botkyrka kommun i Stockholm, där ungefär 40 procent av invånarna är utrikes födda, ca 3,5 procent, vilket är klart lägre än genomsnittet i Dalarna.
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap=paste0("Figur ",i)}
+knitr::include_graphics(here("Diagram","ekonomiskt_bistand.png"))
+i=i+1
+```
+<br>
+
+Ett problem är något som inom akademin kallas omvänd kausalitet, dvs. att det är svårt att veta om det är utbildningsnivå som driver den ekonomiska tillväxten eller om en hög ekonomisk tillväxt medför att befolkningen utbildar sig. Författarna påpekar även att orsakerna till att olika länder har olika utbildningsnivå ofta är oklar och att det därför är svårt att särskilja effekterna som utbildning har på BNP från andra potentiella påverkande faktorer. Det är helt enkelt inte självklart att det kommer att gå bättre (ur ekonomisk synvinkel) för regioner med större andel högutbildade personer.

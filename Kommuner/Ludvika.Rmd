@@ -1,0 +1,38 @@
+---
+title: "Ludvika"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Ludvika
+
+Ludivka kommun är Dalarnas tredje största sett till befolkning och hade 2022 drygt 26 000 invånare. Befolkingen minskade stadigt fram till 2000-talet, för att därefter stabiliseras. Precis som för många av Dalarnas kommuner beror den stabilare befolkningstillväxten till stor del på människor födda utomlands, vilkas andel av Ludvikas befolkning har ökat från ca 8 procent vid millenieskiftet till mer än 18 procent idag. Ludvika har samtidigt en av Dalarnas lägsta medelåldrar på ca 44 år, men arbetslösheten på över 7 procent är länets högsta. Den höga arbetslösheten kan delvis förklaras av att Ludvika har Dalarnas högsta andel av utrikes födda invånare, vilka som grupp har en klart högre arbetslöshet än inrikes födda. Andelen högutbildade är i linje med Dalarnas genomsnitt och många av dessa är kopplade till kommunens största privata arbetsgivare, Hitachi, där nästan 50 procent är högutbildade.
+
+Ludvika är ett traditionell brukssamhälle med bruk som dateras till 1500-talet. Idag är tillverkning och utvinning den totalt dominerande branschen och anställer närmare var tredje av Ludvikas förvärvsarbetande. I övrigt är det ingen brancsh som sticker ut nämnvärt jämfört med snittet i Dalarna, även om relativt få jobbar inom offentlig förvaltning.
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Ludvika.png"))
+```
+<br>
+Bland arbetsgivare inom det privata näringslivet är branschgruppen annan elektro- och teleproduktion den överlägset största, såväl vad gäller sysselsatta som andel av den totala lönesumman (drygt 40 procent). Detta är helt förknippat med Hitachi, tidigare ABB, som är den klart största arbetsgivaren i kommunen. Inom branschgruppen jobbar många utrikes födda (drygt 20 procent) och högutbildade (52 procent). Även branschgruppen företagsservicefirmor är viktig med ca 12 procent av den totala lönesumman och realtivt stor andel av såväl kvinnor som högutbildade. Gissningsvis är flera av företagen inom den branschgruppen kopplade till Hitachi.  
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Ludvika.png"))
+```
+<br>
+Ludvika har både lägst antal arbetställen och lägst antal nystartade företag i Dalarna, samtidigt som konkurserna ligger runt genomsnittet. Positivt är dock att antalet nystartade företag har ökat stadigt sedan slutet av 00-talet.
+
+Av skäl som diskuteradets tidiagare är Ludvika den kommun i Dalarna som är överlägset mest beroende en enskild arbetsgivare. I Ludvika krävs  tre företag för att den aggregerade lönesumman inom det privata näringslivet skall uppgå till 50 procent av den totala lönesumman, klart mindre än övriga kommunerna i Dalarna. Samtidigt gör kommunens storlek att relativt många branscher är representerade, vilket är positivt.
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_foretag_Ludvika.png"))
+```
+
+Sammanfattningsvis är Ludvika en kommun med  hög sårbarhet. Arbetslösheten är bland Dalarnas högsta och pendlingen till andra kommuner låg, vilket indikerar en sårbar arbetsmarknad. Samtidigt tillhör kommunen de sämre i Dalarna på flera områden kopplade till företagande. Ludvika är dessutom beroende av en enskild arbetsgivare i stor uträckning. På den positiva sidan finns dock den relativa närheten (ca 4 mil) till en av Dalarnas större kommuner (Borlänge). Vid en större kris/företagsnedläggning skulle pendlingen därför kunna öka, även om också Borlänge har hög arbetslöshet. Viktigt att notera är naturligtvis också att en koppling till en stor och expansiv arbetsgivare som Hitachi har många positiva sidor. Företaget anställer många och expanderar, vilket skapar arbetstillfällen. 

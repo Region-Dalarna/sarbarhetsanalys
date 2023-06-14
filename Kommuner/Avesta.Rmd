@@ -1,0 +1,34 @@
+---
+title: "Avesta"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+i=0
+```
+
+### Avesta kommun
+Befolkningen i Avesta kommun, den fjärde största i Dalarna mätt i antal, minskade stadigt fram till millenieskiftet, men stabiliserades därefter och uppgick 2022 till ca 23 000. Antalet utrikes födda i Avesta har ökat med ungefär lika många som antalet inrikes födda har minskat, vilket förklarar den stabiliserade befolkningsförändringen. Avesta har en av Dalarnas högsta arbetslösheter med ungefär 6 procent arbetslösa, medan relativt få är högt utbildade. Att arbetslösheten är hög kan delvis förklaras med att Avesta har en relativt stor andel utrikes födda, drygt 17 procent av invånarna, vilka generellt har en klart högre arbetslöshet än inrikes födda.  Befolkningen i Avesta tillhör samtidigt Dalarnas yngre med en genomsnittsålder på drygt 44 år, vilket även det sannolikt kan tillskrivas andelen utrikes födda.
+
+Historiskt är Avesta i första hand känt för sin järn-och stålindustri, med anor från 1600-talet. Detta arv lever kvar än idag, då nästan var fjärde förvärvsarbetande i Avesta arbetar inom tillverkning och utvinning, att jämföra med ca 14 procent i Dalarna som helhet. Inom det privata näringslivet utgår företag inom stål och metallverk, byggindustri och pappers och pappersvaruindustri de tre största branscherna, mätt som andel av total lönesumma.
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap=paste0("Figur ",i)}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Avesta.png"))
+i=i+1
+```
+<br>
+Om vi enbart fokuserar på det privata näringslivet är företag inom stål och metallverk, byggindustri och pappers och pappersvaruindustri de tre största, mätt som andel av total lönesumma.
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap=paste0("Figur ",i)}
+knitr::include_graphics(here("Diagram","storsta_branscher_Avesta.png"))
+i=i+1
+```
+<br>
+När det kommer till företagandet ligger Avesta något under genomsnittet i Dalarna både vad gäller antalet arbetsställen och antalet nystartade företag (per 1000 invånare). Antalet företag som krävs för att komma upp i hälften av den totala lönesumman inom det privata näringslivet är dessutom relativt få (19 st), vilket indikerar ett ganska stort beroende, något som delvis kan förklaras med att Avesta har ett antal stora arbetsgivare inom framförallt tillverkningsindustrin. Positivt är att Avesta samtidigt har en relativt stor branschbredd, 5e bäst i Dalarna med runt 40 procent av alla branscher representerade.
+
+Sammanfattningsvis är Avesta en kommun som uppvisar sårbarhet på ett par punkter. Arbetslösheten är relativt hög (och sysselsättningsgraden relativt låg) vilket indikerar att problem kan uppstå på arbetsmarknaden vid nedläggningar/kriser. Företagandet i kommunen är något under genomsnittet i länet, men sticker inte ut överdrivet negativt. Samtidigt är beroendet av enskilda branscher och företag stort, då nästan var fjärde förvärvsarbetande arbetar inom tillverkning och utvninning.
+

@@ -1,0 +1,31 @@
+---
+title: "Falun"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Falun
+
+Falun är Dalarnas största kommun med närmare 60 000 invånare. Befolkningen, såväl inrikes som utrikes födda, har ökat stadigt under en längre period, exempelvis ökade befolkningen med runt 10 procent mellan millenieskiftet och 2022. Falun är dessutom Dalarnas näst yngsta kommun med en medelålder på strax över 42 år. Arbetslösheten i Falun (ca 3,5 procent) är lägre än genomsnittet i Dalarna, men samtidigt klart högre än i exempelvis Gagnef. Falun har Dalarnas klart högst utbildade befolkning, där andelen högutbildade (ca en tredjedel av befolkningen) till och med är högre än genomsnittet i Sverige. En orsak till detta är Falu lasarett, Dalarnas största arbetsgivare, där många anställda har eftergymnasiala utbildning. 
+
+Falun har en lång historia kopplad till framförallt gruvindustrin, men arvet efter detta lever idag framförallt kvar i världsarvet Falu Gruva. Idag arbetar den största andelen av kommunens invånare, mer än var fjärde, inom vård och omsorg, vilket återigen delvis kan tillskrivas Falu lasarett.
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Falun.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Falun.png"))
+```
+<br>
+När det gäller företagande i Falun, är kommunen ungefär genomsnittlig i Dalarna för alla variabler vi har undersökt.
+Falun har såväl Dalarnas högsta branschbredd som det största antalet företag som utgör 50 procent av lönesumman (102) inom det privata näringslivet. Att Falun är överslägsen etta i Dalarna vad gäller den sistnämnda variabeln, kan delvis förklaras med att Faluns största arbetsgivare, Falu lasarett som står för mer än 10 procent av de förvärvsarbetande i kommunen, räknas som offentlig verksamhet och därför inte syns i diagrammet
+
+Sammanfattningsvis kan Falun sägas vara en kommun som uppvisar låg sårbarhet utifrån vår modell. Arbetsmarknaden fungerar relativt väl och utbildningsnivån är hög, vilket är tecken på låg sårbarhet. Dessutom är beroendet av enskilda företag och branscher inom det privata näringslivet lägst i Dalarna, vilket är positivt. Faluns sårbarhet är i stor uträckning kopplad till Falu Lasarett, med många anställda. Samtidigt känns det osannolikt att Lasarettet skulle flytta eller göra stora neddragningar av personal inom överskådlig framtid, vilket medför att den sammanfattande bilden av Falun är låg sårbarhet.

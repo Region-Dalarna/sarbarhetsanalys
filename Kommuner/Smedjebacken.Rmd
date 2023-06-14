@@ -1,0 +1,32 @@
+---
+title: "Smedjebacken"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Smedjebacken
+
+Smedjebacken är en av Dalarnas minsta kommuner med ca 11000 invånare år 2022. Befolkningen minskade ganska kraftigt mellan 1980 och 2000, men har därefter stabiliserats och till och med ökat något. Detta kan till viss del tillskrivas en ökad invandring, men även den inrikes födda befolkningen har ökat något det senaste decenniet. Arbetslösheten i Smedjebacken, strax över 4 procent, är något lägre än genomsnittet i Dalarna, vilket även gäller utbildningsnivån. Smedjebacken är Dalarnas fjärde äldsta kommun, med en medelålder på mellan 46 och 47 år. Detta är exempelvis klart högre än näraliggande Ludvika. Smedjebacken är även en av Dalarnas största pendlarkommuner, då ungefär hälften av de som bor i kommunen och förvärvsarbetar har sin arbetsplats i en annan kommun, sannolikt Ludvika i stor utsträckning. 
+
+Som namnet antyder har Smedjebacken en lång historia kopplad till smedjor, men fungerade även länge som knutpunkt för lands- och vattentransporter. Än idag är företag inom tillverkning och utvinning dominerade i kommunen, då ungefär var fjärde förvärvsarbetande arbetar inom sådana företag. Även arbetsgivare inom vård och omsorg är viktiga, med ca 20 procent av de förvärvsarbetande i kommunen.
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Smedjebacken.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Smedjebacken.png"))
+```
+<br>
+Branschbredden i Smedjebacken (ca 24 procent) tillhör de lägsta i Dalarna och minskade dessutom från 2015 till 2020. Även antalet företag som utgör 50 procent av den aggregerade lönesumman är bland de lägsta i Dalarna (12), vilket indikerar att Smedjebacken är en kommun med relativt högt beroende. Visserligen är pendlingen dessutom hög, men denna pendling går sannolikt i står utsträckning till näraliggande Ludvika med en väldigt dominerande arbetsgivare. Smedjebacken har även Dalarnas näst lägsta andel av privata arbetsställen per 1000 invånare, men samtidigt har antalet nystartade företag ökat avsevärt mellan 2015 och 2020.
+
+Sammanfattningsvis kan Smedjebacken sägas vara en kommun med tydlig sårbarhet. Visserligen är arbetslösheten bara runt genomsnittet i Dalarna och kommunen har en stor utpendling, men den pendlingen går som sagt i stor uträckning till näraliggande Ludvika som domineras av en enskild arbetsgivare. Beroendet till enskilda företag och branscher i Smedjebacken är dessutom högt, vilket indikerar ett beroende.

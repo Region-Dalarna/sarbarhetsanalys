@@ -1,0 +1,32 @@
+---
+title: "Gagnef"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+
+```
+
+### Gagnef
+Gagnef tillhör Dalarnas minsta kommuner, med ungefär 10 500 invånare år 2022. Från slutet av 1960-talet till 1980 ökade befolkningen snabbt, för att därefter stabiliseras. Av Gagnefs invånare är ungefär 7 procent födda utanför Sverige, vilket är lägst i Dalarna. Detta kan delvis förklara den låga arbetslösheten i Gagnef, utrikes födda har klart högre arbetslöshet än inrikes födda, men samtidigt ligger Gagnef nära flera stora arbetsmarknader (Borlänge i första hand), vilket gör att kommunen har en omfattande pendling, något som ger större möjligheter att hitta ett jobb.
+
+Den största branschen i Gagnef är vård och omsorg, med ungefär 20 procent av de förvärvsarbetande, men även inom utbildning och offentlig förvaltning arbetar fler i Gagnef än genomsnittet i Dalarna. Även Tillverkning och utvinning är viktigt för Gagnef, med drygt 17 procent av de förvärvsarbetande.
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Gagnef.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Gagnef.png"))
+```
+<br>
+Gagnef har relativt få arbetsställen per 1000 invånvare (3e minst i Dalarna), men däremot relaivt många nystartade företag. Antal nystartade företag (per 1000 invånare) ökade dessutom kraftigt mellan 2015 och 2021, efter att dessförinnan varit mer eller mindre konstant sedan 2007. Dessutom är antalet konkurser (per 1000 invånare) bland de lägsta i Dalarna, även om dessa, till skillnad från i många andra kommuner, ökade rejält mellan 2013 och 2021.
+
+Gagnef är en liten kommun, vilket medför att en relativt liten andel av branscherna är representerade, ungefär var fjärde. Samtidigt krävs 21 företag för att lönesumman inom det privata skall uppgå till 50 procent, vilket är i linje med många andra mindre kommuner i Dalarna. Som nämnt tidigare är pendlingen från Gagnef till andra orter dock stor, vilket meför att kommunens arbetsmarknad sannolikt kan motstå chocker bättre än motsvarande kommuner med mindre pendling.
+
+Sammanfattningsvis är Gagnef en kommun med relativt låg sårbarhet. Arbetslösheten är Dalarnas lägsta och närheten till flera stora kommuner gör att pendlingen är omfattande. Kommunen är inte beroende av någon enskild bransch i någon större utsträckning, men kommunens storlek gör att det ändå finns ett visst beroende av enskilda företag. Gagnef sticker dock inte ut jämfört med många dalakommuner av liknande storlek på den punkten.

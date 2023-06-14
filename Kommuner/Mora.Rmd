@@ -1,0 +1,35 @@
+---
+title: "Mora"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Mora
+
+Mora kommun är Dalarnas femte största sett till befolkning och hade 2022 drygt 20600 invånare. Fram till 1990 ökade befolkningen avsevärt, men har därefter mer eller mindre stått still. Mora arbetslöshet, drygt 3 procent, är klart under genomsnittet i Dalarna och dessutom har kommunen den tredje högsta andelen högutbildade. Den låga arbetslösheten kan delvis förklaras av att andelen utrikes födda, som har högre arbetslöshet än inrikes födda, är lägre i Mora än i många andra Dalakommuner. Vidare är Mora en kommun som många pendlar till, ungefär var fjärde förvärvsarbetande bor inte i kommunen.
+
+Mora har ursprung från medeltiden och är idag kanske mest känt för Vasaloppet och Anders Zorn. 2021 arbetade ungefär var fjärde förvärvsarbetande inom vård och omsorg, vilket är en klart högre andel än genomsnittet i Dalarna. Detta beror till stor del på att ett av Dalarnas Centralsjukhus, Mora lasarett, ligger i kommunen. I övrigt är andelen förvärvsarbetande per bransch ungefär i linje med snittet i Dalarna
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Mora.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Mora.png"))
+```
+<br>
+Mora kommun har såväl en relativt stor branschbredd (3e bäst i Dalarna) och rankar högt på antal företag som krävs för att lönesumman skall överstiga 50 procent (4e bäst i Dalarna), vilket indikerar att beroendet i kommunen är lågt. Samtidigt är, som nämnts tidigare, vård och omsorg en viktig arbetsgivare och på exempelvis Mora lasarett jobbar runt 1000 personer, vilket är ett typ av beroende som inte fångas av figurerna ovan. Precis som många andra kommuner i norra Dalarna så är antalet arbetsställen stort i kommunen, vilket är en indikator på ett väl fungerande företagande.
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_foretag_Mora.png"))
+```
+<br>
+Sammanfattningsvis uppvisar Mora låg sårbarhet baserat på den modell vi utgår ifrån. Arbetslösheten är låg och utbildningsnivån hög, samtidigt som beroendet av enskilda branscher och företag inom det privata näringslivet är lågt. Den riskfaktor som kan skönjas, precis som var fallet med Falun, är det relativt stora beroendet av företag inom vård och omsorg, i mångt och mycket kopplat till Mora lasarett.

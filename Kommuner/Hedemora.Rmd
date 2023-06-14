@@ -1,0 +1,31 @@
+---
+title: "Hedemora"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+###Hedemora
+Hedemoras befolkningsstorlek, drygt 15400 invånare år 2022, är något under genomsnittet bland Dalarnas kommuner. Befolkningen minskade stadigt under många år, men från 2010 och framåt har det skett en liten ökning. Denna ökning kan helt tillskrivas personer födda utanför Sverige, vars andel av Hedemoras befolkning har fördubblats sedan 2010. Hedemora har Dalarnas fjärde högsta arbetslöshet på strax under 6 procent och relativt låg andel med högutbildade. Att arbetslösheten är hög kan delvis tillskrivas den relativt stora andelen utrikes födda, Dalarnas fjärde högsta, då gruppen utrikes födda har högre arbetslöshet än gruppen inrikes födda. Pendlingen till och från Hedemora, där ungefär var tredje pendlar till annan ort för att arbeta, är ungefär genomsnittlig bland Dalarnas kommuner.
+
+Hedemora är Dalarnas äldsta stad och fick stadsrättigheter redan på 1400-talet. Idag är arbetsgivare inom vård och omsorg de viktigaste i Hedemora kommun, då ungefär var fjärde förvärvsarbetande arbetar inom denna sektor. Även företag inom tillverkning och utvinning är viktiga, bland annat kopplat till gruvindustrin i Garbenberg.
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Hedemora.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Hedemora.png"))
+```
+<br>
+Såväl antal arbetsställen som antal nystartade företag (per 1000 invånare) i Hedemora ligger under genomsnittet i Dalarna. Detsamma gäller antalet konkurser, vilka dessutom har minskat rejält sedan 2013.
+
+Branschbredden i Hedemora är ungefär som genomsnittet i Dalarna och antalet företag var aggregerade lönesummor utgör 50 procent av kommunens lönesumma (i det privata arbetslivet) är i linje med många andra kommuner av samma storlek (20 st). Noterbart är dock att näraliggande Säter är klart mindre beroende, då mer än dubbelt så många företag krävs för att uppnå 50 procent av lönesumman.
+
+Sammanfattningsvis är Hedemora en kommun med viss sårbarhet. Arbetslösheten är en av Dalarnas högsta vilket är en indikation på en arbetsmarkand som skulle kunna få problem vid större kriser/nedläggningar. Hedemora har dock en pendling, ca var tredje som bor i kommunen och arbetar gör det på annan ort, som visserligen är lägre än de största pendlarkommunerna i Dalarna (Säter mfl.), men samtidigt klart högre än i vissa andra kommuner (exempelvis Ludvika och Avesta) vilket är en mildrande faktor vid en eventuell kris/företagsnedläggning.

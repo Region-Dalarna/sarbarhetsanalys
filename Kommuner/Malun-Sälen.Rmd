@@ -1,0 +1,37 @@
+---
+title: "Malung-Sälen"
+author: "Jon Frank"
+date: "2023-03-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Malung-Sälens kommun
+
+Malung-Sälen är Dalarnas tredje minsta kommun sett till befolkning och hade 2022 strax över 10000 invånare. Befolkningen har minskat stadigt under en längre period, trots att antalet utrikes födda har ökat de senaste decennierna. Värt att notera är dock att Malungs-Sälens kommun har ett relativt stort antal säsongsarbetande (Sälenfjällen) och många fritidshus, varför befolkningen är klart större vintertid. Malung-Sälen har Dalarnas näst lägsta arbetslöshet, strax över 2 procent, men också en av de lägre andelarna högutbildade i länet. Vidare är kopplingen mellan andelen utrikes födda och nivån av arbetslöshet inte lika tydlig i Malung-Sälens kommun som i många andra kommuner. Noterbart är även att kommunen har den lägsta andelen in och utpendling bland Dalarnas kommuner, vilket delvis kan tillskrivas kommunens storlek.
+
+Malung-Sälen har nära kopplingar till turistindustrin via Sälenfjällen, men trots detta arbetar den största andelen av de förvärvsarbetande inom vård och omsorg. Detta kan delvis förklaras av att turism är en svår bransch att definiera. Exemplivs ryms sannolikt en hel del av Sälenfjällens anställda inom kultur m,m. i figuren nedan, men samtidigt kan naturligtvis delar av hotell och restaurabranschen också räknas som turistindustri.
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Malung-Sälen.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Malung-Sälen.png"))
+```
+<br>
+Malung-Sälen är den kommun i Dalarna som har klart störst antal privata arbetsställen per 1000 invånare, vilket är en indikator på ett bra företagsklimat. Det startas dessutom många företag i Malung-Sälen, vilket är positivt, men samtidigt är antalet konkurser per 1000 invånare bland de högsta i länet.
+
+I relation till sin befolkningsstorlek krävs relativt många företag i det privata näringslivet för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman i kommunen, vilket är en indikator på att Malung-Sälen har ett relativt litet beroende av enskilda företag. Samtidigt är branschbredden i Malung-Sälen i linje med genomsnittet i Dalarna
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_foretag_Malung-Sälen.png"))
+```
+<br>
+Sammanfattningsvis är Malung-Sälen en kommun som uppvisar relativt lite sårbarhet. Arbetslösheten är låg och det både startas, och finns, många företag. Dessutom är beroendet av enskilda branscher och arbetsgivare relativt lågt. På minussidan finns en låg pendling (Dalarnas lägsta) och ett relativt stort beroende av säsongsarbetande. Dessutom finns viss osäkerhet kopplad till klimatförändringar och dess på snötillgång och annat, men vilka effekter det kan få för turismen i Sälenfjällen kommer denna rapport inte att spekulera i.

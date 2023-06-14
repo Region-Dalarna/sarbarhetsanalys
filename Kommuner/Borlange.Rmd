@@ -1,0 +1,33 @@
+---
+title: "Borlange"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+
+```
+
+### Borlänge kommun
+Borlänge kommuns befolkningsantal, Dalarnas näst största, har ökat stadigt under en lång period, från ca 43 000 invånare i slutet av 60-talet till drygt 52 000 år 2022. Under 2000-talet har den ökning utgjorts av personer födda utanför Sverige, medan de som är inrikes födda har minskat något. Sett till invånarnas ålder är Borlänge Dalarnas yngsta kommun, med en medelålder på drygt 41 år. Arbetslösheten i Borlänge, närmare 7 procent, är däremot Dalarnas tredje högsta, medan andelen högutbildade är ungefär som länets genomsnitt. Att arbetslösheten är hög kan delvis förklaras med att Borlänge har Dalarnas näst största andel utrikes födda invåndare, drygt 18 procent. Utikes födda har generellt en klart högre arbetslöshet än inrikes födda. Borlänge är samtidigt den kommun i Dalarna som har klart högst inpendling, då nästan 40 procent av de som förvärvsarbetar i kommunen inte bor där.
+
+Borlänge kommun växte fram i mitten 1800-talet och var länge förknippat med industrisektorn, men idag är handel den största branschen. Jämfört med Dalarna som helhet hade Borlänge år 2020 en klart lägre andel som arbetar inom tillverkning och utvninning, medan en klart större andel jobbar inom handel. Detta kan tillskrivas stora handelsområden såsom Norra Backa och Kupolen. I Borlänge finns även ett statligt verk, Trafikverket, med många anställda, vilket gör att andelen som arbetar inom offentlig förvaltning är klart högre i Borlänge än i Dalarna.
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Borlänge.png"))
+```
+<br>
+Inom det 
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Borlänge.png"))
+```
+<br>
+Borlänge är ungefär genomsnittligt i Dalarna när det kommer till antal företag (per 1000 invånare), men samtidigt startas relativt få företag i kommunen. Borlänge är dessutom den kommun där näst minst antal personer per 1000 invånare räknas som företagssamma. Positivt ur sårbarhetssynvinkel är dock att Borlänge är näst bäst i Dalarna vad gäller såväl branschbredd som antal företag som utgör 50 procent av lönesumman, något som delvis kan tillskrivas kommunens storlek (Dalarnas största kommun Falun är etta i båda kategorierna) Noterbart är dock att Borlänge har ett par stora företag inom det privata näringslivet, exempelvis SSAB, vilket är en potentiell riskfaktor.
+
+Sammanfattningsvis en kommum som uppvisar sårbara och inte sårbara sidor enligt den modell vi använder. Arbetslösheten är Dalarnas högsta, vilket indikerar en arbetsmarknad som kan få problem vid större kriser och företagsnedläggningar. Samtidigt är Borlänge en folkrik kommun som inte är beroende av enskilda företag eller branscher i någon större utsträckning. 
+

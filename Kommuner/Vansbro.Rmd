@@ -1,0 +1,29 @@
+---
+title: "Vansbro"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Vansbro
+
+Vansbro år, med sina 6800 invånare år 2022, Dalarnas minsta kommun. Befolkningen minskade stadigt fram till 2000-talet, för att därefter stabilisieras. Detta kan i mångt och mycket tillskrivas en ökad andel av utrikes födda, men även den del av befolkningen som är född i Sverige har minskat i långsammare takt på senare år. Vansbro har en av Dalarnas lägsta arbetslösheter, strax under 3 procent,  men är också den kommun med lägst andel högutbildade, runt 12 procent. Som jämförelse har kommunen med högst utbildningsnivå, Falun, över 30 procent högutbildade. Att arbetslösheten är låg i Vansbro kan delvis tillskrivas den relativt låga andelen utrikes födda (under 10 procent), vilket är klart lägre än i många andra Dalakommuner. Pendlingen till och från kommunen tillhör länets lägsta, vilket kan ha att göra med kommunens läge i västra Dalarna
+
+Idag är Vansbro i första hand förknippat med diverse större företag, såsom Lyko och Orkla, med många anställda i kommunen. Detta återspeglas i figuren nedan, som visar att mer än 40 procent av Vansbros förvärvsarbetande arbetar inom tillverkning och utvinning samt handel.
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Vansbro.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Vansbro.png"))
+```
+<br>
+Vansbro är som sagt Dalarnas minsta kommun sett till befolkning och har följdaktligen också en av de minsta branschbredderna i länet (ca 24 procent av branscherna är representerade). Även antalet företag som utgör 50 procent av den aggregerade lönesumman är bland de lägsta i Dalarna (13), vilket indikerar att Vansbro är en kommun med relativt högt beroende. Samtidigt är antalet arbetsställen per 1000 invånare högre i Vansbro än genomsnittet i Dalarna, vilket är positivt.
+
+Sammanfattningsvis är Vansbro en kommun med viss sårbarhet. Arbetslösheten är låg, vilket indikerar en arbetsmarknad med god resiliens mot kriser. Samtidigt är Vansbro beroende av större företag inom ett par olika branshcer, vilket är en riskfaktor. Noterbart är dock att den största arbetsgivaren, Lyko, är ett familjedominerat företag med tydliga kopplingar till Vansbro.

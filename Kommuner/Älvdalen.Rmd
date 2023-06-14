@@ -1,0 +1,31 @@
+---
+title: "Älvdalen"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Älvdalen
+
+Älvdalens kommun har länets tredje minsta befolkning, med drygt 7000 invånare år 2022. Precis som för många andra av Dalarnas mindre kommuner har befolkingen minskat under en längre period, en utveckling som har bromsat in på senare år. Detta kan i mångt och mycket tillskrivas en ökad andel av utrikes födda. Arbetslösheten, drygt 3,5 procent, är under genomsnittet i Dalarna, men samtidigt har Älvdalen näst lägst andel högutbildade i Dalarna, drygt 13 procent. Att arbetslösheten är låg i Älvdalen kan delvis tillskrivas den relativt låga andelen utrikes födda (under 10 procent), vilket är klart lägre än i många andra Dalakommuner. Precis som för många andra kommuner i norra och västra Dalarna är pendlingen låg, men ungefär var femte boende i Älvdalen som förvärvsarbetar gör det i en annan kommun.
+
+Älvdalens är Dalarnas till ytan klart största kommun, mer än dubbelt så stor som Falun och Borlänge tillsammans. Kommunen är idag kanske mest känd för en omfattande tursistindustri, som domineras av diverse aktörer i området kring Idre och Grövelsjön ("Kultur m.m." i figuren nedan). Kopplad till den "boom" som skett inom turistindustrin på senare år, har även byggsektorn expanderat och står för ungefär 13 procent av de förvärvsarbetande. I jämförelse med Dalarna sticker även företag inom jord och skogsbruk ut, där dubbelt så många arbetar jämfört med snittet i länet.
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Älvdalen.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Älvdalen.png"))
+```
+<br>
+Befolkningsmässigt är Älvdalen en liten kommun och har följdaktligen en låg branschbredd (drygt 24 procent av branscherna finns representerade i kommunen). Dock är antalet företag som utgör 50 procent av den aggregerade lönesumman högre än i många jämförbara kommuner, vilket indikerar att Älvdalen inte är en kommun med överdrivet stort beroende. Älvdalen är dessutom den kommun i Dalarna där de startas flest nya företag (per 1000 invånare) och kommunen har dessutom 3e flest antal arbetsställen per 1000 invånare. Baksidan är att Älvdalen samtdigt är den kommun som har flest antal konkurser per 1000 invånare i Dalarna, ett antal som dessutom ökade avsevärt mellan 2013 och 2021.
+
+Sammanfattningsvis är Älvdalen en kommun med relativt låg sårbarhet enligt den modell vi använder. Arbetslösheten är relativt låg samtidigt som beroende av enskilda företag eller branscher inte är överdrivet stor. Det startas dessutom många företag i Älvdalens kommun, men samtidigt går relativt många företag i konkurs.

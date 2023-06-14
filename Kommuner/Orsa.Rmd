@@ -1,0 +1,35 @@
+---
+title: "Orsa"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Orsa
+
+Antalet invånare i Orsa kommun, ca 7000, var näst lägst i Dalarna år 2022. Befolkningsantalet har varit relativt stabilt under en lång tid och på senare år har en nedgång i antalet invånare som är födda i Sverige kompenserats av en ökad invandring. Arbetslöshten i Orsa, drygt 4,5 procent, är ungefär som genomsnittet i Dalarna,  men andelen högutbildade är klart lägre än genomsnittet. I jämförelse med de andra kommunerna i norra Dalarna har dock Orsa en klart högre arbetslöshet, vilket bara delvis kan tillskrivas en något högre andel utrikes födda invånare. Exempelvis är andelen utrikes födda invånare i Orsa och Malung-Sälen ungefär lika stora (ca 12 procent), men samtidigt har Malung-Sälen ungefär 2 procentenheter lägre arbetslöshet än Orsa. Pendlingen från Orsa till andra kommuner är hög och nästan varannan som bor i Orsa och förvärvsarbetar gör så i en annan kommun, vilket kan vara positivt för arbetsmarknadens resiliens mot kriser. Medelåldern i orsa, strax över 46 år, är relativt hög.
+
+Av de som förvärvsarbetar i Orsa gör mer än var femte det inom vård och omsorg, vilket är en större andel än Dalarnas genomsnitt. I jämförelse med Dalarna sticker även bygg, med runt 16 procent av de förvärvsarbetande, jord och skogsbruk (8 procent) och kultur m.m. (ca 7 procent) ut. Den sistnämnda branschen innefattar sannolikt personer som jobbar inom turism (Orsa Grönklitt).
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Orsa.png"))
+```
+<br>
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Orsa.png"))
+```
+<br>
+Orsa är som sagt en av Dalarnas minsta kommuner sett till befolkning och har följdaktligen en låg branschbredd (lägst i Dalarna). Kommunen tillhör även de kommuner i Dalarna där det krävs minst antal företag för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman (inom det privata näringslivet). Samtidigt startas relativt få nya företag i Orsa, något som dock har förbättras de senaste 6-7 åren.
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_foretag_Orsa.png"))
+```
+<br>
+Sammanfattningsvis kan Orsa sägas vara en kommun med viss sårbarhet. Arbetslösheten är ungefär som genomsnittet i Dalarna, men en stor utpendling minskar arbetsmarknadens sårbarhet. Samtidigt har kommunen Dalarnas lägsta branschbredd och är förhållandevis beroende av enskilda företag. Inom det privata näringslivet bygg en viktig sektor, vilket skulle kunna skapa problem i dagens ekonomi, med höga räntor och en potentiell lågkonjunktur på horisonten.

@@ -1,0 +1,35 @@
+---
+title: "Leksand"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+###Leksand
+
+Leksands kommun är Dalarnas sjätte största sett till befolkning och hade 2022 drygt 16000 invånare. Fram till millennieskiftet ökade befolkningen stadigt, för att därefter stå still i ett decennium. På senare år har befolkningen börjat öka igen, vilket kan tillskrivas en allt större andel utrikes födda. Leksand har Dalarnas tredje lägsta arbetslöshet, med under 3 procent arbetslösa, och dessutom den näst högsta andelen högutbildade. Befolkningen i Leksand är samtidigt en av Dalarnas äldsta, med en medelålder på närmare 47 år.
+
+Leksand har gamla anor med boplatser från stenåldern och idag är kommunen, vid sidan om sitt hockeylag, i första hand förknippat med företag inom handel, då framförallt Clas Ohlson i Insjön. 2021 arbetade mer än var femte förvärvsarbetande inom handel, vilket är mer än dubbelt jämfört med genomsnittet i Dalarna.  
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Leksand.png"))
+```
+<br>
+De största privata arbetsgivarna finns inom parti och detaljhandel, varav många jobbar på Clas Ohlson huvudkontor i Insjön. I jämförelse med Dalarna som helhet är även hotell och restaurangbranschen viktig i Leksand, där drygt 6 procent av de förvärvsarbetande arbetar.
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Leksand.png"))
+```
+<br>
+Såväl vad gäller antal nystartade företag, som personer som beskrivs som nyföretagssamma, tillhör Leksand Dalarnas bättre kommuner. Samtidigt är dock konkurserna något högre än genomsnittet i Länet.
+
+I Leksand finns ett par större privata arbetsgivare, vilket medför att bara 16 företag krävs för att lönesumman skall uppgå till 50 procent inom det privata näringslivet. Samtidigt har kommunen något högre branschbredd än vissa storleksmässigt jämförbara kommuner.
+<br>
+
+Sammanfattningsvis kan Leksand beskrivas som en kommun med viss sårbarhet. På den positiva sidan finns en väl fungerande arbetsmarknad med låg arbetslöshet och en befolkning som tillhör Dalarnas högst utbildade. Samtidigt är Leksand relativt beroende av arbetsgivare inom handel, då framförallt Clas Ohlson, vilket är en potentiell sårbarhet.

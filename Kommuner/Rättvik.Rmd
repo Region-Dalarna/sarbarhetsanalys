@@ -1,0 +1,34 @@
+---
+title: "Rättvik"
+author: "Jon Frank"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(here)
+```
+
+### Rättvik
+
+Rättviks kommun tillhör de minsta i Dalarna, sett till antalet invånare, med en befolkning på drygt 11 000 år 2022. Befolkningen minskade fram till 1990-talet men har därefter varit relativt stabil och på senare år till och med ökat något. Detta kan, precis som i de flesta kommuner i Dalarna, tillskrivas en ökad invandring, även om andelen utrikes födda är lägre i Rättvik än i många andra Dalakommuner. Rättvik är samtidigt Sveriges åttonde äldsta kommun, med en medelålder på 49 år, vilket också är klart högst i Dalarna. Arbetslösheten i Rättvik (ca 3 procent) är lägre än genomsnittet i Dalarna, men det är även andelen högutbildade. Ungefär 35 procent av de boende i Rättvik pendlar till en annan kommun för att arbeta, samtidigt som få (runt 20 procent) av de förvärvsarbetande i Rättvik bor i en annan kommun.
+
+Rättvik har länge varit en populär turistort, vilket märks genom att nästan dubbelt så stor andel jobbar inom hotell och restaurang jämfört med genomsnittet i Dalarna. Även bygg samt jord och skogsbruk är branscher inom vilka en klart större andel av de förvärvsarbetande i Rättvik arbetar.
+<br>
+<br>
+```{r, echo=FALSE, fig.width=10, fig.align='Left',fig.cap="Figur 10"}
+knitr::include_graphics(here("Diagram","Förvärvsarbetande 16+ år (dagbef)andel_per_bransch _Rättvik.png"))
+```
+<br>
+
+<br>
+```{r, echo=FALSE, fig.width=8, fig.align='Left',fig.cap="Figur 9"}
+knitr::include_graphics(here("Diagram","storsta_branscher_Rättvik.png"))
+```
+<br>
+Rättvik tillhör Dalarnas bästa kommuner såväl vad gäller antalet privata arbetsställen som antalet nystartade företag. Till skillnad från många andra kommuner med många nystartade företag, är konkurserna i Rättvik dessutom förhållandevis få.
+
+När det kommer till antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman sticker Rättvik ut, som tredje bäst i Dalarna. Trots att Borlänge har mer än 4 gånger så stor befolkning som Rättvik, krävs ungefär lika många företag för att uppnå 50 procent av lönesumman. Rättvik har således ett väldigt litet beroende av enskilda företag. Samtidigt bör man notera att företag inom bygg står för ungefär 20 procent av lönesumman inom det privata näringslivet, varför Rättvik är relativt beroende av den branschen.
+<br>
+Sammanfattningsvis kan Rättvik sägas vara en kommun med relativt låg sårbarhet, då arbetslösheten är låg och relativt många pendlar till andra kommuner. Dessutom är Rättvik en av Dalarnas bästa kommuner när det kommer till företagande (enligt vår modell) och har dessutom ett lågt beroende. Vissa orosmoln finns på framförallt längre sikt, exempelvis en relativt gammal befolkning, men Rättviks förmåga att motstå större kriser och nedläggningar borde vara god på lite kortare sikt.
