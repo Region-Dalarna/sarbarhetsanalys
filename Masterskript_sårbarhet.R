@@ -7,7 +7,7 @@ pacman::p_load(here,httr,keyring)
 source("G:/skript/func/func_SkapaDiagram.R", encoding = "utf-8", echo = FALSE)
 source("G:/skript/func/func_API.R", encoding = "utf-8", echo = FALSE)
 
-#test=hamta_figurer(skapa_fil=TRUE,skapa_ppt=FALSE)
+#test=hamta_figurer(skapa_fil=FALSE,skapa_ppt=FALSE)
 hamta_figurer <- function(skapa_ppt=FALSE,skapa_fil=TRUE,Output_mapp = here("Diagram","/")){
   master_lista <-list()
   vald_region="20"
@@ -19,7 +19,6 @@ hamta_figurer <- function(skapa_ppt=FALSE,skapa_fil=TRUE,Output_mapp = here("Dia
   #=========================================================
   # Historiska kriser i Dalarna
   #=========================================================
-  
 
   # Arbetslöshet från 1976 till senaste data
   # Uppdateras automatiskt förutsatt att SCB inte byter tabell (gäller framförallt mer sentida data)

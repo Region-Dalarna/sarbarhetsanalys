@@ -970,8 +970,8 @@ Sammanfattningsvis är Älvdalen en kommun som uppvisar låg sårbarhet på fler
 ```{r, include = FALSE}
 
 # kopiera html-filen till 
-file.copy(from = "Sarbarhetsanalys.html", to = "docs/index.html", overwrite = TRUE)
-file.copy(from = "Sarbarhetsanalys.Rmd", to = "docs/index.Rmd", overwrite = TRUE)
+#file.copy(from = "Sarbarhetsanalys.html", to = "docs/index.html", overwrite = TRUE)
+#file.copy(from = "Sarbarhetsanalys.Rmd", to = "docs/index.Rmd", overwrite = TRUE)
 
 # ska vi ta bort html-filen i projektmappen eller ha dubbelt, både där och i docs-mappen?
 #file.remove("laget_i_Dalarna.html")
