@@ -26,16 +26,17 @@ p_load(sf,
 source("https://raw.githubusercontent.com/FaluPeppe/func/main/func_SkapaDiagram.R")
 source("https://raw.githubusercontent.com/FaluPeppe/func/main/func_API.R")
 
-# Skapar en mapp för att 
+# Skall figurer sparas
+spara_figur <- TRUE
 output_mapp <- here("Figurer","/")
 
 # Om man vill uppdatera den externa hemsidan sätts denna variabel till TRUE
 uppdatera_hemsida = FALSE
 
 # Läser in data
-arbetsloshet_76_df <- read.xlsx(Output_mapp = "G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx",sheet=1)
-
-
+arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
+arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus_lan.xlsx")
+i=1
 
 #test_lank<-here("Diagram","befolkningsforandring_20_64.png")
 
@@ -57,13 +58,32 @@ I början av 2020 drabbades Sverige av pandemin orsakad av Covid-19. Krisen ledd
 
 När denna rapport skrivs pågår ytterligare en kris kopplad till Rysslands invasion av Ukraina och dess effekter på bland annat tillgången till råvaror. Denna kris, som tog sin början i februari 2022, kommer sannolikt att få stora effekter på Sveriges ekonomi över en längre tid, även om den ännu inte syns i arbetslöshetsstatistiken för Dalarna i någon större utsträckning.
 
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, include = FALSE}
 knitr::include_graphics(here("Diagram","arbetsloshet76_linje.png"))
-i=i+1
+    
+  diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nFrån och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa"
+  diagramtitel <- paste0("Arbetslöshet")
+
+  arb_76 <- SkapaLinjeDiagram(skickad_df =arbetsloshet_76_df ,
+                              skickad_x_var = "år",
+                              skickad_y_var = "arbetsloshet",
+                              skickad_x_grupp = "region",
+                              manual_color = diagramfarger("rus_sex"),
+                              diagram_titel = diagramtitel,
+                              diagram_capt =  diagram_capt,
+                              manual_y_axis_title = "procent",
+                              x_axis_lutning = 45,
+                              visa_var_x_xlabel = 4,
+                              stodlinjer_avrunda_fem = TRUE,
+                              output_mapp = output_mapp,
+                              filnamn_diagram = "arbetsloshet_76.png",
+                              skriv_till_diagramfil = spara_figur)
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Arbetslöshet")`
-</p>
+
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+arb_76
+```
 
 Sammanfattningsvis har detta avsnitt visat att Sverige med viss regelbundenhet drabbats av kriser av varierande omfattning. Det är därför viktigt att studera samhällets sårbarhet för denna typ av kriser.
 

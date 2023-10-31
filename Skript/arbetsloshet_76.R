@@ -21,10 +21,10 @@ hamta_data_arbetsloshet_76 <- function(region_vekt="20",
 
   # "Adresser" till SCBs databas
   url_76_04 <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0402/AM0402F/AKUABefolkningL"
-  url_05_20 <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0403/AM0403N/NAKUBefolkningLArTD"
-  url_21_ <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0401/AM0401N/NAKUBefolkningLAr"
+  #url_05_ <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0403/AM0403N/NAKUBefolkningLArTD"
+  url_05_ <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0401/AM0401N/NAKUBefolkningLAr"
   
-  url <- c(url_76_04,url_05_20, url_21_)
+  url <- c(url_76_04,url_05_)
   
   varlista_76_04 <- list("Region"=c("00",region_vekt),
                          "Arbetskraftstillh"=c("IARB","SYS20-34","SYS35+","SYS","ALÖS","EIAKR"),
@@ -32,19 +32,19 @@ hamta_data_arbetsloshet_76 <- function(region_vekt="20",
                          "ContentsCode"=c("*"),
                          "Tid"=c("*"))
   
-  varlista_05_20 <- list("Region"=c("00",region_vekt),
+  varlista_05_ <- list("Region"=c("00",region_vekt),
                          "Arbetskraftstillh"=c("TOTALT","ALÖS","EIAKR","SYS"),
-                         "Kon"=c("1","2","1+2"),
+                         "Kon"=c("1","2"),
                          "ContentsCode"=c("*"),
                          "Tid"=c("*"))
   
-  varlista_21_ <- list("Region"=c("00",region_vekt),
-                       "Arbetskraftstillh"=c("TOTALT","ALÖS","EIAKR","SYS"),
-                       "Kon"=c("1","2"),
-                       "ContentsCode"=c("*"),
-                       "Tid"=c("*")) 
+  # varlista_21_ <- list("Region"=c("00",region_vekt),
+  #                      "Arbetskraftstillh"=c("TOTALT","ALÖS","EIAKR","SYS"),
+  #                      "Kon"=c("1","2"),
+  #                      "ContentsCode"=c("*"),
+  #                      "Tid"=c("*")) 
   
-  varlista_lista = list(varlista_76_04,varlista_05_20,varlista_21_)
+  varlista_lista = list(varlista_76_04,varlista_05_)
   
   # Loopar över lista med url:er och hämtar data för de olika variablerna. Dessa läggs i en lista
   lista=list()
@@ -67,7 +67,7 @@ hamta_data_arbetsloshet_76 <- function(region_vekt="20",
   }
   
   # Namnger lista
-  names(lista) <- c("76_04","05_20","21_")
+  names(lista) <- c("76_04","05_")
   
   # Beräknar arbetslöshet i två steg för de olika perioderna
   df_76_04 <- lista$`76_04` %>% 
@@ -78,24 +78,24 @@ hamta_data_arbetsloshet_76 <- function(region_vekt="20",
   
   df_76_04$arbetsloshet=(df_76_04$arbetslösa/(df_76_04$arbetslösa+df_76_04$sysselsatta))*100
   
-  df_05_20 <- lista$`05_20` %>% 
+  df_05_ <- lista$`05_` %>% 
     filter(arbetskraftstillhörighet%in%c("arbetslösa","sysselsatta")) %>% 
       group_by(region,år,arbetskraftstillhörighet) %>% 
         summarize("Antal"=sum(`1000-tal`))%>% 
           pivot_wider(names_from=arbetskraftstillhörighet,values_from=Antal )
   
-  df_05_20$arbetsloshet=(df_05_20$arbetslösa/(df_05_20$arbetslösa+df_05_20$sysselsatta))*100
+  df_05_$arbetsloshet=(df_05_$arbetslösa/(df_05_$arbetslösa+df_05_$sysselsatta))*100
   
-  df_21_<- lista$`21_` %>% 
-    filter(arbetskraftstillhörighet%in%c("arbetslösa","sysselsatta")) %>% 
-      group_by(region,år,arbetskraftstillhörighet) %>% 
-        summarize("Antal"=sum(`1000-tal`))%>% 
-          pivot_wider(names_from=arbetskraftstillhörighet,values_from=Antal)
-  
-  df_21_$arbetsloshet=(df_21_$arbetslösa/(df_21_$arbetslösa+df_21_$sysselsatta))*100
+  # df_21_<- lista$`21_` %>% 
+  #   filter(arbetskraftstillhörighet%in%c("arbetslösa","sysselsatta")) %>% 
+  #     group_by(region,år,arbetskraftstillhörighet) %>% 
+  #       summarize("Antal"=sum(`1000-tal`))%>% 
+  #         pivot_wider(names_from=arbetskraftstillhörighet,values_from=Antal)
+  # 
+  # df_21_$arbetsloshet=(df_21_$arbetslösa/(df_21_$arbetslösa+df_21_$sysselsatta))*100
   
   #Slår ihop dataset och grupperar på regionkod och år
-  df_bef_slutgiltig <- rbind(df_76_04,df_05_20,df_21_)
+  df_bef_slutgiltig <- rbind(df_76_04,df_05_)
 
   # Tar bort län i länsnamn och väljer ut de variabler vi är intresseade av (dvs. inte arbetslösa och sysselsatta (i antal))
   df_bef_slutgiltig <- df_bef_slutgiltig %>% 

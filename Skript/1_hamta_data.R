@@ -10,3 +10,14 @@ hamta_data_arbetsloshet_76(region_vekt="20",
                            spara_data = TRUE,
                            diag_stapel = FALSE,
                            diag_linje = FALSE)
+
+
+source(here("Skript","arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
+hamta_data_arbetsmarknadsstatus_kommun(region_vekt = "20",
+                                       output_mapp = Output_mapp,
+                                       skapa_fil = TRUE,
+                                       ta_med_lan = FALSE,
+                                       ta_med_riket = FALSE,
+                                       diag_arbetslosthet = TRUE,
+                                       diag_arbetskraftsdeltagande = FALSE,
+                                       diag_sysselsattningsgrad = TRUE)
