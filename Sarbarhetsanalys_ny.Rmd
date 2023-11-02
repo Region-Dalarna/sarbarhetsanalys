@@ -35,7 +35,7 @@ uppdatera_hemsida = FALSE
 
 # Läser in data
 arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
-arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus_lan.xlsx")
+arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus_kommun.xlsx")
 i=1
 
 #test_lank<-here("Diagram","befolkningsforandring_20_64.png")
@@ -107,27 +107,73 @@ En fungerande arbetsmarknad är viktig för en regions motståndskraft mot ekono
 
 En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför ålder (20-64 år) är sysselsatta, vilket mäts genom sysselsättningsgraden. Som sysselsatt räknas en person som under en viss vecka (referensveckan) utfört något arbete i minst en timme som anställd, egen företagare eller medhjälpare i företag tillhörande en familjemedlem. I Dalarna arbetar färre än 3 procent av de sysselsatta mindre än halvtid, och drygt 83 procent arbetar minst 35 timmar per vecka^[Överenskommen veckoarbetstid, regionala tabeller, AKU, SCB]. Om sysselsättningraden är låg är det ett tecken på att arbetslösheten är hög alternativt att många i arbetsför ålder (utöver studenter) står utanför arbetskraften, vilket ger ett sämre utgångsläge för att hantera en kris^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html]. Om personerna befinner sig i arbetslöshet kan de ses som en outnyttjad resurs för en region eller kommun (se `r paste0("figur ",i+2)`). Arbetslösa är personer som är villiga att ta ett arbete, men av olika skäl inte arbetar. Om denna outnyttjade resurs är stor, är det rimligt att sårbarheten vid varsel eller uppsägningar också är större^[https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf]. 
 
-Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet (se `r paste0("figur ",i+1)`). Högst sysselsättningsgrad har Gagnef och Säter, där ca 85 procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad har Ludvika, där motsvarande siffra är 78 procent.
-<br>
-<br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Sysselsättningsgrad_kommun.png"))
-i=i+1
-```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Sysselsättningsgrad")`
-</p>
+Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet (se `r paste0("figur ",i+1)`). Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus_df$manad_long)` `r max(arbetsmarknadsstatus_df$ar)`  hade `r arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == max(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == max(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$sysselsättningsgrad,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == min(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == min(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$sysselsättningsgrad,0)` procent.
 
-I Dalarna var arbetslösheten år 2022 något lägre än i Sverige, strax över 5 procent jämfört med strax under 6 procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där Ludvika och Avesta har högst arbetslöshet (mer än 7 procent), medan Gagnef har lägst arbetslöshet med strax över 2 procent.
-<br>
-<br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Arbetslöshet_kommun.png"))
-i=i+1
+```{r, include = FALSE}
+    diagram_capt = "Källa: SCB:s öppna statistikdatabas, befolkningens arbetsmarknadsstatus (BAS).\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Andelen av befolkningen som är sysselsatt (sysselsättningsgrad)."
+    diagramtitel <- paste0("Sysselsättningsgrad i åldersgruppen 20-64 år i ",last(arbetsmarknadsstatus_df$manad_long)," ",max(arbetsmarknadsstatus_df$ar))
+    
+    # Skapar diagram 
+    syss_grad_fig <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>% 
+                                   mutate(region=ifelse(region=="Riket", "Sverige",region),
+                                          fokus = ifelse(region == "Dalarna",1,
+                                                         ifelse(region == "Sverige",2,0))), 
+                                 skickad_x_var = "region", 
+                                 skickad_y_var = "sysselsättningsgrad", 
+                                 #skickad_x_grupp = "kön",
+                                 manual_y_axis_title = "procent",
+                                 manual_x_axis_text_vjust = 1,
+                                 manual_x_axis_text_hjust = 1,
+                                 manual_color = diagramfarger("rus_tre_fokus"),
+                                 diagram_titel = diagramtitel,
+                                 diagram_capt =  diagram_capt,
+                                 x_var_fokus = "fokus",
+                                 x_axis_sort_value = TRUE,
+                                 x_axis_lutning = 45,
+                                 stodlinjer_avrunda_fem = TRUE,
+                                 output_mapp = output_mapp,
+                                 filnamn_diagram = "sysselsattningsgrad_kommun.png",
+                                 skriv_till_diagramfil = spara_figur)
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Arbetslöshet")`
-</p>
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
+syss_grad_fig
+```
+
+I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus_df$manad_long)` `r max(arbetsmarknadsstatus_df$ar)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus_df %>% filter(region == "Dalarna") %>% .$arbetslöshet,0)` procent jämfört med ca `r round(arbetsmarknadsstatus_df %>% filter(region == "Riket") %>% .$arbetslöshet,0)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet` procent), medan `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har lägst arbetslöshet med ca `r round(arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet,0)` procent.
+
+```{r, include = FALSE}
+    diagram_capt = "Källa: SCB:s öppna statistikdatabas, befolkningens arbetsmarknadsstatus (BAS).\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Andelen av befolkningen som är sysselsatt (sysselsättningsgrad)."
+    diagramtitel <- paste0("Arbetslöshet i åldersgruppen 20-64 år i ",last(arbetsmarknadsstatus_df$manad_long)," ",max(arbetsmarknadsstatus_df$ar))
+    
+    # Skapar diagram 
+    arbetsloshet_fig <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>% 
+                                   mutate(region=ifelse(region=="Riket", "Sverige",region),
+                                          fokus = ifelse(region == "Dalarna",1,
+                                                         ifelse(region == "Sverige",2,0))), 
+                                 skickad_x_var = "region", 
+                                 skickad_y_var = "arbetslöshet", 
+                                 #skickad_x_grupp = "kön",
+                                 manual_y_axis_title = "procent",
+                                 manual_x_axis_text_vjust = 1,
+                                 manual_x_axis_text_hjust = 1,
+                                 manual_color = diagramfarger("rus_tre_fokus"),
+                                 diagram_titel = diagramtitel,
+                                 diagram_capt =  diagram_capt,
+                                 x_var_fokus = "fokus",
+                                 x_axis_sort_value = TRUE,
+                                 x_axis_lutning = 45,
+                                 stodlinjer_avrunda_fem = TRUE,
+                                 output_mapp = output_mapp,
+                                 filnamn_diagram = "sysselsattningsgrad_kommun.png",
+                                 skriv_till_diagramfil = spara_figur)
+
+```
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
+arbetsloshet_fig
+```
 
 För att förstå arbetslösheten bättre är det relevant att beakta hur lång tid som människor har stått utan arbete. De som har varit arbetslösa länge har i regel svårare att komma i arbete. Ett kompletterande mått för att fånga arbetsmarknadens funktionalitet är långtidsarbetslöshet. En förklaring till att det finns långtidsarbetslöshet är strukturella problem på arbetsmarknaden. Det kan exempelvis handla om att de arbetslösa inte har de kompetenser som krävs för de lediga platserna eller att de arbeten som finns kräver långpendling eller flytt^[https://arbetsformedlingen.se/download/18.3e623d4f16735f3976ead4/Perspektiv-pa-langtidsarbetslosheten,%20rapport.pdf]. 
 

@@ -1,13 +1,3 @@
-# Tar fram arbetslöshet från 1974 till 2022 (AKU) 
-# https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0402__AM0402F/AKUABefolkningL/
-# https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0403__AM0403N/NAKUBefolkningLArTD/
-# https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0401__AM0401N/NAKUBefolkningLAr/
-
-pacman::p_load(pxweb,here,tidyverse)
-
-# Skript som behövs
-source("G:/skript/func/func_SkapaDiagram.R", encoding = "utf-8", echo = FALSE)
-source("G:/skript/func/func_API.R", encoding = "utf-8", echo = FALSE)
 
 #test_list=diag_arbetsloshet_76(region_vekt="20",skapa_fil=FALSE,output_mapp=here("Diagram","/"))
 hamta_data_arbetsloshet_76 <- function(region_vekt="20",
@@ -18,8 +8,20 @@ hamta_data_arbetsloshet_76 <- function(region_vekt="20",
                                        diag_stapel = FALSE,
                                        diag_linje = FALSE){
   
+  # Tar fram arbetslöshet från 1974 till senaste år (AKU) 
+  # https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0402__AM0402F/AKUABefolkningL/
+  # https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0403__AM0403N/NAKUBefolkningLArTD/
+  # https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0401__AM0401N/NAKUBefolkningLAr/
+  
+  pacman::p_load(pxweb,
+                 here,
+                 tidyverse)
+  
+  # Skript som behövs
+  source("G:/skript/func/func_SkapaDiagram.R", encoding = "utf-8", echo = FALSE)
+  source("G:/skript/func/func_API.R", encoding = "utf-8", echo = FALSE)
 
-  # "Adresser" till SCBs databas
+  # Adresser" till SCBs databas
   url_76_04 <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0402/AM0402F/AKUABefolkningL"
   #url_05_ <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0403/AM0403N/NAKUBefolkningLArTD"
   url_05_ <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0401/AM0401N/NAKUBefolkningLAr"
