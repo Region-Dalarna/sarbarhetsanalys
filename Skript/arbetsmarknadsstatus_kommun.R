@@ -4,8 +4,9 @@
 
 hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
                                                   output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
+                                                  filnamn = "arbetsmarknadsstatus_kommun.xlsx",
+                                                  spara_data = TRUE,
                                                   artal = "senaste år", # Välj årtal. Senaste år ger just det.
-                                                  skapa_fil = TRUE,
                                                   ta_med_lan = TRUE,
                                                   ta_med_riket = TRUE,
                                                   diag_arbetslosthet = TRUE,
@@ -17,9 +18,9 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   # Källa  https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0210__AM0210A/ArbStatusM/
   # =================================================================================================================
   if (!require("pacman")) install.packages("pacman")
-  pacman::p_load(pxweb,
-                 tidyverse,
-                 openxlsx)
+  p_load(pxweb,
+         tidyverse,
+         openxlsx)
   
   source("https://raw.githubusercontent.com/FaluPeppe/func/main/func_API.R")
   
@@ -40,7 +41,7 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   if(diag_arbetskraftsdeltagande == TRUE) cont_code=c(cont_code,"000006IJ")
   if(diag_sysselsattningsgrad == TRUE) cont_code=c(cont_code,"000006IK")
   
-  if(artal == "senaste år") ar = max(hamta_giltiga_varden_fran_tabell(url3, "tid"))
+  if(artal == "senaste år") artal = max(hamta_giltiga_varden_fran_tabell(url3, "tid"))
   
   # Variabler som skall tas ut
   varlista <-  list("Region"=hamtakommuner(lan = region_vekt,tamedlan = ta_med_lan,tamedriket = ta_med_riket),
@@ -48,7 +49,7 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
                     "Alder"=c("20-64"),
                     "Fodelseregion"=c("tot"),
                     "ContentsCode"=cont_code,
-                    "Tid"=ar)
+                    "Tid"=artal)
   
   # Uttag av data
   px_uttag <- pxweb_get(url = url3,query = varlista)
@@ -71,7 +72,9 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   # Tar bort län i länsnamnet
   arbetsmarknadsstatus_df$region <-skapa_kortnamn_lan(arbetsmarknadsstatus_df$region)
   
-  openxlsx::write.xlsx(arbetsmarknadsstatus_df,paste0(output_mapp,"/arbetsmarknadsstatus_kommun.xlsx"))
+  if (spara_data==TRUE){
+    write.xlsx(arbetsmarknadsstatus_df,paste0(output_mapp,filnamn))
+  }
   
 }
 

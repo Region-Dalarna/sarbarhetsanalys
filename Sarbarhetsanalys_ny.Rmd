@@ -36,6 +36,8 @@ uppdatera_hemsida = FALSE
 # Läser in data
 arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
 arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus_kommun.xlsx")
+langtidsarbetsloshet_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/langtidsarbesloshet_kommun.xlsx")
+andel_offentligt_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
 i=1
 
 #test_lank<-here("Diagram","befolkningsforandring_20_64.png")
@@ -179,33 +181,76 @@ För att förstå arbetslösheten bättre är det relevant att beakta hur lång 
 
 Långtidsarbetslöshet mäts på lite olika sätt av olika myndigheter. Denna rapport utgår från Arbetsförmedlingens definition, det vill säga att vara öppet arbetslös eller i program med aktivitetsstöd under minst sex månader. Anledningen till valet av data från Arbetsförmedlingen är att de tillhandahåller arbetslöshetssiffror även på regional nivå.
 
-I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt (se `r paste0("figur ",i+1)`). Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i Älvdalens kommun. Långtidsarbetslösheten ökade i alla Dalarnas kommuner, såväl som i Sverige, mellan 2011 och 2022.
-<br>
-<br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","langtidsarbetsloshet.png"))
-i=i+1
+I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt. Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i `r langtidsarbetsloshet_df %>% filter(year == max(year),gender == "T") %>% filter(andel == min(andel)) %>% .$region`. Långtidsarbetslösheten ökade i alla Dalarnas kommuner, såväl som i Sverige, mellan `r min(langtidsarbetsloshet_df$year)` och `r max(langtidsarbetsloshet_df$year)`.
+
+```{r, include = FALSE}
+    diagram_capt <- "Källa: Arbetsförmedlingen (via Kolada).\nBearbetning: Samhällsanalys, Region Dalarna\nDiagramförklaring: Antal invånare 15-74 år som varit öppet arbetslösa eller i program med aktivitetsstöd i minst sex månader,\ndividerat med totalt antal invånare 15-74 år som är öppet arbetslösa eller i program med aktivitetsstöd." 
+
+  diagram_titel <- paste0("Långtidsarbetslöshet (15-74 år)")
+  diagramfil <- "langtidsarbetsloshet.png"
+  
+  langtid_fig <- SkapaStapelDiagram(skickad_df = langtidsarbetsloshet_df %>% 
+                                     filter(gender == "T",year%in%c(min(langtidsarbetsloshet_df$year),max(langtidsarbetsloshet_df$year))) %>% 
+                                     mutate(region = ifelse(region=="Riket", "Sverige",region)),
+                                   skickad_x_var = "region",
+                                   skickad_y_var = "andel",
+                                   skickad_x_grupp = "year",
+                                   manual_x_axis_text_vjust=1,
+                                   manual_x_axis_text_hjust=1,
+                                   manual_color = diagramfarger("rus_sex"),
+                                   x_axis_sort_value = TRUE,
+                                   x_axis_sort_grp = 4,
+                                   vand_sortering = TRUE,
+                                   dataetiketter = FALSE,
+                                   manual_y_axis_title="procent",
+                                   diagram_titel = diagram_titel,
+                                   diagram_capt = diagram_capt,
+                                   stodlinjer_avrunda_fem = TRUE,
+                                   output_mapp = output_mapp,
+                                   filnamn_diagram = "langtidsarbetsloshet.png",
+                                   skriv_till_diagramfil = spara_figur)
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Långtidsarbetslöshet")`
-</p>
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
+langtid_fig
+```
 
 Verksamheter som finansieras genom offentliga medel, såsom kommuner och regioner, kan påverkas annorlunda än privata företag i sämre tider. Exempelvis bör finnas ett grundläggande behov av vissa offentliga tjänster som torde vara åtminstone konstant. En lågkonjunktur som drabbar näringslivet ger ofta ett snabbt utslag genom en högre arbetslöshet i privat sektor^[https://www.nationalekonomi.se/sites/default/files/legacy/29-1-pl.pdf], medan offentlig sektor kan fungera som vanligt ett par år i början av en kris. När skatteintäkterna minskar kan det kräva neddragningar även för offentliga verksamheter, alternativt kan politiker genom offentlig sektor bidra till att stimulera efterfrågan i ekonomin. Hypotesen är således att kommuner med en stadig andel offentlig verksamhet både har en arbetsmarknad som är mer varierad och kan stå emot en kris bättre på grund av att offentlig sektor har verktyg att stimulera efterfrågan med.
 
-I Dalarna är Säter den kommun där störst andel arbetar inom offentlig verksamhet, drygt 40 procent av de förvärvsarbetande (se `r paste0("figur ",i+1)`). Motsvarande siffra i Leksand, med lägst andel, är bara runt 25 procent. Även i Falun arbetar många inom offentlig verksamhet, vilket delvis kan förklaras av att Dalarnas största arbetsgivare, Falu lasarett med över 3 000 anställda, ligger där.
-<br>
-<br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","andel_offentligt.png"))
-i=i+1
+I Dalarna är `r andel_offentligt_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$region` den kommun där störst andel arbetar inom offentlig verksamhet, ungefär `r round(andel_offentligt_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$Andel_forv,0)` procent av de förvärvsarbetande. Motsvarande siffra i `r andel_offentligt_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$region`, med lägst andel, är bara runt `r round(andel_offentligt_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$Andel_forv,0)` procent. Även i Falun arbetar många inom offentlig verksamhet, vilket delvis kan förklaras av att Dalarnas största arbetsgivare, Falu lasarett med över 3 000 anställda, ligger där.
+
+```{r, include = FALSE}
+  diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_offentligt_df$år))
+  diagramfilnamn <- paste0("andel_offentligt.png")
+  diagram_capt <- "Källa: SCB:s öppna statistikdatabas.\nBearbetning: Samhällsanalys, Region Dalarna."
+
+  andel_off_fig <- SkapaStapelDiagram(skickad_df = andel_offentligt_df %>% 
+                                       mutate("sektor"= factor(`sektor`, levels = c("Offentlig sektor","Övriga")[2:1])) ,
+                                     skickad_x_var = "region", 
+                                     skickad_y_var = "Andel_forv", 
+                                     skickad_x_grupp = "sektor",
+                                     manual_x_axis_text_vjust=1,
+                                     manual_x_axis_text_hjust=1,
+                                     manual_color = diagramfarger("rus_sex"),
+                                     stodlinjer_avrunda_fem = TRUE,
+                                     geom_position_stack = TRUE,
+                                     legend_vand_ordning = TRUE,
+                                     x_axis_sort_value = TRUE,
+                                     x_axis_sort_grp = 1,
+                                     manual_y_axis_title="procent",
+                                     diagram_titel = diagram_titel,
+                                     diagram_capt = diagram_capt,
+                                     output_mapp = output_mapp,
+                                     filnamn_diagram = diagramfilnamn,
+                                     skriv_till_diagramfil = spara_figur)
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Andel offentligt anställda")`
-</p>
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
+andel_off_fig
+```
 
 För att fördjupa förståelsen för arbetsmarknaders funktionssätt bör lokala arbetsmarknadsregioner inkluderas i analysen, utöver kommuner som analysenhet. Lokala arbetsmarknadsregioner skapas utifrån pendlingsrelationer mellan kommuner. Om jobbskapandet i den egna kommunen är svagt, kan närhet till andra kommuners arbetsmarknader möjliggöra pendling och medföra en totalt sett starkare arbetsmarknad. I Dalarna varierar pendlingen avsevärt mellan olika kommuner, men är högst i mindre kommuner som angränsar till större kommuner (se `r paste0("figur ",i+1)`). I såväl Gagnef som Säter pendlar mer än 50 procent av de sysselsatta till en annan kommun (främst till Borlänge). Även i Smedjebacken är utpendlingen hög, bland annat till grannkommunen Ludvika som har en stor arbetsgivare i Hitachi (tidigare ABB). Det omvända gäller för Malung-Sälens kommun, där avsevärt färre pendlar in och ut ur kommunen. 
-<br>
-<br>
+
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 knitr::include_graphics(here("Diagram","andel_pendling_kommun.png"))
 i=i+1
