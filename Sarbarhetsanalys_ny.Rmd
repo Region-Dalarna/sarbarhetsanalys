@@ -39,10 +39,8 @@ arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/ar
 langtidsarbetsloshet_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/langtidsarbesloshet_kommun.xlsx")
 andel_offentligt_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
 pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling_kommun.xlsx")
+arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/foretagarna.xlsx",sheet =1)
 i=1
-
-#test_lank<-here("Diagram","befolkningsforandring_20_64.png")
-
 
 ```
 
@@ -293,37 +291,38 @@ Sammanfattningsvis är sårbarheten låg i Gagnef och Säter kopplad till arbets
 ### 2.3 Företagande
 Förutom det jobbskapande som sker i befintliga och expanderande företag, kan även nyskapade företag stå för en del av jobbskapandet^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html]. I det här avsnittet presenteras indikatorer som kan vara viktiga förutsättningar för ett gott företagsklimat, dessa är antalet privata arbetsställen/1000 invånare, nystartade företag/1000 invånare, antal konkurser/1000 invånare samt andel företagsamma individer.
 
-En indikator är antalet privata arbetsställen (med minst 1 anställd), och i Dalarna finns det något fler sådana i jämförelse med i Sverige (se `r paste0("figur ",i+1)`). I Dalarna fanns 2021 ungefär 34 privata arbetsställen per 1000 invånare, att jämföra med drygt 32 i Sverige. Bland Dalarnas kommuner är variationen stor, där Malung-Sälen har klart flest med fler än 50 arbetsställen per 1000 invånare, medan Smedjebacken och Ludvika återfinns på andra sidan spektrumet med ungefär hälften så många privata arbetsställen per 1 000 invånare.
+En indikator är antalet privata arbetsställen (med minst 1 anställd), och i Dalarna finns det något fler sådana i jämförelse med i Sverige. I Dalarna fanns `r max(arbetsstallen_df$year)` ungefär `r round(arbetsstallen_df %>% filter(Kommun == "Dalarna") %>% .$Arb_stallen,0)` privata arbetsställen per 1000 invånare, att jämföra med drygt `r round(arbetsstallen_df %>% filter(Kommun == "Riket") %>% .$Arb_stallen,0)` i Sverige. Bland Dalarnas kommuner är variationen stor, där `r arbetsstallen_df %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Kommun`  har klart flest med `r round(arbetsstallen_df %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Arb_stallen,0)` per 1000 invånare, medan Smedjebacken och Ludvika återfinns på andra sidan spektrumet med ungefär hälften så många privata arbetsställen per 1 000 invånare.
 <br>
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, include = FALSE}
     # Används i de tre nästkommande diagrammen (alla kopplade till företagarna)
-    diagram_capt <- c("Källa: SCB.\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Gäller arbetsställen med minst 1 anställd",
-                    "Källa: UC AB.\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Nyföretagsamma personer är sådana som inte klassades som företagsamma förra året, men som gör det under innevarande år.",
-                    "Källa: UC, Kreicbergs Utredning & Opinion AB\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: De invånare som innehar F-skattesedel, är delägare i ett aktivt handelsbolag\neller är vd eller styrelseordförande i ett aktivt aktiebolag räknas som företagsamma.\n")
+    diagram_capt <- c("Källa: SCB.\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Gäller arbetsställen med minst 1 anställd")
 
-    diagramtitel <- paste0("Antal privata arbetsställen per 1000 invånare år ",max(arbetsstallen_df_utskrift$year))
+    diagramtitel <- paste0("Antal privata arbetsställen per 1000 invånare år ",max(arbetsstallen_df$year))
     diagramfilnamn <- paste0("arbetsstallen_per_1000.png")
-    objektnamn <- c(objektnamn,diagramtitel)
     
-    gg_obj <- SkapaStapelDiagram(skickad_df =arbetsstallen_df_utskrift %>% 
-                                   mutate(Kommun=ifelse(Kommun=="Riket", "Sverige",Kommun)),
+    arbetsstallen_fig <- SkapaStapelDiagram(skickad_df = arbetsstallen_df %>% 
+                                   mutate(Kommun = ifelse(Kommun == "Riket", "Sverige",Kommun),
+                                          fokus = ifelse(Kommun == "Riket",1,
+                                                         ifelse(Kommun == "Dalarna",2,0))),
                                  skickad_x_var = "Kommun", 
-                                 skickad_y_var = "Arb_stallen", 
-                                 #skickad_x_grupp = "utb_niva",
+                                 skickad_y_var = "Arb_stallen",
                                  manual_x_axis_text_vjust=1,
                                  manual_x_axis_text_hjust=1,
                                  manual_color = diagramfarger("rus_tre_fokus"),
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt[1],
                                  manual_y_axis_title = "Antal arbetsställen per 1000 invånare",
-                                 diagram_facet = FALSE,
                                  x_var_fokus = "fokus",
                                  x_axis_lutning = 45,
                                  x_axis_sort_value = TRUE,
                                  output_mapp = output_mapp,
                                  filnamn_diagram = diagramfilnamn,
                                  skriv_till_diagramfil = spara_figur)
+```
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
+arbetsstallen_fig
 ```
 
 När det gäller nystartade företag har Älvdalens kommun flest, med ungefär 15 nystartade företag per 1000 invånare 2021 (se `r paste0("figur ",i+1)`). Även Malung-Sälen, Rättvik och Gagnef hade fler nystartade företag (per 1000 invånare) än Sverige 2021. Glädjande är att antalet nystartade företag har ökat i de allra flesta av Dalarnas kommuner mellan 2011 och 2021, något som möjligtvis kan tillskrivas Coronapandemin. I Gagnef fördubblades exempelvis antalet nystartade företag mellan 2015 och 2021.

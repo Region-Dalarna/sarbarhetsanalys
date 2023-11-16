@@ -49,4 +49,6 @@ hamta_data_pendling_kommun(output_mapp = Output_mapp,
 ####################
 
 # Diverse från företagarna
+source(here("Skript","foretagarna.R"), encoding="UTF-8")
+hamta_data_foretagarna(output_mapp = Output_mapp)
 

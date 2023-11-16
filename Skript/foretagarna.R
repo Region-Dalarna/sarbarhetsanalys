@@ -1,10 +1,13 @@
 hamta_data_foretagarna <- function(region_vekt="20",
                                    output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                   skapa_fil=TRUE){
+                                   filnamn = "foretagarna.xlsx",
+                                   spara_data = TRUE){
   
   
   # Tar fram diverse olika diagram kopplat till företagande
   # https://www.foretagsklimat.se/downloads
+  # Välj variabel av intresse under "gör dina urval per faktor"
+  # Senast uppdaterad (data) - 20231116
   
   pacman::p_load(openxlsx,here,tidyverse)
   
@@ -15,9 +18,9 @@ hamta_data_foretagarna <- function(region_vekt="20",
   # ========================================== Läser in data ============================================
   # Läser in data från Excel (ursprung Företagarna (se ovan för länk till nedladdning))
   
-  arbetsstallen_df <- read.xlsx("G:/skript/projekt/Sårbarhetsanalys/Indata/Arbetsställen_2002-2023.xlsx",startRow=5)
-  nyforetagsamma_df <- read.xlsx("G:/skript/projekt/Sårbarhetsanalys/Indata/Nyföretagsamhet_2002-2023.xlsx",startRow=5)
-  foretagsamma_df <- read.xlsx("G:/skript/projekt/Sårbarhetsanalys/Indata/Företagsamhet_2002-2023.xlsx",startRow=5)
+  arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Arbetsställen_2002-2023.xlsx",startRow=5)
+  nyforetagsamma_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Nyföretagsamhet_2002-2023.xlsx",startRow=5)
+  foretagsamma_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Företagsamhet_2002-2023.xlsx",startRow=5)
   
   # ARBETSSTÄLLEN
   
@@ -28,7 +31,7 @@ hamta_data_foretagarna <- function(region_vekt="20",
         rename("Kategorier"=Delserie.1)
   
   # Tar ut Dalarnas kommuner
-  Dalarnas_kommuner=hamtaregion_kod_namn(hamtakommuner(tamedlan = FALSE,tamedriket = FALSE))[2]
+  Dalarnas_kommuner=hamtaregion_kod_namn(hamtakommuner(lan =region_vekt, tamedlan = FALSE,tamedriket = FALSE))[2]
   # Filtrerar ut Dalarnas kommuner
   
   arbetsstallen_df_Dalarna<-arbetsstallen_df %>% 
@@ -87,5 +90,13 @@ hamta_data_foretagarna <- function(region_vekt="20",
   # Filtrerar ut Dalarnas kommuner
   foretagsamma_df_Dalarna<-foretagsamma_df %>% 
     filter(Kommun%in%Dalarnas_kommuner$region,Kategorier== "Andel företagsamma individer",year%in%max(year))
+  
+  flik_lista = lst("arbetsställen" = arbetsstallen_df_utskrift,
+                   "nyföretagssamma" = nyforetagsamma_df_utskrift,
+                   "företagssamma" = foretagsamma_df_Dalarna)
+  
+  if (spara_data==TRUE){
+    write.xlsx(flik_lista,paste0(output_mapp,filnamn))
+  }
 
 }
