@@ -38,6 +38,7 @@ arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsl
 arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus_kommun.xlsx")
 langtidsarbetsloshet_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/langtidsarbesloshet_kommun.xlsx")
 andel_offentligt_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
+pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling_kommun.xlsx")
 i=1
 
 #test_lank<-here("Diagram","befolkningsforandring_20_64.png")
@@ -251,13 +252,41 @@ andel_off_fig
 
 För att fördjupa förståelsen för arbetsmarknaders funktionssätt bör lokala arbetsmarknadsregioner inkluderas i analysen, utöver kommuner som analysenhet. Lokala arbetsmarknadsregioner skapas utifrån pendlingsrelationer mellan kommuner. Om jobbskapandet i den egna kommunen är svagt, kan närhet till andra kommuners arbetsmarknader möjliggöra pendling och medföra en totalt sett starkare arbetsmarknad. I Dalarna varierar pendlingen avsevärt mellan olika kommuner, men är högst i mindre kommuner som angränsar till större kommuner (se `r paste0("figur ",i+1)`). I såväl Gagnef som Säter pendlar mer än 50 procent av de sysselsatta till en annan kommun (främst till Borlänge). Även i Smedjebacken är utpendlingen hög, bland annat till grannkommunen Ludvika som har en stor arbetsgivare i Hitachi (tidigare ABB). Det omvända gäller för Malung-Sälens kommun, där avsevärt färre pendlar in och ut ur kommunen. 
 
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","andel_pendling_kommun.png"))
-i=i+1
+```{r, include = FALSE}
+  diagram_capt <- "Källa: SCB (via Kolada)\nBearbetning: Samhällsanalys, Region Dalarna\nDiagramförklaring: Antal inpendlare (personer som förvärvsarbetar i kommunen/regionen och bor i en annan kommun/region)\ndividerat med antal förvärvsarbetande som arbetar i kommunen/regionen (dagbefolkning)\nAntal utpendlare (personer som bor i kommunen/regionen och förvärvsarbetar i en annan kommun/region)\ndividerat med antal förvärvsarbetande som bor i kommunen/regionen (nattbefolkning)" 
+
+    diagram_titel <- paste0("Andel av förvärvsarbetande som pendlar över kommungräns år ",max(pendling_df$year))
+    diagram_titel<-str_wrap(diagram_titel,50)
+    diagram_typ <- "andel_pendling"
+    diagramfil <- "andel_pendling_kommun.png"
+    
+    pendling_fig <- SkapaStapelDiagram(skickad_df = pendling_df %>% 
+                                   filter(year%in%c(max(pendling_df$year))) %>% 
+                                    filter(gender=="T") %>% 
+                                      mutate(municipality = ifelse(municipality == "Riket", "Sverige",municipality)),
+                                 skickad_x_var = "municipality", 
+                                 skickad_y_var = "Pendling_andel", 
+                                 skickad_x_grupp = "pendling_typ",
+                                 manual_x_axis_text_vjust=1,
+                                 manual_x_axis_text_hjust=1,
+                                 manual_color = diagramfarger("rus_sex"),
+                                 x_axis_sort_value = TRUE,
+                                 x_axis_sort_grp = 2,
+                                 vand_sortering=TRUE,
+                                 dataetiketter = FALSE,
+                                 dataetiketter_antal_dec = 0,
+                                 manual_y_axis_title="procent",
+                                 diagram_titel = diagram_titel,
+                                 diagram_capt = diagram_capt,
+                                 output_mapp = output_mapp,
+                                 filnamn_diagram = diagramfil,
+                                 skriv_till_diagramfil = spara_figur)
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Andel in och utpendling")`
-</p>
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
+pendling_fig
+```
 
 Sammanfattningsvis är sårbarheten låg i Gagnef och Säter kopplad till arbetsmarknaden, med både hög sysselsättningsgrad, hög andel offentlig verksamhet och stor utpendling, medan det omvända gäller för Ludvika, där sysselsättningsgraden och utpendlingen är låg, samt få arbetar inom offentlig verksamhet.
 
@@ -268,12 +297,34 @@ En indikator är antalet privata arbetsställen (med minst 1 anställd), och i D
 <br>
 <br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","arbetsstallen_per_1000.png"))
-i=i+1
+    # Används i de tre nästkommande diagrammen (alla kopplade till företagarna)
+    diagram_capt <- c("Källa: SCB.\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Gäller arbetsställen med minst 1 anställd",
+                    "Källa: UC AB.\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Nyföretagsamma personer är sådana som inte klassades som företagsamma förra året, men som gör det under innevarande år.",
+                    "Källa: UC, Kreicbergs Utredning & Opinion AB\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: De invånare som innehar F-skattesedel, är delägare i ett aktivt handelsbolag\neller är vd eller styrelseordförande i ett aktivt aktiebolag räknas som företagsamma.\n")
+
+    diagramtitel <- paste0("Antal privata arbetsställen per 1000 invånare år ",max(arbetsstallen_df_utskrift$year))
+    diagramfilnamn <- paste0("arbetsstallen_per_1000.png")
+    objektnamn <- c(objektnamn,diagramtitel)
+    
+    gg_obj <- SkapaStapelDiagram(skickad_df =arbetsstallen_df_utskrift %>% 
+                                   mutate(Kommun=ifelse(Kommun=="Riket", "Sverige",Kommun)),
+                                 skickad_x_var = "Kommun", 
+                                 skickad_y_var = "Arb_stallen", 
+                                 #skickad_x_grupp = "utb_niva",
+                                 manual_x_axis_text_vjust=1,
+                                 manual_x_axis_text_hjust=1,
+                                 manual_color = diagramfarger("rus_tre_fokus"),
+                                 diagram_titel = diagramtitel,
+                                 diagram_capt =  diagram_capt[1],
+                                 manual_y_axis_title = "Antal arbetsställen per 1000 invånare",
+                                 diagram_facet = FALSE,
+                                 x_var_fokus = "fokus",
+                                 x_axis_lutning = 45,
+                                 x_axis_sort_value = TRUE,
+                                 output_mapp = output_mapp,
+                                 filnamn_diagram = diagramfilnamn,
+                                 skriv_till_diagramfil = spara_figur)
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Antal arbetsställen per 1000 invånare")`
-</p>
 
 När det gäller nystartade företag har Älvdalens kommun flest, med ungefär 15 nystartade företag per 1000 invånare 2021 (se `r paste0("figur ",i+1)`). Även Malung-Sälen, Rättvik och Gagnef hade fler nystartade företag (per 1000 invånare) än Sverige 2021. Glädjande är att antalet nystartade företag har ökat i de allra flesta av Dalarnas kommuner mellan 2011 och 2021, något som möjligtvis kan tillskrivas Coronapandemin. I Gagnef fördubblades exempelvis antalet nystartade företag mellan 2015 och 2021.
 <br>

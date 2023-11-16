@@ -33,10 +33,20 @@ hamta_data_arbetsmarknadsstatus_kommun(region_vekt = "20",
 
 # Långtidsarbetslöshet
 source(here("Skript","langtidsarbetsloshet.R"), encoding="UTF-8")
-hamta_data_langtidsarbetsloshet(output_mapp = Output_mapp,
-                                spara_data = TRUE)
+hamta_data_langtidsarbetsloshet(output_mapp = Output_mapp)
 
 # Andel som jobbar i offentlig sektor
 source(here("Skript","andel_offentligt.R"), encoding="UTF-8")
-hamta_data_andel_offentligt(output_mapp = Output_mapp,
-                            spara_data = TRUE)
+hamta_data_andel_offentligt(output_mapp = Output_mapp)
+
+# Andel pendling i kommun (skript från rapporten kopplad till kompetensförsörjning
+source("https://raw.githubusercontent.com/Region-Dalarna/kompetensforsorjning_i_Dalarna/main/Skript/pendling_kommun.R")
+hamta_data_pendling_kommun(output_mapp = Output_mapp,
+                           senaste_ar = TRUE)
+
+#####################
+##### Inte API #####
+####################
+
+# Diverse från företagarna
+
