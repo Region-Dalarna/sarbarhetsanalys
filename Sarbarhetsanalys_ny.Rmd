@@ -328,7 +328,7 @@ En indikator är antalet privata arbetsställen (med minst 1 anställd), och i D
 arbetsstallen_fig
 ```
 
-När det gäller nystartade företag har Älvdalens kommun flest, med ungefär 15 nystartade företag per 1000 invånare 2021 (se `r paste0("figur ",i+1)`). Även Malung-Sälen, Rättvik och Gagnef hade fler nystartade företag (per 1000 invånare) än Sverige 2021. Glädjande är att antalet nystartade företag har ökat i de allra flesta av Dalarnas kommuner mellan 2011 och 2021, något som möjligtvis kan tillskrivas Coronapandemin. I Gagnef fördubblades exempelvis antalet nystartade företag mellan 2015 och 2021.
+När det gäller nystartade företag har `r Nystartade_df %>% filter(year == max(year)) %>% filter(nystartade_ftg== max(nystartade_ftg)) %>% .$municipality` kommun flest, med ungefär `r round(Nystartade_df %>% filter(year == max(year)) %>% filter(nystartade_ftg== max(nystartade_ftg)) %>% .$nystartade_ftg,0)` nystartade företag per 1000 invånare `r max(Nystartade_df$year)`. Även Malung-Sälen och Falun hade fler nystartade företag (per 1000 invånare) än Sverige `r max(Nystartade_df$year)`. Glädjande är att antalet nystartade företag har ökat i de allra flesta av Dalarnas kommuner mellan 2011 och 2021, något som möjligtvis kan tillskrivas Coronapandemin. I Gagnef fördubblades exempelvis antalet nystartade företag mellan 2015 och 2021 (KOLLA UPP).
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
     
@@ -380,7 +380,7 @@ När det gäller nystartade företag har Älvdalens kommun flest, med ungefär 1
 nystartade_fig
 ```
 
-Antalet nystartade företag gör ju ingen större skillnad om många företag samtidigt går i konkurs (se `r paste0("figur ",i+1)`). Generellt tenderar kommuner med många nystartade företag (Malung-Sälen, Älvdalen) också har relativt många konkurser (per invånare). Undantaget är Rättviks kommun, som både har många nystartade företag och få konkurser.
+Antalet nystartade företag gör ju ingen större skillnad om många företag samtidigt går i konkurs. Generellt tenderar kommuner med många nystartade företag (Malung-Sälen, Älvdalen) också har relativt många konkurser (per invånare). Undantaget är Rättviks kommun, som både har många nystartade företag och få konkurser.
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
@@ -428,7 +428,7 @@ Antalet nystartade företag gör ju ingen större skillnad om många företag sa
 konkurser_fig
 ```
 
-Ett annat sätt att mäta företagande är genom att undersöka hur stor andel av en kommuns invånare som anses vara företagssamma, dvs. innehar F-skattesedel, är delägare i ett aktivt handelsbolag alternativt är VD eller styrelseordförande i ett aktivt aktiebolag (se `r paste0("figur ",i+1)`). Bland Dalarnas kommuner är det återigen en stor variationen, där Malung-Sälen har högst andel företagssamma (drygt 19 procent) och Ludvika lägst andel (8 procent).
+Ett annat sätt att mäta företagande är genom att undersöka hur stor andel av en kommuns invånare som anses vara företagssamma, dvs. innehar F-skattesedel, är delägare i ett aktivt handelsbolag alternativt är VD eller styrelseordförande i ett aktivt aktiebolag. Bland Dalarnas kommuner är det återigen en stor variationen, där Malung-Sälen har högst andel företagssamma (drygt 19 procent) och Ludvika lägst andel (8 procent).
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 knitr::include_graphics(here("Diagram","foretagsamma_andel.png"))
