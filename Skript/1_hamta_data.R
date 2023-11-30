@@ -32,8 +32,14 @@ hamta_data_arbetsmarknadsstatus_kommun(region_vekt = "20",
                                        diag_sysselsattningsgrad = TRUE)
 
 # Långtidsarbetslöshet
-source(here("Skript","langtidsarbetsloshet.R"), encoding="UTF-8")
-hamta_data_langtidsarbetsloshet(output_mapp = Output_mapp)
+source("https://raw.githubusercontent.com/Region-Dalarna/uppfoljning_dalastrategin/main/Skript/l%C3%A5ngtidsarbetsl%C3%B6shet.R")
+hamta_data_langtidsarb(region = c("0020"),
+                       cond_code = c("N03923"),
+                       alla_kommuner = TRUE,
+                       ta_med_riket = TRUE,
+                       outputmapp = Output_mapp,
+                       filnamn = "langtidsarbetsloshet.csv"
+                       )
 
 # Andel som jobbar i offentlig sektor
 source(here("Skript","andel_offentligt.R"), encoding="UTF-8")

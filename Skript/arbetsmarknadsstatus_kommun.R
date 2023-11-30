@@ -1,7 +1,4 @@
 
-
-#test_list <- diag_arbetsmarknadsstatus(skapa_fil = FALSE)
-
 hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
                                                   output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                                   filnamn = "arbetsmarknadsstatus_kommun.xlsx",
@@ -9,6 +6,9 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
                                                   artal = "senaste år", # Välj årtal. Senaste år ger just det.
                                                   ta_med_lan = TRUE,
                                                   ta_med_riket = TRUE,
+                                                  Alder = c("20-64"),
+                                                  Kon = ("1+2"),
+                                                  Fodelse_region = c("tot"),
                                                   diag_arbetslosthet = TRUE,
                                                   diag_arbetskraftsdeltagande = TRUE,
                                                   diag_sysselsattningsgrad = TRUE){
@@ -16,21 +16,22 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   ## =================================================================================================================
   # Skript som laddar hem data för arbetsmarknadsstatus från SCB på kommunnivå (månadsdata). Beroende på val tas data för arbetslöshet, arbetskraftsdeltagande och sysselsättningsgrad med i uttaget.
   # Källa  https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0210__AM0210A/ArbStatusM/
+  # För förklaringar av parameteralternativ använd pxvardelist(https://api.scb.se/OV0104/v1/doris/sv/ssd/AM/AM0210/AM0210A/ArbStatusM, "Alder"), 
+  # där "Alder" byts mot vald variabel (från varlista nedan)
+  # diag_arbetsloshet, diag_arbetskraftsdeltagande och diag_sysselsattningsgrad sätts till TRUE baserat på vilka variabler man vill ha
   # =================================================================================================================
   if (!require("pacman")) install.packages("pacman")
   p_load(pxweb,
          tidyverse,
          openxlsx)
   
-  source("https://raw.githubusercontent.com/FaluPeppe/func/main/func_API.R")
+  source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
   
   
   # =============================================== API-uttag ===============================================
   # "Adresser" till SCBs databas
-  url1 <- "https://api.scb.se"
-  url2 <- "/OV0104/v1/doris/sv/ssd/AM/AM0210/AM0210A/ArbStatusM"
-  url3 <- paste0(url1, url2)
-  
+  url3 <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/AM/AM0210/AM0210A/ArbStatusM"
+
   # Om man vill ta reda vilka variabler som finns i tabellen. 
   # pxvarlist(url3)                        # för att se alla variabler för en tabell
   # pxvardelist(url3, "contentscode")      # för att se alla värden för vald variabel
@@ -45,11 +46,11 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   
   # Variabler som skall tas ut
   varlista <-  list("Region"=hamtakommuner(lan = region_vekt,tamedlan = ta_med_lan,tamedriket = ta_med_riket),
-                    "Kon"=c("1+2"),
-                    "Alder"=c("20-64"),
-                    "Fodelseregion"=c("tot"),
-                    "ContentsCode"=cont_code,
-                    "Tid"=artal)
+                    "Kon" = Kon,
+                    "Alder" =Alder,
+                    "Fodelseregion"= Fodelse_region,
+                    "ContentsCode"= cont_code,
+                    "Tid" = artal)
   
   # Uttag av data
   px_uttag <- pxweb_get(url = url3,query = varlista)

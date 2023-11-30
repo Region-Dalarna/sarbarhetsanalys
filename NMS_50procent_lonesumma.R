@@ -7,7 +7,7 @@ pacman::p_load(openxlsx,here,tidyverse)
 source("G:/skript/func/func_SkapaDiagram.R", encoding = "utf-8", echo = FALSE)
 source("G:/skript/func/func_API.R", encoding = "utf-8", echo = FALSE)
 
-#test_list=diag_50proc_lonesumma(skapa_fil=FALSE)
+#test_list=diag_50proc_lonesumma(skapa_fil=TRUE,diag_LA=FALSE)
 diag_50proc_lonesumma <- function(region_vekt="20",
                                   output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                   skapa_fil=TRUE,
@@ -26,8 +26,8 @@ diag_50proc_lonesumma <- function(region_vekt="20",
   
   # ========================================== Läser in data ============================================
   # Läser in data från Excel (ursprung arbetsförmedlingen)
-  kommun_df <- read.xlsx("G:/skript/projekt/Sårbarhetsanalys/Indata/17_mar_23_50_procent_lonesumma.xlsx",sheet=1)
-  LA_df <- read.xlsx("G:/skript/projekt/Sårbarhetsanalys/Indata/17_mar_23_50_procent_lonesumma.xlsx",sheet=2)
+  kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_50_procent_lonesumma.xlsx",sheet=1)
+  LA_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/17_mar_23_50_procent_lonesumma.xlsx",sheet=2)
 
   if(diag_kommun==TRUE){
     diagramtitel <- paste0("Summan av antalet företag i respektive kommun som utgör 50 procent av lönesumman ",max(kommun_df$Ar))
