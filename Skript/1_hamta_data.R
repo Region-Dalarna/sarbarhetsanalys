@@ -16,9 +16,7 @@ Output_mapp = "G:/skript/projekt/data/sarbarhetsanalys/"
 source(here("Skript","arbetsloshet_76.R"), encoding="UTF-8")
 hamta_data_arbetsloshet_76(region_vekt="20",
                            output_mapp_excel = Output_mapp,
-                           spara_data = TRUE,
-                           diag_stapel = FALSE,
-                           diag_linje = FALSE)
+                           spara_data = TRUE)
 
 # Arbetslöshet och sysselsättningsgrad
 source(here("Skript","arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
@@ -49,6 +47,11 @@ hamta_data_andel_offentligt(output_mapp = Output_mapp)
 source("https://raw.githubusercontent.com/Region-Dalarna/kompetensforsorjning_i_Dalarna/main/Skript/pendling_kommun.R")
 hamta_data_pendling_kommun(output_mapp = Output_mapp,
                            senaste_ar = TRUE)
+
+# Antal nystartade företag och antalet konkurser
+source(here("Skript","nystartade_konk.R"), encoding="UTF-8")
+hamta_data_nystartade_konk(outputmapp = Output_mapp)
+
 
 #####################
 ##### Inte API #####

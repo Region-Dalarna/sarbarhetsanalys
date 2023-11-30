@@ -11,7 +11,8 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
                                                   Fodelse_region = c("tot"),
                                                   diag_arbetslosthet = TRUE,
                                                   diag_arbetskraftsdeltagande = TRUE,
-                                                  diag_sysselsattningsgrad = TRUE){
+                                                  diag_sysselsattningsgrad = TRUE,
+                                                  returnera_data = FALSE){
   
   ## =================================================================================================================
   # Skript som laddar hem data för arbetsmarknadsstatus från SCB på kommunnivå (månadsdata). Beroende på val tas data för arbetslöshet, arbetskraftsdeltagande och sysselsättningsgrad med i uttaget.
@@ -45,11 +46,11 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   if(artal == "senaste år") artal = max(hamta_giltiga_varden_fran_tabell(url3, "tid"))
   
   # Variabler som skall tas ut
-  varlista <-  list("Region"=hamtakommuner(lan = region_vekt,tamedlan = ta_med_lan,tamedriket = ta_med_riket),
+  varlista <-  list("Region" = hamtakommuner(lan = region_vekt,tamedlan = ta_med_lan,tamedriket = ta_med_riket),
                     "Kon" = Kon,
-                    "Alder" =Alder,
-                    "Fodelseregion"= Fodelse_region,
-                    "ContentsCode"= cont_code,
+                    "Alder" = Alder,
+                    "Fodelseregion" = Fodelse_region,
+                    "ContentsCode" = cont_code,
                     "Tid" = artal)
   
   # Uttag av data
@@ -76,6 +77,8 @@ hamta_data_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   if (spara_data==TRUE){
     write.xlsx(arbetsmarknadsstatus_df,paste0(output_mapp,filnamn))
   }
+  
+  if(returnera_data == TRUE) return(arbetsmarknadsstatus_df)
   
 }
 

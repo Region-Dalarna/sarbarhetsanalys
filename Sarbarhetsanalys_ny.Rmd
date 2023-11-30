@@ -40,6 +40,8 @@ langtidsarbetsloshet_df <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/arb
 andel_offentligt_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
 pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling_kommun.xlsx")
 arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/foretagarna.xlsx",sheet =1)
+Nystartade_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
+Konkurser_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
 i=1
 
 ```
@@ -329,34 +331,47 @@ arbetsstallen_fig
 När det gäller nystartade företag har Älvdalens kommun flest, med ungefär 15 nystartade företag per 1000 invånare 2021 (se `r paste0("figur ",i+1)`). Även Malung-Sälen, Rättvik och Gagnef hade fler nystartade företag (per 1000 invånare) än Sverige 2021. Glädjande är att antalet nystartade företag har ökat i de allra flesta av Dalarnas kommuner mellan 2011 och 2021, något som möjligtvis kan tillskrivas Coronapandemin. I Gagnef fördubblades exempelvis antalet nystartade företag mellan 2015 och 2021.
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-"Källa: SCB (via Kolada/RKA)\nBearbetning: Samhällsanalys, Region Dalarna"
+    
+  senaste_ar_nystartade = max(Nystartade_df$year)
+  
+  valda_år_nystartade = paste0("medelvärde ",senaste_ar_nystartade-7,"-",senaste_ar_nystartade-2)
+  
+  # Beräknar medelvärde för de fem år som föranleder näst senaste år
+  Nystartade_medel <- Nystartade_df %>%
+    filter(year %in% c((senaste_ar_nystartade-7):(senaste_ar_nystartade-2))) %>% 
+      group_by(municipality) %>% 
+        summarize(nystartade_ftg = mean(nystartade_ftg)) %>% 
+          mutate(year = valda_år_nystartade)
+  
+  Nystartade_utskrift <- rbind(Nystartade_df %>% filter(year%in%c(max(year),max(year-1))),Nystartade_medel)    
 
-diagram_titel <- paste0("Antal nystartade företag per 1000 invånare (16-64 år)")
-    diagram_typ <- "nystartade"
+
+    diagram_capt <- "Källa: SCB (via Kolada/RKA)\nBearbetning: Samhällsanalys, Region Dalarna"
+    diagram_titel <- paste0("Antal nystartade företag per 1000 invånare (16-64 år)")
     diagramfil <- "nystartade.png"
     
-    nystartade_fig <- SkapaStapelDiagram(skickad_df = Nystartade_df %>% 
-                                           filter(year%in%c(min(Nystartade_df$year),"2015",max(Nystartade_df$year))) %>% 
-                                           filter(gender=="T") %>% 
-                                           mutate(municipality=ifelse(municipality=="Region Dalarna","Dalarna",municipality)) %>% 
-                                           mutate(municipality=ifelse(municipality=="Riket", "Sverige",municipality)), 
-                                         skickad_x_var = "municipality", 
-                                         skickad_y_var = "nystartade_ftg", 
-                                         skickad_x_grupp = "year",
-                                         manual_x_axis_text_vjust=1,
-                                         manual_x_axis_text_hjust=1,
-                                         manual_color = diagramfarger("rus_sex"),
-                                         x_axis_sort_value = TRUE,
-                                         x_axis_sort_grp = 3,
-                                         vand_sortering=TRUE,
-                                         dataetiketter = FALSE,
-                                         dataetiketter_antal_dec = 0,
-                                         manual_y_axis_title="Nystartade företag/1000 invånare",
-                                         diagram_titel = diagram_titel,
-                                         diagram_capt = diagram_capt,
-                                         output_mapp = output_mapp,
-                                         filnamn_diagram = diagramfil,
-                                         skriv_till_diagramfil = skapa_fil)
+    gg_obj <- SkapaStapelDiagram(skickad_df = Nystartade_utskrift %>%
+                                   mutate(municipality=ifelse(municipality=="Region Dalarna","Dalarna",municipality)) %>% 
+                                    mutate(municipality=ifelse(municipality=="Riket", "Sverige",municipality)) %>% 
+                                      mutate(year = factor(year, levels = c(valda_år_nystartade,as.character(senaste_ar_nystartade-1), senaste_ar_nystartade))), 
+                                 skickad_x_var = "municipality", 
+                                 skickad_y_var = "nystartade_ftg", 
+                                 skickad_x_grupp = "year",
+                                 manual_x_axis_text_vjust=1,
+                                 manual_x_axis_text_hjust=1,
+                                 manual_color = diagramfarger("rus_sex"),
+                                 x_axis_sort_value = TRUE,
+                                 x_axis_sort_grp = 3,
+                                 vand_sortering=TRUE,
+                                 dataetiketter = FALSE,
+                                 stodlinjer_avrunda_fem = TRUE,
+                                 dataetiketter_antal_dec = 0,
+                                 manual_y_axis_title="Nystartade företag/1000 invånare",
+                                 diagram_titel = diagram_titel,
+                                 diagram_capt = diagram_capt,
+                                 output_mapp = output_mapp,
+                                 filnamn_diagram = diagramfil,
+                                 skriv_till_diagramfil = spara_figur)
     
 
 ```
@@ -369,15 +384,25 @@ Antalet nystartade företag gör ju ingen större skillnad om många företag sa
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-diagram_titel <- paste0("Antal konkurser per 1000 invånare (16-64 år)")
+    senaste_ar_konk = max(Konkurser_df$year)
+    valda_år_konk = paste0("medelvärde ",(senaste_ar_konk-7),"-",(senaste_ar_konk-2))
+    
+    konkurser_medel <- Konkurser_df %>%
+      filter(year %in% c((senaste_ar_konk-7):(senaste_ar_konk-2))) %>% 
+        group_by(municipality) %>% 
+          summarize(konkurser = mean(konkurser)) %>% 
+            mutate(year = valda_år_konk)
+    
+    konkurser_utskrift <- rbind(Konkurser_df %>% filter(year%in%c(max(year),max(year-1))),konkurser_medel)
+  
+    diagram_titel <- paste0("Antal konkurser per 1000 invånare (16-64 år)")
     diagram_typ <- "konkurser"
     diagramfil <- "konkurser.png"
     
-    konkurser_fig <- SkapaStapelDiagram(skickad_df = Konkurser_df %>% 
-                                   filter(year%in%c(min(Konkurser_df$year),max(Konkurser_df$year))) %>% 
-                                   filter(gender=="T") %>% 
+    konkurser_fig <- SkapaStapelDiagram(skickad_df = konkurser_utskrift %>%
                                    mutate(municipality=ifelse(municipality=="Region Dalarna","Dalarna",municipality)) %>% 
-                                   mutate(municipality=ifelse(municipality=="Riket", "Sverige",municipality)), 
+                                   mutate(municipality=ifelse(municipality=="Riket", "Sverige",municipality)) %>% 
+                                   mutate(year = factor(year, levels = c(valda_år_konk,as.character(senaste_ar_konk-1), senaste_ar_konk))), 
                                  skickad_x_var = "municipality", 
                                  skickad_y_var = "konkurser", 
                                  skickad_x_grupp = "year",
@@ -385,17 +410,17 @@ diagram_titel <- paste0("Antal konkurser per 1000 invånare (16-64 år)")
                                  manual_x_axis_text_hjust=1,
                                  manual_color = diagramfarger("rus_sex"),
                                  x_axis_sort_value = TRUE,
-                                 x_axis_sort_grp = 2,
+                                 x_axis_sort_grp = 3,
                                  vand_sortering=TRUE,
                                  dataetiketter = FALSE,
-                                 dataetiketter_antal_dec = 0,
                                  stodlinjer_avrunda_fem = TRUE,
+                                 dataetiketter_antal_dec = 0,
                                  manual_y_axis_title="Konkurser/1000 invånare",
                                  diagram_titel = diagram_titel,
                                  diagram_capt = diagram_capt,
                                  output_mapp = output_mapp,
                                  filnamn_diagram = diagramfil,
-                                 skriv_till_diagramfil = skapa_fil)
+                                 skriv_till_diagramfil = spara_figur)
 
 ```
 
