@@ -2,8 +2,13 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
                                        output_mapp_excel = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                        output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                        filnamn_excel = "/arbetsloshet_76.xlsx",
+                                       diag_farger = "rus_sex",
                                        spara_data = TRUE,
-                                       returnera_data = FALSE){
+                                       returnera_data = FALSE, # Om man vill att data skall göras till en global variabel (och hamna i R-Studios enviroment)
+                                       diag_linje = FALSE, # Vill man skapa en figur
+                                       spara_figur = TRUE, # Sparar figuren till output_mapp_figur
+                                       returnera_figur = FALSE # Om man vill att figuren skall returneras från funktionen
+                                       ){
   
   
   # =================================================================================================================
@@ -96,69 +101,31 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
     openxlsx::write.xlsx(flik_lista,paste0(output_mapp_excel,filnamn_excel))
   }
   
-  if(returnera_data == TRUE) return(df_bef_slutgiltig)
+  if(returnera_data == TRUE) assign("arbetsloshet_76_df", df_bef_slutgiltig, envir = .GlobalEnv)
+
+  if(diag_linje==TRUE){
+
+    diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nFrån och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa"
+    diagramtitel <- paste0("Arbetslöshet")
   
-  # # Om användaren vill skriva ut figurer så sker detta i nästa steg. Annars returneras inget från funktionen (utan det enda som händer är att ett dokument sparas i Excel)
-  # if(diag_stapel==TRUE){
-  # 
-  #   diagramtitel <- paste0("Arbetslöshet")
-  #   diagramfilnamn <- paste0("arbetsloshet76_stapel.png")
-  #   objektnamn <- c(objektnamn,"arbetsloshet_stapel")
-  # 
-  #   gg_obj <- SkapaStapelDiagram(skickad_df =df_bef_slutgiltig %>%
-  #                                  filter(region%in%c("Riket",ValdGeografi)) %>%
-  #                                  mutate(region=ifelse(region=="Riket", "Sverige",region)),
-  #                                skickad_x_var = "år",
-  #                                skickad_y_var = "arbetsloshet",
-  #                                skickad_x_grupp = "region",
-  #                                # manual_x_axis_text_vjust=1,
-  #                                # manual_x_axis_text_hjust=1,
-  #                                manual_color = diagramfarger("rus_sex"),
-  #                                diagram_titel = diagramtitel,
-  #                                diagram_capt =  diagram_capt,
-  #                                manual_y_axis_title = "procent",
-  #                                diagram_facet = FALSE,
-  #                                x_axis_lutning = 90,
-  #                                diagram_liggande = FALSE,
-  #                                legend_vand_ordning=FALSE,
-  #                                geom_position_stack = FALSE,
-  #                                berakna_index = FALSE,
-  #                                output_mapp = output_mapp_figur,
-  #                                filnamn_diagram = diagramfilnamn,
-  #                                skriv_till_diagramfil = skapa_fil)
-  # 
-  #   gg_list[[i]] <-gg_obj
-  #   i=i+1
-  # 
-  # }
-  # 
-  # if(diag_linje==TRUE){
-  #   diagramtitel <- paste0("Arbetslöshet")
-  #   diagramfilnamn <- paste0("arbetsloshet76_linje.png")
-  #   objektnamn <- c(objektnamn,"arbetsloshet_linje")
-  # 
-  #   gg_obj <- SkapaLinjeDiagram(skickad_df =df_bef_slutgiltig %>%
-  #                                 filter(region%in%c("Riket",ValdGeografi)) %>%
-  #                                 mutate(region=ifelse(region=="Riket", "Sverige",region)),
-  #                               skickad_x_var = "år",
-  #                               skickad_y_var = "arbetsloshet",
-  #                               skickad_x_grupp = "region",
-  #                               manual_color = diagramfarger("rus_sex"),
-  #                               diagram_titel = diagramtitel,
-  #                               diagram_capt =  diagram_capt,
-  #                               manual_y_axis_title = "procent",
-  #                               x_axis_lutning = 45,
-  #                               visa_var_x_xlabel = 4,
-  #                               output_mapp = output_mapp_figur,
-  #                               filnamn_diagram = diagramfilnamn,
-  #                               skriv_till_diagramfil = skapa_fil)
-  # 
-  #   gg_list[[i]] <-gg_obj
-  #   i=i+1
-  # }
-  # 
-  # if(diag_stapel == TRUE||diag_linje == TRUE){
-  #   names(gg_list) <- objektnamn
-  #   return(gg_list)
-  # }
+    gg_obj <- SkapaLinjeDiagram(skickad_df = df_bef_slutgiltig ,
+                                skickad_x_var = "år",
+                                skickad_y_var = "arbetsloshet",
+                                skickad_x_grupp = "region",
+                                manual_color = diagramfarger(diag_farger),
+                                diagram_titel = diagramtitel,
+                                diagram_capt =  diagram_capt,
+                                manual_y_axis_title = "procent",
+                                x_axis_lutning = 45,
+                                visa_var_x_xlabel = 4,
+                                stodlinjer_avrunda_fem = TRUE,
+                                output_mapp = output_mapp_figur,
+                                filnamn_diagram = "arbetsloshet_76.png",
+                                skriv_till_diagramfil = spara_figur)
+  
+    if(returnera_figur == TRUE){
+      return(gg_obj)
+    }
+  }
+ 
 }

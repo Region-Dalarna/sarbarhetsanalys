@@ -112,7 +112,7 @@ diag_arbetsmarknadsstatus <-function(region_vekt = "20",
                                  skriv_till_diagramfil = skapa_fil)
     
     
-    gg_list[[i]] <-gg_obj
+    gg_list[[i]] <- gg_obj
     i=i+1
   }
   

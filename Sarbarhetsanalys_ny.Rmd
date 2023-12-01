@@ -62,30 +62,7 @@ I början av 2020 drabbades Sverige av pandemin orsakad av Covid-19. Krisen ledd
 När denna rapport skrivs pågår ytterligare en kris kopplad till Rysslands invasion av Ukraina och dess effekter på bland annat tillgången till råvaror. Denna kris, som tog sin början i februari 2022, kommer sannolikt att få stora effekter på Sveriges ekonomi över en längre tid, även om den ännu inte syns i arbetslöshetsstatistiken för Dalarna i någon större utsträckning.
 
 ```{r, include = FALSE}
-knitr::include_graphics(here("Diagram","arbetsloshet76_linje.png"))
-    
-  diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nFrån och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa"
-  diagramtitel <- paste0("Arbetslöshet")
-
-  arb_76 <- SkapaLinjeDiagram(skickad_df =arbetsloshet_76_df ,
-                              skickad_x_var = "år",
-                              skickad_y_var = "arbetsloshet",
-                              skickad_x_grupp = "region",
-                              manual_color = diagramfarger("rus_sex"),
-                              diagram_titel = diagramtitel,
-                              diagram_capt =  diagram_capt,
-                              manual_y_axis_title = "procent",
-                              x_axis_lutning = 45,
-                              visa_var_x_xlabel = 4,
-                              stodlinjer_avrunda_fem = TRUE,
-                              output_mapp = output_mapp,
-                              filnamn_diagram = "arbetsloshet_76.png",
-                              skriv_till_diagramfil = spara_figur)
-```
-
-
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
-arb_76
+knitr::include_graphics(here("Figurer","arbetsloshet_76.png"))
 ```
 
 Sammanfattningsvis har detta avsnitt visat att Sverige med viss regelbundenhet drabbats av kriser av varierande omfattning. Det är därför viktigt att studera samhällets sårbarhet för denna typ av kriser.
@@ -113,64 +90,16 @@ En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför
 Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet (se `r paste0("figur ",i+1)`). Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus_df$manad_long)` `r max(arbetsmarknadsstatus_df$ar)`  hade `r arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == max(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == max(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$sysselsättningsgrad,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == min(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == min(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$sysselsättningsgrad,0)` procent.
 
 ```{r, include = FALSE}
-    diagram_capt = "Källa: SCB:s öppna statistikdatabas, befolkningens arbetsmarknadsstatus (BAS).\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Andelen av befolkningen som är sysselsatt (sysselsättningsgrad)."
-    diagramtitel <- paste0("Sysselsättningsgrad i åldersgruppen 20-64 år i ",last(arbetsmarknadsstatus_df$manad_long)," ",max(arbetsmarknadsstatus_df$ar))
-    
-    # Skapar diagram 
-    syss_grad_fig <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>% 
-                                   mutate(region=ifelse(region=="Riket", "Sverige",region),
-                                          fokus = ifelse(region == "Dalarna",1,
-                                                         ifelse(region == "Sverige",2,0))), 
-                                 skickad_x_var = "region", 
-                                 skickad_y_var = "sysselsättningsgrad", 
-                                 #skickad_x_grupp = "kön",
-                                 manual_y_axis_title = "procent",
-                                 manual_x_axis_text_vjust = 1,
-                                 manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger("rus_tre_fokus"),
-                                 diagram_titel = diagramtitel,
-                                 diagram_capt =  diagram_capt,
-                                 x_var_fokus = "fokus",
-                                 x_axis_sort_value = TRUE,
-                                 x_axis_lutning = 45,
-                                 stodlinjer_avrunda_fem = TRUE,
-                                 output_mapp = output_mapp,
-                                 filnamn_diagram = "sysselsattningsgrad_kommun.png",
-                                 skriv_till_diagramfil = spara_figur)
 
-```
+knitr::include_graphics(here("Figurer","sysselsattningsgrad_kommun.png"))
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
-syss_grad_fig
 ```
 
 I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus_df$manad_long)` `r max(arbetsmarknadsstatus_df$ar)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus_df %>% filter(region == "Dalarna") %>% .$arbetslöshet,0)` procent jämfört med ca `r round(arbetsmarknadsstatus_df %>% filter(region == "Riket") %>% .$arbetslöshet,0)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet` procent), medan `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har lägst arbetslöshet med ca `r round(arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet,0)` procent.
 
 ```{r, include = FALSE}
-    diagram_capt = "Källa: SCB:s öppna statistikdatabas, befolkningens arbetsmarknadsstatus (BAS).\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Andelen av befolkningen som är sysselsatt (sysselsättningsgrad)."
-    diagramtitel <- paste0("Arbetslöshet i åldersgruppen 20-64 år i ",last(arbetsmarknadsstatus_df$manad_long)," ",max(arbetsmarknadsstatus_df$ar))
-    
-    # Skapar diagram 
-    arbetsloshet_fig <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>% 
-                                   mutate(region=ifelse(region=="Riket", "Sverige",region),
-                                          fokus = ifelse(region == "Dalarna",1,
-                                                         ifelse(region == "Sverige",2,0))), 
-                                 skickad_x_var = "region", 
-                                 skickad_y_var = "arbetslöshet", 
-                                 #skickad_x_grupp = "kön",
-                                 manual_y_axis_title = "procent",
-                                 manual_x_axis_text_vjust = 1,
-                                 manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger("rus_tre_fokus"),
-                                 diagram_titel = diagramtitel,
-                                 diagram_capt =  diagram_capt,
-                                 x_var_fokus = "fokus",
-                                 x_axis_sort_value = TRUE,
-                                 x_axis_lutning = 45,
-                                 stodlinjer_avrunda_fem = TRUE,
-                                 output_mapp = output_mapp,
-                                 filnamn_diagram = "sysselsattningsgrad_kommun.png",
-                                 skriv_till_diagramfil = spara_figur)
+
+knitr::include_graphics(here("Figurer","sysselsattningsgrad_kommun.png"))
 
 ```
 
@@ -222,33 +151,9 @@ Verksamheter som finansieras genom offentliga medel, såsom kommuner och regione
 I Dalarna är `r andel_offentligt_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$region` den kommun där störst andel arbetar inom offentlig verksamhet, ungefär `r round(andel_offentligt_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$Andel_forv,0)` procent av de förvärvsarbetande. Motsvarande siffra i `r andel_offentligt_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$region`, med lägst andel, är bara runt `r round(andel_offentligt_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$Andel_forv,0)` procent. Även i Falun arbetar många inom offentlig verksamhet, vilket delvis kan förklaras av att Dalarnas största arbetsgivare, Falu lasarett med över 3 000 anställda, ligger där.
 
 ```{r, include = FALSE}
-  diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_offentligt_df$år))
-  diagramfilnamn <- paste0("andel_offentligt.png")
-  diagram_capt <- "Källa: SCB:s öppna statistikdatabas.\nBearbetning: Samhällsanalys, Region Dalarna."
 
-  andel_off_fig <- SkapaStapelDiagram(skickad_df = andel_offentligt_df %>% 
-                                       mutate("sektor"= factor(`sektor`, levels = c("Offentlig sektor","Övriga")[2:1])) ,
-                                     skickad_x_var = "region", 
-                                     skickad_y_var = "Andel_forv", 
-                                     skickad_x_grupp = "sektor",
-                                     manual_x_axis_text_vjust=1,
-                                     manual_x_axis_text_hjust=1,
-                                     manual_color = diagramfarger("rus_sex"),
-                                     stodlinjer_avrunda_fem = TRUE,
-                                     geom_position_stack = TRUE,
-                                     legend_vand_ordning = TRUE,
-                                     x_axis_sort_value = TRUE,
-                                     x_axis_sort_grp = 1,
-                                     manual_y_axis_title="procent",
-                                     diagram_titel = diagram_titel,
-                                     diagram_capt = diagram_capt,
-                                     output_mapp = output_mapp,
-                                     filnamn_diagram = diagramfilnamn,
-                                     skriv_till_diagramfil = spara_figur)
-```
+knitr::include_graphics(here("Figurer","andel_offentligt.png"))
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
-andel_off_fig
 ```
 
 För att fördjupa förståelsen för arbetsmarknaders funktionssätt bör lokala arbetsmarknadsregioner inkluderas i analysen, utöver kommuner som analysenhet. Lokala arbetsmarknadsregioner skapas utifrån pendlingsrelationer mellan kommuner. Om jobbskapandet i den egna kommunen är svagt, kan närhet till andra kommuners arbetsmarknader möjliggöra pendling och medföra en totalt sett starkare arbetsmarknad. I Dalarna varierar pendlingen avsevärt mellan olika kommuner, men är högst i mindre kommuner som angränsar till större kommuner (se `r paste0("figur ",i+1)`). I såväl Gagnef som Säter pendlar mer än 50 procent av de sysselsatta till en annan kommun (främst till Borlänge). Även i Smedjebacken är utpendlingen hög, bland annat till grannkommunen Ludvika som har en stor arbetsgivare i Hitachi (tidigare ABB). Det omvända gäller för Malung-Sälens kommun, där avsevärt färre pendlar in och ut ur kommunen. 
