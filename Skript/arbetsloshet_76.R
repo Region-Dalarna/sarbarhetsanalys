@@ -1,13 +1,8 @@
 hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
-                                       output_mapp_excel = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                       output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
+                                       output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                        filnamn_excel = "/arbetsloshet_76.xlsx",
-                                       diag_farger = "rus_sex",
                                        spara_data = TRUE,
-                                       returnera_data = FALSE, # Om man vill att data skall göras till en global variabel (och hamna i R-Studios enviroment)
-                                       diag_linje = FALSE, # Vill man skapa en figur
-                                       spara_figur = TRUE, # Sparar figuren till output_mapp_figur
-                                       returnera_figur = FALSE # Om man vill att figuren skall returneras från funktionen
+                                       returnera_data = FALSE # Om man vill att data skall göras till en global variabel (och hamna i R-Studios enviroment)
                                        ){
   
   
@@ -22,8 +17,7 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
          tidyverse,
          openxlsx)
   
-  # Skript som behövs
-  source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
+  # Funktioner som behövs
   source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
 
   # Adresser" till SCBs databas
@@ -98,34 +92,9 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
   # Sparar till Excel
   if (spara_data==TRUE){
     flik_lista=lst("Arbetslöshet" = df_bef_slutgiltig)
-    openxlsx::write.xlsx(flik_lista,paste0(output_mapp_excel,filnamn_excel))
+    openxlsx::write.xlsx(flik_lista,paste0(output_mapp,filnamn_excel))
   }
   
-  if(returnera_data == TRUE) assign("arbetsloshet_76_df", df_bef_slutgiltig, envir = .GlobalEnv)
-
-  if(diag_linje==TRUE){
-
-    diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nFrån och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa"
-    diagramtitel <- paste0("Arbetslöshet")
-  
-    gg_obj <- SkapaLinjeDiagram(skickad_df = df_bef_slutgiltig ,
-                                skickad_x_var = "år",
-                                skickad_y_var = "arbetsloshet",
-                                skickad_x_grupp = "region",
-                                manual_color = diagramfarger(diag_farger),
-                                diagram_titel = diagramtitel,
-                                diagram_capt =  diagram_capt,
-                                manual_y_axis_title = "procent",
-                                x_axis_lutning = 45,
-                                visa_var_x_xlabel = 4,
-                                stodlinjer_avrunda_fem = TRUE,
-                                output_mapp = output_mapp_figur,
-                                filnamn_diagram = "arbetsloshet_76.png",
-                                skriv_till_diagramfil = spara_figur)
-  
-    if(returnera_figur == TRUE){
-      return(gg_obj)
-    }
-  }
+  if(returnera_data == TRUE) return(df_bef_slutgiltig)
  
 }

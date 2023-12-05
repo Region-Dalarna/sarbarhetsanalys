@@ -89,4 +89,52 @@ hamta_data_nystartade_konk = function(region = c("0020"),
       
       if (spara_data == TRUE) write.xlsx(Konkurser_df, fil)
     }
+    
+    if(diag_linje==TRUE){
+      
+      senaste_ar_nystartade = max(Nystartade_df$year)
+      
+      valda_år_nystartade = paste0("medelvärde ",senaste_ar_nystartade-7,"-",senaste_ar_nystartade-2)
+      
+      # Beräknar medelvärde för de fem år som föranleder näst senaste år
+      Nystartade_medel <- Nystartade_df %>%
+        filter(year %in% c((senaste_ar_nystartade-7):(senaste_ar_nystartade-2))) %>% 
+        group_by(municipality) %>% 
+        summarize(nystartade_ftg = mean(nystartade_ftg)) %>% 
+        mutate(year = valda_år_nystartade)
+      
+      Nystartade_utskrift <- rbind(Nystartade_df %>% filter(year%in%c(max(year),max(year-1))),Nystartade_medel)    
+      
+      
+      diagram_capt <- "Källa: SCB (via Kolada/RKA)\nBearbetning: Samhällsanalys, Region Dalarna"
+      diagram_titel <- paste0("Antal nystartade företag per 1000 invånare (16-64 år)")
+      diagramfil <- "nystartade.png"
+      
+      gg_obj <- SkapaStapelDiagram(skickad_df = Nystartade_utskrift %>%
+                                     mutate(municipality=ifelse(municipality=="Region Dalarna","Dalarna",municipality)) %>% 
+                                     mutate(municipality=ifelse(municipality=="Riket", "Sverige",municipality)) %>% 
+                                     mutate(year = factor(year, levels = c(valda_år_nystartade,as.character(senaste_ar_nystartade-1), senaste_ar_nystartade))), 
+                                   skickad_x_var = "municipality", 
+                                   skickad_y_var = "nystartade_ftg", 
+                                   skickad_x_grupp = "year",
+                                   manual_x_axis_text_vjust=1,
+                                   manual_x_axis_text_hjust=1,
+                                   manual_color = diagramfarger("rus_sex"),
+                                   x_axis_sort_value = TRUE,
+                                   x_axis_sort_grp = 3,
+                                   vand_sortering=TRUE,
+                                   dataetiketter = FALSE,
+                                   stodlinjer_avrunda_fem = TRUE,
+                                   dataetiketter_antal_dec = 0,
+                                   manual_y_axis_title="Nystartade företag/1000 invånare",
+                                   diagram_titel = diagram_titel,
+                                   diagram_capt = diagram_capt,
+                                   output_mapp = output_mapp,
+                                   filnamn_diagram = diagramfil,
+                                   skriv_till_diagramfil = spara_figur)
+      
+      if(returnera_figur == TRUE){
+        return(gg_obj)
+      }
+    }
 }
