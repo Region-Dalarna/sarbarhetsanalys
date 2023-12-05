@@ -17,7 +17,7 @@ Output_mapp_figur = here("Figurer","/")
 source(here("Skript","diagram_arbetsloshet_76.R"), encoding="UTF-8")
 diagram_data_arbetsloshet_76(region_vekt ="20",
                              output_mapp_excel = Output_mapp,
-                             output_mapp_figur = Output_mapp_figur,
+                             output_mapp_figur = Output_mapp_figur,vald_farg = "rus_sex",
                              spara_data = TRUE,
                              returnera_figur = FALSE)
 
@@ -36,21 +36,28 @@ diagram_arbetsmarknadsstatus_kommun(region_vekt = "20",
                                     returnera_figur = FALSE)
 
 # Långtidsarbetslöshet
-source("https://raw.githubusercontent.com/Region-Dalarna/uppfoljning_dalastrategin/main/Skript/l%C3%A5ngtidsarbetsl%C3%B6shet.R")
-hamta_data_langtidsarb(region = c("0020"),
-                       cond_code = c("N03923"),
-                       alla_kommuner = TRUE,
-                       ta_med_riket = TRUE,
-                       outputmapp = Output_mapp,
-                       filnamn = "langtidsarbetsloshet.csv"
-                       )
+source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")
+diagram_langtidsarb(region = c("0020"),
+                   ta_med_riket = TRUE,
+                   outputmapp = Output_mapp_figur, 
+                   outputmapp_data = Output_mapp,
+                   returnera_figur = FALSE,
+                   spara_figur = TRUE,
+                   vald_farg = "rus_sex",
+                   spara_data = TRUE,
+                   tid = 2011:2100)
 
 # Andel som jobbar i offentlig sektor
-source(here("Skript","andel_offentligt.R"), encoding="UTF-8")
-hamta_data_andel_offentligt(output_mapp = Output_mapp,
-                            output_mapp_figur = Output_mapp_figur,
-                            spara_data = TRUE,
-                            diag_linje = TRUE)
+source(here("Skript","diagram_andel_offentligt.R"), encoding="UTF-8")
+diagram_andel_offentligt(region = c("20"),
+                         ta_med_riket = TRUE,
+                         output_mapp_data = Output_mapp,
+                         output_mapp_figur = Output_mapp_figur,
+                         returnera_figur = FALSE,
+                         senaste_ar = TRUE,
+                         spara_figur = TRUE,
+                         vald_farg = "rus_sex",
+                         spara_data = TRUE)
 
 # Andel pendling i kommun (skript från rapporten kopplad till kompetensförsörjning
 source("https://raw.githubusercontent.com/Region-Dalarna/kompetensforsorjning_i_Dalarna/main/Skript/pendling_kommun.R")

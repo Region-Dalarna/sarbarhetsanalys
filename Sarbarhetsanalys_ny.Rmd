@@ -89,7 +89,7 @@ En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför
 
 Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet (se `r paste0("figur ",i+1)`). Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus_df$manad_long)` `r max(arbetsmarknadsstatus_df$ar)`  hade `r arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == max(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == max(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$sysselsättningsgrad,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == min(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == min(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$sysselsättningsgrad,0)` procent.
 
-```{r, include = FALSE}
+```{r, include = TRUE}
 
 knitr::include_graphics(here("Figurer","sysselsattningsgrad_kommun.png"))
 
@@ -97,14 +97,10 @@ knitr::include_graphics(here("Figurer","sysselsattningsgrad_kommun.png"))
 
 I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus_df$manad_long)` `r max(arbetsmarknadsstatus_df$ar)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus_df %>% filter(region == "Dalarna") %>% .$arbetslöshet,0)` procent jämfört med ca `r round(arbetsmarknadsstatus_df %>% filter(region == "Riket") %>% .$arbetslöshet,0)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet` procent), medan `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har lägst arbetslöshet med ca `r round(arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet,0)` procent.
 
-```{r, include = FALSE}
+```{r, include = TRUE}
 
-knitr::include_graphics(here("Figurer","sysselsattningsgrad_kommun.png"))
+knitr::include_graphics(here("Figurer","arbetslöshet_kommun.png"))
 
-```
-
-```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
-arbetsloshet_fig
 ```
 
 För att förstå arbetslösheten bättre är det relevant att beakta hur lång tid som människor har stått utan arbete. De som har varit arbetslösa länge har i regel svårare att komma i arbete. Ett kompletterande mått för att fånga arbetsmarknadens funktionalitet är långtidsarbetslöshet. En förklaring till att det finns långtidsarbetslöshet är strukturella problem på arbetsmarknaden. Det kan exempelvis handla om att de arbetslösa inte har de kompetenser som krävs för de lediga platserna eller att de arbeten som finns kräver långpendling eller flytt^[https://arbetsformedlingen.se/download/18.3e623d4f16735f3976ead4/Perspektiv-pa-langtidsarbetslosheten,%20rapport.pdf]. 
@@ -114,32 +110,9 @@ Långtidsarbetslöshet mäts på lite olika sätt av olika myndigheter. Denna ra
 I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt. Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i `r langtidsarbetsloshet_df %>% filter(year == max(year),gender == "T") %>% filter(value == min(value)) %>% .$municipality`. Långtidsarbetslösheten ökade i alla Dalarnas kommuner, såväl som i Sverige, mellan `r min(langtidsarbetsloshet_df$year)` och `r max(langtidsarbetsloshet_df$year)`.
 
 ```{r, include = FALSE}
-    diagram_capt <- "Källa: Arbetsförmedlingen (via Kolada).\nBearbetning: Samhällsanalys, Region Dalarna\nDiagramförklaring: Antal invånare 15-74 år som varit öppet arbetslösa eller i program med aktivitetsstöd i minst sex månader,\ndividerat med totalt antal invånare 15-74 år som är öppet arbetslösa eller i program med aktivitetsstöd." 
 
-  diagram_titel <- paste0("Långtidsarbetslöshet (15-74 år)")
-  diagramfil <- "langtidsarbetsloshet.png"
-  
-  langtid_fig <- SkapaStapelDiagram(skickad_df = langtidsarbetsloshet_df %>% 
-                                     filter(gender == "T",year%in%c(min(langtidsarbetsloshet_df$year),max(langtidsarbetsloshet_df$year))) %>% 
-                                     mutate(region = ifelse(municipality == "Riket", "Sverige",
-                                                            ifelse(municipality == "Region Dalarna", "Dalarna", municipality))),
-                                   skickad_x_var = "municipality",
-                                   skickad_y_var = "value",
-                                   skickad_x_grupp = "year",
-                                   manual_x_axis_text_vjust=1,
-                                   manual_x_axis_text_hjust=1,
-                                   manual_color = diagramfarger("rus_sex"),
-                                   x_axis_sort_value = TRUE,
-                                   x_axis_sort_grp = 4,
-                                   vand_sortering = TRUE,
-                                   dataetiketter = FALSE,
-                                   manual_y_axis_title="procent",
-                                   diagram_titel = diagram_titel,
-                                   diagram_capt = diagram_capt,
-                                   stodlinjer_avrunda_fem = TRUE,
-                                   output_mapp = output_mapp,
-                                   filnamn_diagram = "langtidsarbetsloshet.png",
-                                   skriv_till_diagramfil = spara_figur)
+knitr::include_graphics(here("Figurer","andel_offentligt.png"))
+
 ```
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
