@@ -61,8 +61,9 @@ diagram_andel_offentligt(region = c("20"),
 
 # Andel pendling i kommun (skript från rapporten kopplad till kompetensförsörjning
 source("https://raw.githubusercontent.com/Region-Dalarna/kompetensforsorjning_i_Dalarna/main/Skript/pendling_kommun.R")
-hamta_data_pendling_kommun(output_mapp = Output_mapp,
-                           senaste_ar = TRUE)
+hej = hamta_data_pendling_kommun(output_mapp = Output_mapp,
+                                 senaste_ar = TRUE,
+                                 returnera_data = TRUE)
 
 # Antal nystartade företag och antalet konkurser
 source(here("Skript","nystartade_konk.R"), encoding="UTF-8")

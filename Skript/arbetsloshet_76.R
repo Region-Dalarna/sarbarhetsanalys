@@ -1,22 +1,24 @@
-hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
+hamta_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Enbart för regioner och riket ("00")
                                        output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                        filnamn_excel = "/arbetsloshet_76.xlsx",
+                                       Kon_klartext = c("män","kvinnor"), # Alternativ är män och/eller kvinnor (totalt saknas)
                                        spara_data = TRUE,
-                                       returnera_data = FALSE # Om man vill att data skall göras till en global variabel (och hamna i R-Studios enviroment)
+                                       returnera_data = TRUE # Om man vill att data skall returneras
                                        ){
   
   
   # =================================================================================================================
-  # Tar fram arbetslöshet från 1974 till senaste år (AKU - SCB) 
-  # Går i praktiken bara att ändra region för tillfället. Nästa steg, anpassa koden för kön
+  # Tar fram antal arbetslösa, antal sysselsatta och arbetslöshet från 1976 till senaste år (AKU - SCB). Enbart på länsnivå
+  # Notera även att det inte går att välja arbetskraftstillhörighet. Detta eftersom kategorierna varierar över tiden
   # Källa  https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0210__AM0210A/ArbStatusM/
+  # pxvardelist("https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0402/AM0402F/AKUABefolkningL", "Kon")
   # =================================================================================================================
   
   if (!require("pacman")) install.packages("pacman")
   p_load(pxweb,
          tidyverse,
          openxlsx)
-  
+
   # Funktioner som behövs
   source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
 
@@ -24,17 +26,19 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
   url_76_04 <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0402/AM0402F/AKUABefolkningL"
   url_05_ <- "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0401/AM0401N/NAKUBefolkningLAr"
   
+  kon_vekt <- hamta_kod_med_klartext(url_76_04, Kon_klartext, skickad_fran_variabel = "kon")
+  
   url <- c(url_76_04,url_05_)
   
-  varlista_76_04 <- list("Region" = c("00",region_vekt),
-                         "Arbetskraftstillh" = c("IARB","SYS20-34","SYS35+","SYS","ALÖS","EIAKR"),
-                         "Kon" = c("1","2"),
+  varlista_76_04 <- list("Region" = region_vekt,
+                         "Arbetskraftstillh" = c("SYS","ALÖS"),
+                         "Kon" = kon_vekt,
                          "ContentsCode" = c("*"),
                          "Tid" = c("*"))
   
-  varlista_05_ <- list("Region"=c("00",region_vekt),
-                         "Arbetskraftstillh"=c("TOTALT","ALÖS","EIAKR","SYS"),
-                         "Kon"= c("1","2"),
+  varlista_05_ <- list("Region"= region_vekt,
+                         "Arbetskraftstillh"=c("ALÖS","SYS"),
+                         "Kon"= kon_vekt,
                          "ContentsCode"=c("*"),
                          "Tid"=c("*"))
 
@@ -65,9 +69,10 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
   names(lista) <- c("76_04","05_")
   
   # Beräknar arbetslöshet i två steg för de olika perioderna
+
   df_76_04 <- lista$`76_04` %>% 
     filter(arbetskraftstillhörighet%in%c("arbetslösa","sysselsatta")) %>% 
-      group_by(region,år,arbetskraftstillhörighet) %>% 
+      group_by(region,år,kön,arbetskraftstillhörighet) %>% 
         summarize("Antal" = sum(`Befolkningen 16-64 år (AKU), 100-tal`)) %>% 
           pivot_wider(names_from = arbetskraftstillhörighet,values_from=Antal )
   
@@ -75,7 +80,7 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
   
   df_05_ <- lista$`05_` %>% 
     filter(arbetskraftstillhörighet%in%c("arbetslösa","sysselsatta")) %>% 
-      group_by(region,år,arbetskraftstillhörighet) %>% 
+      group_by(region,år,kön,arbetskraftstillhörighet) %>% 
         summarize("Antal" = sum(`1000-tal`))%>% 
           pivot_wider(names_from=arbetskraftstillhörighet,values_from=Antal )
   
@@ -84,11 +89,6 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = "20",
   #Slår ihop dataset och grupperar på regionkod och år
   df_bef_slutgiltig <- rbind(df_76_04,df_05_)
 
-  # Tar bort län i länsnamn och väljer ut de variabler vi är intresseade av (dvs. inte arbetslösa och sysselsatta (i antal))
-  df_bef_slutgiltig <- df_bef_slutgiltig %>% 
-    mutate(region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE)) %>% 
-      select(region,år,arbetsloshet)
-  
   # Sparar till Excel
   if (spara_data==TRUE){
     flik_lista=lst("Arbetslöshet" = df_bef_slutgiltig)
