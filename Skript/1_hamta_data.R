@@ -9,20 +9,28 @@ p_load(here)
 Output_mapp = "G:/skript/projekt/data/sarbarhetsanalys/"
 Output_mapp_figur = here("Figurer","/")
 
+
 ############################
 ##### Arbetsmarknaden ######
 ############################
 
 # Arbetslöshet 76
 source(here("Skript","diagram_arbetsloshet_76.R"), encoding="UTF-8")
-diagram_data_arbetsloshet_76(region_vekt ="20",
-                             output_mapp_excel = Output_mapp,
-                             output_mapp_figur = Output_mapp_figur,vald_farg = "rus_sex",
-                             spara_data = TRUE,
-                             returnera_figur = FALSE)
+gg_arbetsloshet_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
+                                                   output_mapp_excel = Output_mapp,
+                                                   output_mapp_figur = Output_mapp_figur,
+                                                   vald_farg = "rus_sex",
+                                                   spara_data = FALSE,
+                                                   returnera_figur = TRUE)
 
 # Arbetslöshet och sysselsättningsgrad
 source(here("Skript","diagram_arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
+gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(output_mapp_figur = Output_mapp_figur,
+                                                             diag_arbetskraftsdeltagande = FALSE,
+                                                             diag_farger = "rus_tre_fokus",
+                                                             spara_figur = TRUE,
+                                                             returnera_figur = TRUE)
+
 diagram_arbetsmarknadsstatus_kommun(region_vekt = "20",
                                     output_mapp = Output_mapp,
                                     output_mapp_figur = Output_mapp_figur,

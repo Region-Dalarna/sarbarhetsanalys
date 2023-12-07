@@ -1,24 +1,21 @@
 
-diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
-                                              output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Output-mapp för Excel
-                                              output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Output-mapp för figur
-                                              filnamn = "arbetsmarknadsstatus_kommun.xlsx",
-                                              spara_data = TRUE,
-                                              spara_figur = TRUE, # Sparar figuren till output_mapp_figur
-                                              returnera_figur = FALSE, # Returnerar en figur
-                                              diag_farger = "rus_tre_fokus",
-                                              ta_med_lan = TRUE,
-                                              ta_med_riket = TRUE,
-                                              diag_arbetslosthet = TRUE,
-                                              diag_arbetskraftsdeltagande = TRUE,
-                                              diag_sysselsattningsgrad = TRUE
-){
+#test = diagram_arbetsmarknadsstatus_kommun(spara_figur = FALSE,diag_arbetskraftsdeltagande = FALSE,kon_klartext = c("kvinnor", "män"),diag_farger = "kon")
+diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20"), # Använd förslagsvis hamtakommuner och hamtaallalan
+                                               fokus_lan = "20", # Måste väljas. Det län som, vid sidan om riket, fokuseras i figuren
+                                               output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Output-mapp för figur
+                                               spara_figur = TRUE, # Sparar figuren till output_mapp_figur
+                                               returnera_figur = TRUE, # Returnerar en figur
+                                               returnera_data = TRUE, # Om true, returneras data
+                                               kon_klartext = "totalt", # Finns även c("kvinnor","män") om man vill ha könsuppdelat
+                                               alder_klartext = "20-64 år", # finns: 15-19 år, 16-19 år, 20-24 år, 25-29 år, 30-34 år, 35-39 år, 40-44 år, 45-49 år, 50-54 år, 55-59 år, 60-64 år, 65-69 år, 70-74 år, 15-74 år, 16-64 år, 16-65 år, 20-64 år, 20-65 år
+                                               diag_farger = "rus_tre_fokus", # Ändra till kon om man vill ha de färgerna
+                                               diag_arbetslosthet = TRUE, # True för figur för arbetsloshet
+                                               diag_arbetskraftsdeltagande = TRUE, # "" arbetskraftsdeltagande
+                                               diag_sysselsattningsgrad = TRUE){ # "" sysselsättningsgrad
   
   ## =================================================================================================================
-  # Skript som laddar hem data för arbetsmarknadsstatus från SCB på kommunnivå (månadsdata) och skriver ut diagram. Beroende på val tas data för arbetslöshet, arbetskraftsdeltagande och sysselsättningsgrad med i uttaget.
-  # Källa  https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0210__AM0210A/ArbStatusM/
-  # För förklaringar av parameteralternativ (alder och födelseregion) använd pxvardelist("https://api.scb.se/OV0104/v1/doris/sv/ssd/AM/AM0210/AM0210A/ArbStatusM", "Kon"), 
-  # där "Alder" byts mot vald variabel (från varlista nedan)
+  # Diagram för arbetslöshet, sysselsättningsgrad och arbetskraftsdeltagande för senaste år. Går för tillfället inte att dela upp på kön
+  # Det är även möjligt att ändra åldersgrupper. OBS: max 1 åt gången
   # diag_arbetsloshet, diag_arbetskraftsdeltagande och diag_sysselsattningsgrad sätts till TRUE baserat på vilka variabler man vill ha
   # =================================================================================================================
   if (!require("pacman")) install.packages("pacman")
@@ -31,78 +28,86 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   gg_list <- list()  # skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
   objektnamn<-c()
   i=1 # Räknare som används för att lägga till objekt i listan
-  
-  arbetsmarknadsstatus_df = hamta_data_arbetsmarknadsstatus_kommun(region_vekt = region_vekt,
-                                                                   output_mapp = Output_mapp,
-                                                                   spara_data = spara_data,
-                                                                   ta_med_lan = ta_med_lan,
-                                                                   ta_med_riket = ta_med_riket,
-                                                                   diag_arbetslosthet = diag_arbetslosthet,
-                                                                   diag_arbetskraftsdeltagande = diag_arbetskraftsdeltagande,
-                                                                   diag_sysselsattningsgrad = diag_sysselsattningsgrad)
+
+  source("G:/skript/hamta_data/hamta_bas_arbmarknstatus_manad.R")
+  arbetsmarknadsstatus_df = hamta_bas_arbmarknstatus(region_vekt = region_vekt,
+                                                     kon_klartext_vekt = kon_klartext,
+                                                     alder_vekt_klartext = alder_klartext,
+                                                     fodelseregion_klartext_vekt = "totalt",
+                                                     cont_klartext_vekt = c("arbetslöshet","arbetskraftsdeltagande", "sysselsättningsgrad"),
+                                                     tid_vekt = "99")
   
 
+  # Län att fokusera på
+  valt_lan = skapa_kortnamn_lan(hamtaregion_kod_namn(fokus_lan)$region)
+  # Tar bort län i länsnamn och gör om riket till Sverige
+  arbetsmarknadsstatus_df$region = skapa_kortnamn_lan(arbetsmarknadsstatus_df$region,byt_ut_riket_mot_sverige = TRUE)
   
-  valt_lan = skapa_kortnamn_lan(hamtaregion_kod_namn(region_vekt)$region)
+  if(returnera_data == TRUE){
+    assign("arbetsmarknadsstatus", arbetsmarknadsstatus_df, envir = .GlobalEnv)
+    # gg_list[[i]] <- arbetsmarknadsstatus_df
+    # objektnamn <- c(objektnamn,("data"))
+    # i=i+1
+  }
   
   
   if(diag_sysselsattningsgrad==TRUE){
     
     diagram_capt = "Källa: SCB:s öppna statistikdatabas, befolkningens arbetsmarknadsstatus (BAS).\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Andelen av befolkningen som är sysselsatt (sysselsättningsgrad)."
-    diagramtitel <- paste0("Sysselsättningsgrad i åldersgruppen ",unique(arbetsmarknadsstatus_df$ålder), " i ",last(arbetsmarknadsstatus_df$manad_long)," ",max(arbetsmarknadsstatus_df$ar))
-    objektnamn <-c(objektnamn,paste0("Sysselsättningsgrad","_kommun"))
+    diagramtitel <- paste0("Sysselsättningsgrad i åldersgruppen ",unique(arbetsmarknadsstatus_df$ålder), " i ",unique(arbetsmarknadsstatus_df$månad)," ",unique(arbetsmarknadsstatus_df$år))
+    objektnamn <-c(objektnamn,("sysselsattningsgrad_senastear"))
     
     # Skapar diagram 
     gg_obj <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>% 
-                                   mutate(region=ifelse(region=="Riket", "Sverige",region),
-                                          fokus = ifelse(region == valt_lan,1,
-                                                         ifelse(region == "Sverige",2,0))), 
+                                   filter(variabel == "sysselsättningsgrad") %>% 
+                                     mutate(fokus = ifelse(region == valt_lan,1,
+                                                           ifelse(region == "Sverige",2,0))), 
                                  skickad_x_var = "region", 
-                                 skickad_y_var = "sysselsättningsgrad", 
-                                 #skickad_x_grupp = "kön",
+                                 skickad_y_var = "varde", 
+                                 skickad_x_grupp =ifelse("totalt" %in% kon_klartext,NA,"kön"),
                                  manual_y_axis_title = "procent",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
                                  manual_color = diagramfarger(diag_farger),
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,
-                                 x_var_fokus = "fokus",
+                                 x_var_fokus = ifelse("totalt" %in% kon_klartext,"fokus",NA),
                                  x_axis_sort_value = TRUE,
                                  x_axis_lutning = 45,
                                  stodlinjer_avrunda_fem = TRUE,
                                  output_mapp = output_mapp_figur,
-                                 filnamn_diagram = "sysselsattningsgrad_kommun.png",
+                                 filnamn_diagram = "sysselsattningsgrad_senastear.png",
                                  skriv_till_diagramfil = spara_figur)
-    gg_list[[i]] <-gg_obj
+    gg_list[[i]] <- gg_obj
     i=i+1
   }
   
   if(diag_arbetslosthet==TRUE){
     
     diagram_capt = "Källa: SCB:s öppna statistikdatabas, befolkningens arbetsmarknadsstatus (BAS).\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Andelen av personer i arbetskraften som är arbetslösa."
-    diagramtitel <- paste0("Arbetslöshet i åldersgruppen ",unique(arbetsmarknadsstatus_df$ålder), " i ",last(arbetsmarknadsstatus_df$manad_long)," ",max(arbetsmarknadsstatus_df$ar))
-    objektnamn <-c(objektnamn,paste0("Arbetslöshet","_kommun"))
+    diagramtitel <- paste0("Arbetslöshet i åldersgruppen ",unique(arbetsmarknadsstatus_df$ålder), " i ",unique(arbetsmarknadsstatus_df$månad)," ",unique(arbetsmarknadsstatus_df$år))
+    objektnamn <-c(objektnamn,("arbetslosthet_senastear"))
     
     # Skapar diagram 
-    gg_obj <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>% 
-                                   mutate(region=ifelse(region=="Riket", "Sverige",region),
-                                          fokus = ifelse(region == valt_lan,1,
-                                                         ifelse(region == "Sverige",2,0))), 
+    gg_obj <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>%
+                                   filter(variabel == "arbetslöshet") %>% 
+                                     mutate(fokus = ifelse(region == valt_lan,1,
+                                                           ifelse(region == "Sverige",2,0))), 
                                  skickad_x_var = "region", 
-                                 skickad_y_var = "arbetslöshet", 
-                                 #skickad_x_grupp = "kön",
+                                 skickad_y_var = "varde", 
+                                 skickad_x_grupp = ifelse("totalt" %in% kon_klartext,NA,"kön"),
                                  manual_y_axis_title = "procent",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
                                  manual_color = diagramfarger(diag_farger),
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,
-                                 x_var_fokus = "fokus",
+                                 x_var_fokus = ifelse("totalt" %in% kon_klartext,"fokus",NA),
                                  x_axis_sort_value = TRUE,
                                  x_axis_lutning = 45,
                                  stodlinjer_avrunda_fem = TRUE,
                                  output_mapp = output_mapp_figur,
-                                 filnamn_diagram = "arbetslöshet_kommun.png",
+                                 filnamn_diagram = "arbetslöshet_senastear.png",
                                  skriv_till_diagramfil = spara_figur)
     gg_list[[i]] <-gg_obj
     i=i+1
@@ -111,29 +116,29 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = "20",
   if(diag_arbetskraftsdeltagande == TRUE){
     
     diagram_capt = "Källa: SCB:s öppna statistikdatabas, befolkningens arbetsmarknadsstatus (BAS).\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Andelen av personer i arbetskraften som är arbetslösa."
-    diagramtitel <- paste0("Arbetslöshet i åldersgruppen",unique(arbetsmarknadsstatus_df$ålder), " i ",last(arbetsmarknadsstatus_df$manad_long)," ",max(arbetsmarknadsstatus_df$ar))
-    objektnamn <-c(objektnamn,paste0("Arbetslöshet","_kommun"))
+    diagramtitel <- paste0("Arbetslöshet i åldersgruppen",unique(arbetsmarknadsstatus_df$ålder), " i ",unique(arbetsmarknadsstatus_df$månad)," ",unique(arbetsmarknadsstatus_df$år))
+    objektnamn <-c(objektnamn,("arbetskraftsdeltagande_senastear"))
     
     # Skapar diagram 
-    gg_obj <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>% 
-                                   mutate(region=ifelse(region=="Riket", "Sverige",region),
-                                          fokus = ifelse(region == valt_lan,1,
-                                                         ifelse(region == "Sverige",2,0))), 
+    gg_obj <- SkapaStapelDiagram(skickad_df = arbetsmarknadsstatus_df %>%
+                                   filter(variabel == "arbetskraftsdeltagande") %>%  
+                                     mutate(fokus = ifelse(region == valt_lan,1,
+                                                           ifelse(region == "Sverige",2,0))), 
                                  skickad_x_var = "region", 
-                                 skickad_y_var = "arbetskraftsdeltagande", 
-                                 #skickad_x_grupp = "kön",
+                                 skickad_y_var = "varde", 
+                                 skickad_x_grupp = ifelse("totalt" %in% kon_klartext,NA,"kön"),
                                  manual_y_axis_title = "procent",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
                                  manual_color = diagramfarger(diag_farger),
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,
-                                 x_var_fokus = "fokus",
+                                 x_var_fokus = ifelse("totalt" %in% kon_klartext,"fokus",NA),
                                  x_axis_sort_value = TRUE,
                                  x_axis_lutning = 45,
                                  stodlinjer_avrunda_fem = TRUE,
                                  output_mapp = output_mapp_figur,
-                                 filnamn_diagram = "arbetskraftsdeltagande_kommun.png",
+                                 filnamn_diagram = "arbetskraftsdeltagande_senastear.png",
                                  skriv_till_diagramfil = spara_figur)
     gg_list[[i]] <-gg_obj
     i=i+1

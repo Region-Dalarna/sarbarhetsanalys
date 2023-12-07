@@ -61,8 +61,8 @@ I början av 2020 drabbades Sverige av pandemin orsakad av Covid-19. Krisen ledd
 
 När denna rapport skrivs pågår ytterligare en kris kopplad till Rysslands invasion av Ukraina och dess effekter på bland annat tillgången till råvaror. Denna kris, som tog sin början i februari 2022, kommer sannolikt att få stora effekter på Sveriges ekonomi över en längre tid, även om den ännu inte syns i arbetslöshetsstatistiken för Dalarna i någon större utsträckning.
 
-```{r, include = FALSE}
-knitr::include_graphics(here("Figurer","arbetsloshet_76.png"))
+```{r, include = TRUE}
+gg_arbetsloshet_76
 ```
 
 Sammanfattningsvis har detta avsnitt visat att Sverige med viss regelbundenhet drabbats av kriser av varierande omfattning. Det är därför viktigt att studera samhällets sårbarhet för denna typ av kriser.
@@ -87,19 +87,28 @@ En fungerande arbetsmarknad är viktig för en regions motståndskraft mot ekono
 
 En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför ålder (20-64 år) är sysselsatta, vilket mäts genom sysselsättningsgraden. Som sysselsatt räknas en person som under en viss vecka (referensveckan) utfört något arbete i minst en timme som anställd, egen företagare eller medhjälpare i företag tillhörande en familjemedlem. I Dalarna arbetar färre än 3 procent av de sysselsatta mindre än halvtid, och drygt 83 procent arbetar minst 35 timmar per vecka^[Överenskommen veckoarbetstid, regionala tabeller, AKU, SCB]. Om sysselsättningraden är låg är det ett tecken på att arbetslösheten är hög alternativt att många i arbetsför ålder (utöver studenter) står utanför arbetskraften, vilket ger ett sämre utgångsläge för att hantera en kris^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html]. Om personerna befinner sig i arbetslöshet kan de ses som en outnyttjad resurs för en region eller kommun (se `r paste0("figur ",i+2)`). Arbetslösa är personer som är villiga att ta ett arbete, men av olika skäl inte arbetar. Om denna outnyttjade resurs är stor, är det rimligt att sårbarheten vid varsel eller uppsägningar också är större^[https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf]. 
 
-Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet (se `r paste0("figur ",i+1)`). Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus_df$manad_long)` `r max(arbetsmarknadsstatus_df$ar)`  hade `r arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == max(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == max(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$sysselsättningsgrad,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == min(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus_df %>% filter(sysselsättningsgrad == min(sysselsättningsgrad),!(region%in%c("Riket","Dalarna"))) %>% .$sysselsättningsgrad,0)` procent.
-
 ```{r, include = TRUE}
-
-knitr::include_graphics(here("Figurer","sysselsattningsgrad_kommun.png"))
+# För att kunna använda data nedan får variablerna inte vara "factors". Justeras nedan.
+arbetsmarknadsstatus <- arbetsmarknadsstatus %>% 
+  mutate(år = as.character(år),
+         månad = as.character(månad))
 
 ```
 
-I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus_df$manad_long)` `r max(arbetsmarknadsstatus_df$ar)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus_df %>% filter(region == "Dalarna") %>% .$arbetslöshet,0)` procent jämfört med ca `r round(arbetsmarknadsstatus_df %>% filter(region == "Riket") %>% .$arbetslöshet,0)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet` procent), medan `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har lägst arbetslöshet med ca `r round(arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet,0)` procent.
+
+Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet (se `r paste0("figur ",i+1)`). Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent.
 
 ```{r, include = TRUE}
 
-knitr::include_graphics(here("Figurer","arbetslöshet_kommun.png"))
+gg_arbetsmarknadsstatus$sysselsattningsgrad_senastear
+
+```
+
+I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde,0)` procent jämfört med ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Sverige") %>% .$varde,0)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet` procent), medan `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har lägst arbetslöshet med ca `r round(arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet,0)` procent.
+
+```{r, include = TRUE}
+
+gg_arbetsmarknadsstatus$arbetslosthet_senastear
 
 ```
 
