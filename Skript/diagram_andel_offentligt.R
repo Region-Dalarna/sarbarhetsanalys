@@ -49,6 +49,23 @@ diagram_andel_offentligt <- function(region = "20",
                                           spara_data = spara_data,
                                           returnera_data = TRUE,
                                           senaste_ar = senaste_ar)
+  
+  
+  
+  mutate(`arbetsställets sektortillhörighet` = 
+           ifelse(`arbetsställets sektortillhörighet` %in% 
+                    c("statlig förvaltning","statliga affärsverk","primärkommunal förvaltning","regioner","övriga offentliga institutioner"),"Offentlig sektor","Övriga")) %>% 
+    group_by(regionkod, region,`arbetsställets sektortillhörighet`,år) %>% 
+    summarize("Förvärvsarbetande" = sum(`Förvärvsarbetande 16-74 år med arbetsplats i regionen (dagbefolkning) (RAMS)`)) %>% 
+    ungroup()
+  
+  # Beräknar andelar      
+  antal_sektor_df_utskrift <- antal_sektor_df %>%
+    group_by(region,år) %>% 
+    mutate(Andel_forv = (Förvärvsarbetande/sum(Förvärvsarbetande)*100)-0.01,
+           region = region %>% skapa_kortnamn_lan()) %>% 
+    rename(sektor = `arbetsställets sektortillhörighet`) %>% 
+    ungroup()
     
   diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_df$år))
   diagramfilnamn <- "andel_offentligt.png"

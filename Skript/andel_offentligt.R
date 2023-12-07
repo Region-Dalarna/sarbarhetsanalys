@@ -74,21 +74,8 @@ hamta_data_andel_offentligt <- function(region = "20",
   antal_sektor_df <- as.data.frame(px_uttag) %>% 
     cbind(as.data.frame(px_uttag, column.name.type = "code", variable.value.type = "code") %>%
             select(regionkod = Region)) %>%
-    relocate(regionkod, .before = region) %>% 
-      mutate(`arbetsställets sektortillhörighet` = 
-               ifelse(`arbetsställets sektortillhörighet` %in% 
-                        c("statlig förvaltning","statliga affärsverk","primärkommunal förvaltning","regioner","övriga offentliga institutioner"),"Offentlig sektor","Övriga")) %>% 
-        group_by(regionkod, region,`arbetsställets sektortillhörighet`,år) %>% 
-          summarize("Förvärvsarbetande" = sum(`Förvärvsarbetande 16-74 år med arbetsplats i regionen (dagbefolkning) (RAMS)`)) %>% 
-            ungroup()
-  
-  # Beräknar andelar      
-  antal_sektor_df_utskrift <- antal_sektor_df %>%
-    group_by(region,år) %>% 
-      mutate(Andel_forv = (Förvärvsarbetande/sum(Förvärvsarbetande)*100)-0.01,
-             region = region %>% skapa_kortnamn_lan()) %>% 
-        rename(sektor = `arbetsställets sektortillhörighet`) %>% 
-          ungroup()
+    relocate(regionkod, .before = region) 
+
   
   if (spara_data==TRUE){
     write.xlsx(antal_sektor_df_utskrift,paste0(output_mapp,filnamn))

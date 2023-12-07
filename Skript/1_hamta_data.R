@@ -31,29 +31,16 @@ gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(output_mapp_figur 
                                                              spara_figur = TRUE,
                                                              returnera_figur = TRUE)
 
-diagram_arbetsmarknadsstatus_kommun(region_vekt = "20",
-                                    output_mapp = Output_mapp,
-                                    output_mapp_figur = Output_mapp_figur,
-                                    spara_data = TRUE,
-                                    ta_med_lan = TRUE,
-                                    ta_med_riket = TRUE,
-                                    diag_arbetslosthet = TRUE,
-                                    diag_arbetskraftsdeltagande = FALSE,
-                                    diag_sysselsattningsgrad = TRUE,
-                                    spara_figur = TRUE,
-                                    returnera_figur = FALSE)
-
 # Långtidsarbetslöshet
 source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")
-diagram_langtidsarb(region = c("0020"),
-                   ta_med_riket = TRUE,
-                   outputmapp = Output_mapp_figur, 
-                   outputmapp_data = Output_mapp,
-                   returnera_figur = FALSE,
-                   spara_figur = TRUE,
-                   vald_farg = "rus_sex",
-                   spara_data = TRUE,
-                   tid = 2011:2100)
+gg_långtidsarbetsloshet = diagram_langtidsarb(region = c("0020"),
+                                              ta_med_riket = TRUE,
+                                              outputmapp = Output_mapp_figur,
+                                              jmf_ar = TRUE,
+                                              returnera_figur = TRUE,
+                                              returnera_data = TRUE,
+                                              spara_figur = TRUE,
+                                              vald_farg = "rus_sex")
 
 # Andel som jobbar i offentlig sektor
 source(here("Skript","diagram_andel_offentligt.R"), encoding="UTF-8")

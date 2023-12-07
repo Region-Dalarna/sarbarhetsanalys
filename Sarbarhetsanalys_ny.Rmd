@@ -87,14 +87,13 @@ En fungerande arbetsmarknad är viktig för en regions motståndskraft mot ekono
 
 En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför ålder (20-64 år) är sysselsatta, vilket mäts genom sysselsättningsgraden. Som sysselsatt räknas en person som under en viss vecka (referensveckan) utfört något arbete i minst en timme som anställd, egen företagare eller medhjälpare i företag tillhörande en familjemedlem. I Dalarna arbetar färre än 3 procent av de sysselsatta mindre än halvtid, och drygt 83 procent arbetar minst 35 timmar per vecka^[Överenskommen veckoarbetstid, regionala tabeller, AKU, SCB]. Om sysselsättningraden är låg är det ett tecken på att arbetslösheten är hög alternativt att många i arbetsför ålder (utöver studenter) står utanför arbetskraften, vilket ger ett sämre utgångsläge för att hantera en kris^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html]. Om personerna befinner sig i arbetslöshet kan de ses som en outnyttjad resurs för en region eller kommun (se `r paste0("figur ",i+2)`). Arbetslösa är personer som är villiga att ta ett arbete, men av olika skäl inte arbetar. Om denna outnyttjade resurs är stor, är det rimligt att sårbarheten vid varsel eller uppsägningar också är större^[https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf]. 
 
-```{r, include = TRUE}
+```{r, include = FALSE}
 # För att kunna använda data nedan får variablerna inte vara "factors". Justeras nedan.
 arbetsmarknadsstatus <- arbetsmarknadsstatus %>% 
   mutate(år = as.character(år),
          månad = as.character(månad))
 
 ```
-
 
 Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet (se `r paste0("figur ",i+1)`). Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent.
 
@@ -104,7 +103,7 @@ gg_arbetsmarknadsstatus$sysselsattningsgrad_senastear
 
 ```
 
-I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde,0)` procent jämfört med ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Sverige") %>% .$varde,0)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == max(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet` procent), medan `r arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$region` har lägst arbetslöshet med ca `r round(arbetsmarknadsstatus_df %>% filter(arbetslöshet == min(arbetslöshet),!(region%in%c("Riket","Dalarna"))) %>% .$arbetslöshet,0)` procent.
+I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde,0)` procent jämfört med ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Sverige") %>% .$varde,0)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent), medan `r last(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region)` har lägst arbetslöshet med ca `r last(round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0))` procent.
 
 ```{r, include = TRUE}
 
@@ -112,20 +111,17 @@ gg_arbetsmarknadsstatus$arbetslosthet_senastear
 
 ```
 
+
 För att förstå arbetslösheten bättre är det relevant att beakta hur lång tid som människor har stått utan arbete. De som har varit arbetslösa länge har i regel svårare att komma i arbete. Ett kompletterande mått för att fånga arbetsmarknadens funktionalitet är långtidsarbetslöshet. En förklaring till att det finns långtidsarbetslöshet är strukturella problem på arbetsmarknaden. Det kan exempelvis handla om att de arbetslösa inte har de kompetenser som krävs för de lediga platserna eller att de arbeten som finns kräver långpendling eller flytt^[https://arbetsformedlingen.se/download/18.3e623d4f16735f3976ead4/Perspektiv-pa-langtidsarbetslosheten,%20rapport.pdf]. 
 
 Långtidsarbetslöshet mäts på lite olika sätt av olika myndigheter. Denna rapport utgår från Arbetsförmedlingens definition, det vill säga att vara öppet arbetslös eller i program med aktivitetsstöd under minst sex månader. Anledningen till valet av data från Arbetsförmedlingen är att de tillhandahåller arbetslöshetssiffror även på regional nivå.
 
-I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt. Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i `r langtidsarbetsloshet_df %>% filter(year == max(year),gender == "T") %>% filter(value == min(value)) %>% .$municipality`. Långtidsarbetslösheten ökade i alla Dalarnas kommuner, såväl som i Sverige, mellan `r min(langtidsarbetsloshet_df$year)` och `r max(langtidsarbetsloshet_df$year)`.
+I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt. Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i `r langtidsarbetsloshet %>% filter(year == max(year)) %>% filter(value == min(value)) %>% .$municipality`. Långtidsarbetslösheten ökade i alla Dalarnas kommuner, såväl som i Sverige, mellan `r min(langtidsarbetsloshet$year)` och `r max(langtidsarbetsloshet$year)`.
 
-```{r, include = FALSE}
+```{r, include = TRUE}
 
-knitr::include_graphics(here("Figurer","andel_offentligt.png"))
+gg_långtidsarbetsloshet
 
-```
-
-```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
-langtid_fig
 ```
 
 Verksamheter som finansieras genom offentliga medel, såsom kommuner och regioner, kan påverkas annorlunda än privata företag i sämre tider. Exempelvis bör finnas ett grundläggande behov av vissa offentliga tjänster som torde vara åtminstone konstant. En lågkonjunktur som drabbar näringslivet ger ofta ett snabbt utslag genom en högre arbetslöshet i privat sektor^[https://www.nationalekonomi.se/sites/default/files/legacy/29-1-pl.pdf], medan offentlig sektor kan fungera som vanligt ett par år i början av en kris. När skatteintäkterna minskar kan det kräva neddragningar även för offentliga verksamheter, alternativt kan politiker genom offentlig sektor bidra till att stimulera efterfrågan i ekonomin. Hypotesen är således att kommuner med en stadig andel offentlig verksamhet både har en arbetsmarknad som är mer varierad och kan stå emot en kris bättre på grund av att offentlig sektor har verktyg att stimulera efterfrågan med.
