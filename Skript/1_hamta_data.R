@@ -28,6 +28,7 @@ source(here("Skript","diagram_arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
 gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(output_mapp_figur = Output_mapp_figur,
                                                              diag_arbetskraftsdeltagande = FALSE,
                                                              diag_farger = "rus_tre_fokus",
+                                                             returnera_data = TRUE,
                                                              spara_figur = TRUE,
                                                              returnera_figur = TRUE)
 
@@ -44,21 +45,23 @@ gg_långtidsarbetsloshet = diagram_langtidsarb(region = c("0020"),
 
 # Andel som jobbar i offentlig sektor
 source(here("Skript","diagram_andel_offentligt.R"), encoding="UTF-8")
-diagram_andel_offentligt(region = c("20"),
-                         ta_med_riket = TRUE,
-                         output_mapp_data = Output_mapp,
-                         output_mapp_figur = Output_mapp_figur,
-                         returnera_figur = FALSE,
-                         senaste_ar = TRUE,
-                         spara_figur = TRUE,
-                         vald_farg = "rus_sex",
-                         spara_data = TRUE)
+gg_andel_offentligt = diagram_andel_offentligt(output_mapp_figur= Output_mapp_figur,
+                                               diag_totalt = TRUE,
+                                               diag_kon = FALSE,
+                                               vald_farg = "rus_sex",
+                                               returnera_data = TRUE,
+                                               returnera_figur = TRUE,
+                                               spara_figur = TRUE)
 
 # Andel pendling i kommun (skript från rapporten kopplad till kompetensförsörjning
-source("https://raw.githubusercontent.com/Region-Dalarna/kompetensforsorjning_i_Dalarna/main/Skript/pendling_kommun.R")
-hej = hamta_data_pendling_kommun(output_mapp = Output_mapp,
-                                 senaste_ar = TRUE,
-                                 returnera_data = TRUE)
+source("G:/skript/diagram/diag_pendlare_over_kommungrans.R")
+gg_pendling = diag_pendling_over_kommungrans(output_mapp = Output_mapp_figur,
+                                             skapa_fil = TRUE, 
+                                             diagramfarg_vektor = diagramfarger("rus_sex"),
+                                             enbart_in_ut = TRUE,
+                                             diag_absoluta_tal = FALSE,           
+                                             diag_procent = TRUE,
+                                             returnera_data = TRUE)
 
 # Antal nystartade företag och antalet konkurser
 source(here("Skript","nystartade_konk.R"), encoding="UTF-8")

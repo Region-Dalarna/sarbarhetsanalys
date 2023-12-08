@@ -51,7 +51,7 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"),
     diagramtitel <- paste0("Arbetslöshet")
     objektnamn <- c(objektnamn,"arbetsloshet_region")
     
-    gg_obj <- SkapaLinjeDiagram(skickad_df = df_utskrift ,
+    gg_obj <- SkapaLinjeDiagram(skickad_df = df_utskrift,
                                 skickad_x_var = "år",
                                 skickad_y_var = "arbetsloshet",
                                 skickad_x_grupp = "region",

@@ -81,7 +81,7 @@ hamta_data_nystartade_konk = function(region = c("0020"),
       )
       
       # Konkurser
-      Konkurser_df<-Konkurser_df %>% 
+      Konkurser_df <- Konkurser_df %>% 
         select(year,value,municipality) %>%
          rename("konkurser" = value) 
       
