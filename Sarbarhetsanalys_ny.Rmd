@@ -198,15 +198,11 @@ Antalet nystartade företag gör ju ingen större skillnad om många företag sa
 gg_nyst_konk$konkurser
 ```
 
-Ett annat sätt att mäta företagande är genom att undersöka hur stor andel av en kommuns invånare som anses vara företagssamma, dvs. innehar F-skattesedel, är delägare i ett aktivt handelsbolag alternativt är VD eller styrelseordförande i ett aktivt aktiebolag. Bland Dalarnas kommuner är det återigen en stor variationen, där Malung-Sälen har högst andel företagssamma (drygt 19 procent) och Ludvika lägst andel (8 procent).
+Ett annat sätt att mäta företagande är genom att undersöka hur stor andel av en kommuns invånare som anses vara företagssamma, dvs. innehar F-skattesedel, är delägare i ett aktivt handelsbolag alternativt är VD eller styrelseordförande i ett aktivt aktiebolag. Bland Dalarnas kommuner är det återigen en stor variationen, där `r företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Kommun` hade högst andel företagssamma år `r unique(företagssamma$year)` (ca `r round(företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)` procent) och `r företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Kommun` lägst andel (ca `r round(företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)` procent).
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","foretagsamma_andel.png"))
-i=i+1
+gg_foretagssamma
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Antal nyföretagssamma per 1000 invånare")`
-</p>
 
 Sammanfattningsvis sticker kommuner i framförallt norra Dalarna ut positivt vad gäller företagande. Såväl Malung-Sälen som Älvdalen har ett stort antal privata arbetsställen, många nystartade företag och en stor andel företagssamma invånare. Baksidan är att det i båda kommunerna också registreras ett relativt stort antal konkurser. Rättvik rankas högt vad gäller såväl privata arbetsställen, nystartade företag som andel företagsamma och har dessutom få konkurser. Ludvika har lägst antal privata arbetsställen och lägst andel företagssamma individer, men samtidigt färre konkurser än Malung-Sälen och Älvdalen. Positivt för Ludvika är även att antalet nystartade företag ökat stadigt mellan 2007 och 2021. En potentiell orsak till att Ludvika har färre nystartade företag än andra kommuner är dominansen av en enskild arbetsgivare. Behovet av att starta egna företag minskar om det finns arbetstillfällen i större företag^[https://tillvaxtverket.se/download/18.6855bfcf184896002ffc69/1668765916305/Kommuners%20s%C3%A5rbarhet%20vid%20f%C3%B6retagsnedl%C3%A4ggningar.pdf].
 

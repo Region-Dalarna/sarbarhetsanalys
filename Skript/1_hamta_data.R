@@ -78,6 +78,13 @@ gg_nyst_konk <- diagram_nystartade_konkurser(output_mapp = Output_mapp_figur,
 ####################
 
 # Diverse från företagarna
-source(here("Skript","foretagarna.R"), encoding="UTF-8")
-hamta_data_foretagarna(output_mapp = Output_mapp)
-
+source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
+gg_foretagssamma <- diag_foretagarna(region_vekt = "20",
+                                     output_mapp = Output_mapp_figur,
+                                     spara_figur = TRUE, 
+                                     valda_farger = "rus_tre_fokus",
+                                     valda_farger_foretagssamma = "rus_sex",
+                                     diag_arbetsstallen = FALSE,
+                                     diag_nyforetagsamma = FALSE,
+                                     diag_foretagsamma = TRUE,
+                                     returnera_data = TRUE)

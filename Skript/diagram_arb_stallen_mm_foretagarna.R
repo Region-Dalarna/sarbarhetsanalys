@@ -1,19 +1,20 @@
 
 #test_list=diag_foretagarna(spara_figur=FALSE,region_vekt = "22")
-diag_foretagarna <- function(region_vekt = "20",
+diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                              output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                              spara_figur = TRUE, # Skall figuren sparas
                              valda_farger = "rus_tre_fokus",
                              valda_farger_foretagssamma = "rus_sex",
-                             diag_arbetsstallen = TRUE,
-                             diag_nyforetagsamma = TRUE,
-                             diag_foretagsamma = TRUE,
-                             returnera_data = FALSE){
+                             diag_arbetsstallen = TRUE, # Figur över arbetsstälen
+                             diag_nyforetagsamma = TRUE, # Nyförtagssamma 
+                             diag_foretagsamma = TRUE,# Företagssamma
+                             returnera_data = FALSE){ # Skall data läggas i R-studios globala miljö
   
   # ========================================== Allmän info ============================================
   
   # Diagram för antal företagssamma, antal arbetsställen och andel företagssamma. Data hämtas från företagarna:
   # https://www.foretagsklimat.se/downloads
+  # Enbart senaste år
   # Data uppdaterades senast 2023-11-16
   # ========================================== Inställningar ============================================
   
@@ -100,38 +101,39 @@ diag_foretagarna <- function(region_vekt = "20",
     gg_list <- c(gg_list, list(gg_obj))
     
   }
-  
-  nyforetagsamma_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Nyföretagsamhet_2002-2023.xlsx",startRow=5)
-  # Pivoterar data och gör vissa justeringar
-  nyforetagsamma_df <- nyforetagsamma_df %>%
-    select(-3) %>% 
-    pivot_longer(3:(ncol(nyforetagsamma_df)-1),names_to = "year",values_to = "Antal_nyforetagsamma") %>% 
-    rename("Kategorier" = Delserie.1)
-  
-  # Filtrerar ut Dalarnas kommuner
-  nyforetagsamma_df_kommun <- nyforetagsamma_df %>% 
-    filter(Kommun %in% kommuner$region,Kategorier== "Antal nyföretagsamma individer",year %in% max(year))
-  
-  # Beräknar genomsnittet för Dalarna
-  nyforetagsamma_df_kommun_sum <- nyforetagsamma_df_kommun %>%
-    group_by(year,Kategorier) %>%
-    summarize(Antal_nyforetagsamma = mean(Antal_nyforetagsamma)) %>% 
-    mutate("Kommun" = skapa_kortnamn_lan(hamtaregion_kod_namn(region_vekt)$region))
-  
-  # Beräknar genomsnittet för riket
-  nyforetagsamma_df_riket <- nyforetagsamma_df %>%
-    filter(Kategorier == "Antal nyföretagsamma individer",year %in% max(year)) %>% 
-    group_by(year,Kategorier) %>%
-    summarize(Antal_nyforetagsamma = mean(Antal_nyforetagsamma)) %>% 
-    mutate("Kommun" = "Sverige")
-  
-  nyforetagsamma_df_utskrift<-rbind(nyforetagsamma_df_kommun,nyforetagsamma_df_kommun_sum,nyforetagsamma_df_riket)
-  
-  if(returnera_data == TRUE){
-    assign("nyforetagsamma", nyforetagsamma_df_utskrift, envir = .GlobalEnv)
-  }
 
   if(diag_nyforetagsamma==TRUE){
+    
+    nyforetagsamma_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Nyföretagsamhet_2002-2023.xlsx",startRow=5)
+    # Pivoterar data och gör vissa justeringar
+    nyforetagsamma_df <- nyforetagsamma_df %>%
+      select(-3) %>% 
+      pivot_longer(3:(ncol(nyforetagsamma_df)-1),names_to = "year",values_to = "Antal_nyforetagsamma") %>% 
+      rename("Kategorier" = Delserie.1)
+    
+    # Filtrerar ut Dalarnas kommuner
+    nyforetagsamma_df_kommun <- nyforetagsamma_df %>% 
+      filter(Kommun %in% kommuner$region,Kategorier== "Antal nyföretagsamma individer",year %in% max(year))
+    
+    # Beräknar genomsnittet för Dalarna
+    nyforetagsamma_df_kommun_sum <- nyforetagsamma_df_kommun %>%
+      group_by(year,Kategorier) %>%
+      summarize(Antal_nyforetagsamma = mean(Antal_nyforetagsamma)) %>% 
+      mutate("Kommun" = skapa_kortnamn_lan(hamtaregion_kod_namn(region_vekt)$region))
+    
+    # Beräknar genomsnittet för riket
+    nyforetagsamma_df_riket <- nyforetagsamma_df %>%
+      filter(Kategorier == "Antal nyföretagsamma individer",year %in% max(year)) %>% 
+      group_by(year,Kategorier) %>%
+      summarize(Antal_nyforetagsamma = mean(Antal_nyforetagsamma)) %>% 
+      mutate("Kommun" = "Sverige")
+    
+    nyforetagsamma_df_utskrift<-rbind(nyforetagsamma_df_kommun,nyforetagsamma_df_kommun_sum,nyforetagsamma_df_riket)
+    
+    if(returnera_data == TRUE){
+      assign("nyforetagsamma", nyforetagsamma_df_utskrift, envir = .GlobalEnv)
+    }
+    
     diagramtitel <- paste0("Antal nyföretagsamma per 1000 invånare i Dalarnas län ",max(nyforetagsamma_df_utskrift$year))
     diagramfilnamn <- paste0("nyforetagsamma_per_1000.png")
     objektnamn <- c(objektnamn,"nyföretagssamma")
