@@ -45,9 +45,6 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
   
   if(returnera_data == TRUE){
     assign("arbetsmarknadsstatus", arbetsmarknadsstatus_df, envir = .GlobalEnv)
-    # gg_list[[i]] <- arbetsmarknadsstatus_df
-    # objektnamn <- c(objektnamn,("data"))
-    # i=i+1
   }
   
   

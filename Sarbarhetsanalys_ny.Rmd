@@ -185,104 +185,17 @@ En indikator är antalet privata arbetsställen (med minst 1 anställd), och i D
 arbetsstallen_fig
 ```
 
-När det gäller nystartade företag har `r Nystartade_df %>% filter(year == max(year)) %>% filter(nystartade_ftg== max(nystartade_ftg)) %>% .$municipality` kommun flest, med ungefär `r round(Nystartade_df %>% filter(year == max(year)) %>% filter(nystartade_ftg== max(nystartade_ftg)) %>% .$nystartade_ftg,0)` nystartade företag per 1000 invånare `r max(Nystartade_df$year)`. Även Malung-Sälen och Falun hade fler nystartade företag (per 1000 invånare) än Sverige `r max(Nystartade_df$year)`. Glädjande är att antalet nystartade företag har ökat i de allra flesta av Dalarnas kommuner mellan 2011 och 2021, något som möjligtvis kan tillskrivas Coronapandemin. I Gagnef fördubblades exempelvis antalet nystartade företag mellan 2015 och 2021 (KOLLA UPP).
+När det gäller nystartade företag har `r Nystartade %>% filter(substr(year,1,1) != "m") %>% filter(year == max(year)) %>% filter(nystartade_ftg == max(nystartade_ftg)) %>% .$municipality` kommun flest, med ungefär `r round(Nystartade %>% filter(substr(year,1,1) != "m") %>% filter(year == max(year)) %>% filter(nystartade_ftg == max(nystartade_ftg)) %>% .$nystartade_ftg,0)` nystartade företag per 1000 invånare `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)`. Även Malung-Sälen och Falun hade fler nystartade företag (per 1000 invånare) än Sverige `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)`. Glädjande är att antalet nystartade företag har ökat i en majoritet av Dalarnas kommuner om medelvärdet 2015-2020 jämförs med år `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)`.
 
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-    
-  senaste_ar_nystartade = max(Nystartade_df$year)
-  
-  valda_år_nystartade = paste0("medelvärde ",senaste_ar_nystartade-7,"-",senaste_ar_nystartade-2)
-  
-  # Beräknar medelvärde för de fem år som föranleder näst senaste år
-  Nystartade_medel <- Nystartade_df %>%
-    filter(year %in% c((senaste_ar_nystartade-7):(senaste_ar_nystartade-2))) %>% 
-      group_by(municipality) %>% 
-        summarize(nystartade_ftg = mean(nystartade_ftg)) %>% 
-          mutate(year = valda_år_nystartade)
-  
-  Nystartade_utskrift <- rbind(Nystartade_df %>% filter(year%in%c(max(year),max(year-1))),Nystartade_medel)    
-
-
-    diagram_capt <- "Källa: SCB (via Kolada/RKA)\nBearbetning: Samhällsanalys, Region Dalarna"
-    diagram_titel <- paste0("Antal nystartade företag per 1000 invånare (16-64 år)")
-    diagramfil <- "nystartade.png"
-    
-    gg_obj <- SkapaStapelDiagram(skickad_df = Nystartade_utskrift %>%
-                                   mutate(municipality=ifelse(municipality=="Region Dalarna","Dalarna",municipality)) %>% 
-                                    mutate(municipality=ifelse(municipality=="Riket", "Sverige",municipality)) %>% 
-                                      mutate(year = factor(year, levels = c(valda_år_nystartade,as.character(senaste_ar_nystartade-1), senaste_ar_nystartade))), 
-                                 skickad_x_var = "municipality", 
-                                 skickad_y_var = "nystartade_ftg", 
-                                 skickad_x_grupp = "year",
-                                 manual_x_axis_text_vjust=1,
-                                 manual_x_axis_text_hjust=1,
-                                 manual_color = diagramfarger("rus_sex"),
-                                 x_axis_sort_value = TRUE,
-                                 x_axis_sort_grp = 3,
-                                 vand_sortering=TRUE,
-                                 dataetiketter = FALSE,
-                                 stodlinjer_avrunda_fem = TRUE,
-                                 dataetiketter_antal_dec = 0,
-                                 manual_y_axis_title="Nystartade företag/1000 invånare",
-                                 diagram_titel = diagram_titel,
-                                 diagram_capt = diagram_capt,
-                                 output_mapp = output_mapp,
-                                 filnamn_diagram = diagramfil,
-                                 skriv_till_diagramfil = spara_figur)
-    
-
-```
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
-nystartade_fig
+gg_nyst_konk$nystartade
 ```
 
-Antalet nystartade företag gör ju ingen större skillnad om många företag samtidigt går i konkurs. Generellt tenderar kommuner med många nystartade företag (Malung-Sälen, Älvdalen) också har relativt många konkurser (per invånare). Undantaget är Rättviks kommun, som både har många nystartade företag och få konkurser.
-
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-
-    senaste_ar_konk = max(Konkurser_df$year)
-    valda_år_konk = paste0("medelvärde ",(senaste_ar_konk-7),"-",(senaste_ar_konk-2))
-    
-    konkurser_medel <- Konkurser_df %>%
-      filter(year %in% c((senaste_ar_konk-7):(senaste_ar_konk-2))) %>% 
-        group_by(municipality) %>% 
-          summarize(konkurser = mean(konkurser)) %>% 
-            mutate(year = valda_år_konk)
-    
-    konkurser_utskrift <- rbind(Konkurser_df %>% filter(year%in%c(max(year),max(year-1))),konkurser_medel)
-  
-    diagram_titel <- paste0("Antal konkurser per 1000 invånare (16-64 år)")
-    diagram_typ <- "konkurser"
-    diagramfil <- "konkurser.png"
-    
-    konkurser_fig <- SkapaStapelDiagram(skickad_df = konkurser_utskrift %>%
-                                   mutate(municipality=ifelse(municipality=="Region Dalarna","Dalarna",municipality)) %>% 
-                                   mutate(municipality=ifelse(municipality=="Riket", "Sverige",municipality)) %>% 
-                                   mutate(year = factor(year, levels = c(valda_år_konk,as.character(senaste_ar_konk-1), senaste_ar_konk))), 
-                                 skickad_x_var = "municipality", 
-                                 skickad_y_var = "konkurser", 
-                                 skickad_x_grupp = "year",
-                                 manual_x_axis_text_vjust=1,
-                                 manual_x_axis_text_hjust=1,
-                                 manual_color = diagramfarger("rus_sex"),
-                                 x_axis_sort_value = TRUE,
-                                 x_axis_sort_grp = 3,
-                                 vand_sortering=TRUE,
-                                 dataetiketter = FALSE,
-                                 stodlinjer_avrunda_fem = TRUE,
-                                 dataetiketter_antal_dec = 0,
-                                 manual_y_axis_title="Konkurser/1000 invånare",
-                                 diagram_titel = diagram_titel,
-                                 diagram_capt = diagram_capt,
-                                 output_mapp = output_mapp,
-                                 filnamn_diagram = diagramfil,
-                                 skriv_till_diagramfil = spara_figur)
-
-```
+Antalet nystartade företag gör ju ingen större skillnad om många företag samtidigt går i konkurs. Generellt tenderar kommuner med många nystartade företag (Malung-Sälen, Älvdalen) också har relativt många konkurser (per invånare). Undantaget är Rättviks kommun, som både har många nystartade företag och få konkurser. Värt att notera är dock att många kommuner är relativt små (runt 10 000 invånare), vilket medför att ett par extra konkurser per år ger stora effekter i figuren nedan. Detta kan vara en av orsakerna till att antalet konkurser per 1000 invånare kan variera kraftigt från år till år.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
-konkurser_fig
+gg_nyst_konk$konkurser
 ```
 
 Ett annat sätt att mäta företagande är genom att undersöka hur stor andel av en kommuns invånare som anses vara företagssamma, dvs. innehar F-skattesedel, är delägare i ett aktivt handelsbolag alternativt är VD eller styrelseordförande i ett aktivt aktiebolag. Bland Dalarnas kommuner är det återigen en stor variationen, där Malung-Sälen har högst andel företagssamma (drygt 19 procent) och Ludvika lägst andel (8 procent).

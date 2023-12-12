@@ -53,7 +53,7 @@ gg_andel_offentligt = diagram_andel_offentligt(output_mapp_figur= Output_mapp_fi
                                                returnera_figur = TRUE,
                                                spara_figur = TRUE)
 
-# Andel pendling i kommun (skript från rapporten kopplad till kompetensförsörjning
+# Andel pendling i kommun 
 source("G:/skript/diagram/diag_pendlare_over_kommungrans.R")
 gg_pendling = diag_pendling_over_kommungrans(output_mapp = Output_mapp_figur,
                                              skapa_fil = TRUE, 
@@ -64,8 +64,13 @@ gg_pendling = diag_pendling_over_kommungrans(output_mapp = Output_mapp_figur,
                                              returnera_data = TRUE)
 
 # Antal nystartade företag och antalet konkurser
-source(here("Skript","nystartade_konk.R"), encoding="UTF-8")
-hamta_data_nystartade_konk(outputmapp = Output_mapp)
+source(here("Skript","diagram_nyst_arbetslosa.R"), encoding="UTF-8")
+gg_nyst_konk <- diagram_nystartade_konkurser(output_mapp = Output_mapp_figur,
+                                             spara_figur = TRUE, 
+                                             vald_farg = "rus_sex",
+                                             diag_nystartade = TRUE,           
+                                             diag_konkurser = TRUE,
+                                             returnera_data = TRUE)
 
 
 #####################
