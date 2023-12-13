@@ -1,24 +1,17 @@
+#test_list <- diag_sysselsatta_andel(region_vekt = "22",spara_figur = FALSE,returnera_data = TRUE)
 
-
-# # Laddar in de funktioner som behövs för att skapa diagram mm
-# source("G:/skript/func/func_SkapaDiagram.R", encoding = "utf-8", echo = FALSE)
-# source("G:/skript/func/func_API.R", encoding = "utf-8", echo = FALSE)
-# source("G:/skript/func/func_filer.R", encoding = "utf-8", echo = FALSE)
-
-#test_list <- diag_sysselsatta_andel(skapa_fil = FALSE)
-
-diag_sysselsatta_andel <-function(region_vekt = "20", 
+diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intresserade av. 
                                   output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                  skapa_fil = TRUE,
+                                  valda_farger = "rus_sex",
+                                  spara_figur = TRUE, # Om true sparas figuren till output_mapp
                                   diag_lan = TRUE, #Skapar ett diagram där län jämförs med riket
-                                  diag_kommun = TRUE){ # Skapar diagram för samtliga kommuner 
+                                  diag_kommun = TRUE, # Motsvarande diagram där kommuner jämförs med länet
+                                  returnera_data = FALSE){ # Om TRUE, returneras data till R-studios globala miljö 
   
   # ========================================== Allmän info ============================================
   
-  # Diagram för antal företagssamma, antal arbetsställen och andel företagssamma. Data hämtas från företagarna:
-  # https://www.foretagsklimat.se/downloads
-  # Enbart senaste år
-  # Data uppdaterades senast 2023-11-16
+  # Skapar diagram för andelen förvärvsarbetande inom olika branscher, dels på länsnivå, dels på kommunnivå
+  # Enbart senaste år och ingen uppdelning på kön
   
   # ========================================== Inställningar ============================================
   # Nödvändiga bibliotek och funktioner
@@ -31,13 +24,13 @@ diag_sysselsatta_andel <-function(region_vekt = "20",
   source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
   
   # Det som står under diagrammet
-  diagram_capt <- "Källa: RAMS i SCB:s öppna statistikdatabas\nBearbetning: Samhällsanalys, Region Dalarna\nDiagramförklaring: Branschens andel av totalt antal förvärvsarbetande"
+  diagram_capt <- "Källa: BAS i SCB:s öppna statistikdatabas\nBearbetning: Samhällsanalys, Region Dalarna\nDiagramförklaring: Branschens andel av totalt antal förvärvsarbetande"
   
   gg_list <- list()  # skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
   # Skapar en tom vektor som skall innehålla objektnamn
   objektnamn <- c() 
 
-  vald_region = skapa_kortnamn_lan(hamtaregion_kod_namn("20")$region)
+  vald_region = skapa_kortnamn_lan(hamtaregion_kod_namn(region_vekt)$region)
 
 # =============================================== API-uttag ===============================================
 
@@ -53,6 +46,10 @@ diag_sysselsatta_andel <-function(region_vekt = "20",
       mutate(andel = (Antal/sum(Antal))*100,
              region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE))
   
+  if(returnera_data == TRUE){
+    assign("andel_forvarvsarbetande_bransch", df_sum, envir = .GlobalEnv)
+  }
+  
   if(diag_lan==TRUE){
     
     diagram_titel <- paste0("Andel förvärvsarbetande (16-74) år per bransch ",unique(df_sum$månad_år))
@@ -66,7 +63,7 @@ diag_sysselsatta_andel <-function(region_vekt = "20",
                                  skickad_x_grupp = "region",
                                  manual_x_axis_text_vjust=1,
                                  manual_x_axis_text_hjust=1,
-                                 manual_color = diagramfarger("rus_sex"),
+                                 manual_color = diagramfarger(valda_farger),
                                  x_axis_sort_value = TRUE,
                                  manual_y_axis_title="procent",
                                  stodlinjer_avrunda_fem = TRUE,
@@ -75,9 +72,9 @@ diag_sysselsatta_andel <-function(region_vekt = "20",
                                  diagram_facet = FALSE,
                                  facet_grp="år",
                                  berakna_index = FALSE,
-                                 output_mapp = "output_mapp",
-                                 filnamn_diagram = "diagramfil",
-                                 skriv_till_diagramfil = skapa_fil)
+                                 output_mapp = output_mapp,
+                                 filnamn_diagram = diagramfil,
+                                 skriv_till_diagramfil = spara_figur)
     
     gg_list <- c(gg_list, list(gg_obj))
     
@@ -104,19 +101,17 @@ diag_sysselsatta_andel <-function(region_vekt = "20",
                                    skickad_x_grupp = "region",
                                    manual_x_axis_text_vjust = 1,
                                    manual_x_axis_text_hjust = 1,
-                                   manual_color = diagramfarger("rus_sex"),
+                                   manual_color = diagramfarger(valda_farger),
                                    x_axis_sort_value = TRUE,
                                    x_axis_sort_grp = 2,
                                    vand_sortering = TRUE,
                                    manual_y_axis_title = "procent",
                                    diagram_titel = diagram_titel,
                                    diagram_capt = diagram_capt,
-                                   diagram_facet = FALSE,
                                    facet_grp = "år",
-                                   berakna_index = FALSE,
-                                   output_mapp = "output_mapp",
-                                   filnamn_diagram = "diagramfil",
-                                   skriv_till_diagramfil = skapa_fil)
+                                   output_mapp = output_mapp,
+                                   filnamn_diagram = diagramfil,
+                                   skriv_till_diagramfil = spara_figur)
       
       gg_list <- c(gg_list, list(gg_obj))
       j=j+1

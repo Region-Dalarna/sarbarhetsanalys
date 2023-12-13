@@ -72,12 +72,28 @@ gg_nyst_konk <- diagram_nystartade_konkurser(output_mapp = Output_mapp_figur,
                                              diag_konkurser = TRUE,
                                              returnera_data = TRUE)
 
+# Andel förvärvsarbetande i olika branscher (såväl län som kommun)
+source(here("Skript","diagram_andel_forvarvsarbetande_bransch.R"), encoding="UTF-8")
+gg_andel_forv <- diag_sysselsatta_andel(region_vekt = "20", 
+                                        output_mapp = Output_mapp_figur,
+                                        spara_figur = TRUE, 
+                                        diag_lan = TRUE, 
+                                        diag_kommun = TRUE, 
+                                        returnera_data = TRUE)
+
+# Branschbredd
+source(here("Skript","diagram_branschbredd.R"), encoding="UTF-8")
+gg_branschbredd = diag_branschbredd(region_vekt = "0020", 
+                                    output_mapp = Output_mapp_figur,
+                                    valda_farger = "rus_sex",
+                                    spara_figur = TRUE,
+                                    returnera_data = TRUE)
 
 #####################
 ##### Inte API #####
 ####################
 
-# Diverse från företagarna
+# Diverse från företagarna. Data uppdaterades senaste i mitten av november 2023
 source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
 gg_foretagssamma <- diag_foretagarna(region_vekt = "20",
                                      output_mapp = Output_mapp_figur,
@@ -88,3 +104,10 @@ gg_foretagssamma <- diag_foretagarna(region_vekt = "20",
                                      diag_nyforetagsamma = FALSE,
                                      diag_foretagsamma = TRUE,
                                      returnera_data = TRUE)
+
+# Antal företag som utgör 50 procent av den totala lönesumman (NMS)
+source(here("Skript","diagram_50_proc_lonesumma_NMS.R"), encoding="UTF-8")
+gg_50proc_lonesumma <- diag_50proc_lonesumma(output_mapp = Output_mapp_figur,
+                                            spara_figur = TRUE,
+                                            returnera_data = TRUE)
+
