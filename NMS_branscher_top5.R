@@ -10,7 +10,7 @@ source("G:/skript/func/func_API.R", encoding = "utf-8", echo = FALSE)
 #test_list=diag_50proc_lonesumma(skapa_fil=TRUE,output_mapp = "G:/skript/jon/",diag_kommun=FALSE,diag_kommun_ftg=FALSE)
 diag_50proc_lonesumma <- function(region_vekt="20",
                                   output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                  skapa_fil=TRUE,
+                                  skapa_fil =TRUE,
                                   diag_lan=TRUE,
                                   diag_kommun=TRUE,
                                   diag_kommun_ftg=TRUE){
@@ -21,9 +21,9 @@ diag_50proc_lonesumma <- function(region_vekt="20",
  
   # ========================================== Läser in data ============================================
   # Läser in data från Excel (ursprung arbetsförmedlingen)
-  bransch_lan_df <- read.xlsx("G:/skript/data/sarbarhetsanalys/Indata/17_mar_23_ranking_branscher_lonesumma.xlsx",sheet=1)
-  bransch_kommun_df <- read.xlsx("G:/skript/data/sarbarhetsanalys/Indata/17_mar_23_ranking_branscher_lonesumma.xlsx",sheet=2)
-  foretag_kommun_df <- read.xlsx("G:/skript/data/sarbarhetsanalys/Indata/17_mar_23_ranking_branscher_lonesumma.xlsx",sheet=3)
+  bransch_lan_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_ranking_branscher_lonesumma.xlsx",sheet=1)
+  bransch_kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_ranking_branscher_lonesumma.xlsx",sheet=2)
+  foretag_kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_ranking_branscher_lonesumma.xlsx",sheet=3)
   
   bransch_lan_df <- bransch_lan_df %>% 
     mutate("andel_lonesumma"=round(andel_lonesumma,0),
