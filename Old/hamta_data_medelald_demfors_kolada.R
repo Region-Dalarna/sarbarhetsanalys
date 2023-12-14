@@ -29,6 +29,7 @@ hamta_data_nystartade_konkurser = function(region = c("0020"), # Val av region. 
   lista_data = lst()
   
   source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
+  source("https://raw.githubusercontent.com/JonFrank81/funktioner/main/func_API_alternativ.R")
   
   if(alla_regioner == TRUE){
     region = hamtaAllaLan(tamedriket = FALSE) 
@@ -58,7 +59,8 @@ hamta_data_nystartade_konkurser = function(region = c("0020"), # Val av region. 
     
     medelalder_df <- medelalder_df %>% 
       select(year, municipality, municipality_id, gender,fraga, value) %>%
-        rename(variabel = fraga) 
+        rename(variabel = fraga)%>% 
+          mutate(municipality = byt_namn_lan_kolada(municipality)) 
     
     fil = paste0(outputmapp,filnamn[1])
     
@@ -83,7 +85,8 @@ hamta_data_nystartade_konkurser = function(region = c("0020"), # Val av region. 
     # Konkurser
     demo_df <- demo_df %>% 
       select(year, municipality, municipality_id, gender,fraga, value) %>%
-        rename(variabel = fraga) 
+        rename(variabel = fraga) %>% 
+          mutate(municipality = byt_namn_lan_kolada(municipality))
     
     fil = paste0(outputmapp,filnamn[2])
     

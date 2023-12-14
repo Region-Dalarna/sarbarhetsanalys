@@ -253,27 +253,21 @@ Utöver indikatorerna i Tillväxtverkets modell följer här en beskrivning öve
 
 Normalt arbetar människor när det befinner sig i det åldersspann som kallas arbetsför ålder, dvs. när de är mellan 20 år och 64 år gamla. Det finns naturligtvis undantag, individer tenderar exempelvis att jobba allt längre upp i åldrarna, men ålderspannet fungerar bra som utgångspunkt. Kommuner med lägre medelålder har således, allt annat lika, sannolikt en större andel individer i arbetsför ålder, vilket torde vara positivt för kommunens möjlighet att hantera kriser på arbetsmarknaden. En yngre person som blivit arbetslös borde helt enkelt ha lättare att hitta jobb än en äldre person. Även på längre sikt kan en äldre befolkning bli en utmaning för en kommun, då äldre är i större behov av olika former av kommunal omsorg.
 
-Dalarna är ett län med relativt hög medelålder (se `r paste0("figur ",i+1)`). Av länets 15 kommuner har 14 högre medelålder än Sverige. Det är också tydligt att medelålder är nära kopplat till storleken på kommunens befolkning. I Falun och Borlänge är medelåldern ungefär som genomsnittet i Sverige, medan den i vissa mindre kommuner, då framförallt Rättvik, är avsevärt mycket högre. Den genomsnittlige rättvikaren är mer än 7 år äldre än den genomsnittlige svensken, vilket gjorde Rättvik till Sveriges 9:e äldsta kommun 2022. Bland Dalarnas övriga kommuner är medelåldern lägre, men ett tydlig mönster är att kommuner i norra och västra Dalarna har relativt gamla invånare jämfört med kommuner i sydöstra delarna av länet. Det finns även en koppling mellan andelen utrikes födda i en kommun och kommunens medelålder. Avesta, Borlänge och Ludvika, de tre kommuner i Dalarna med störst andel utrikes födda invånare, tillhör de kommuner som har lägst medelålder.
-<br>
-<br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","medelalder.png"))
-i=i+1
-```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Medelålder")`
-</p>
+Dalarna är ett län med relativt hög medelålder. Av länets 15 kommuner har 14 högre medelålder än Sverige. Det är också tydligt att medelålder är nära kopplat till storleken på kommunens befolkning. I Falun och Borlänge är medelåldern ungefär som genomsnittet i Sverige, medan den i vissa mindre kommuner, då framförallt Rättvik, är avsevärt mycket högre. Den genomsnittlige rättvikaren är mer än 7 år äldre än den genomsnittlige svensken, vilket gjorde Rättvik till Sveriges 9:e äldsta kommun 2022. Bland Dalarnas övriga kommuner är medelåldern lägre, men ett tydlig mönster är att kommuner i norra och västra Dalarna har relativt gamla invånare jämfört med kommuner i sydöstra delarna av länet. Det finns även en koppling mellan andelen utrikes födda i en kommun och kommunens medelålder. Avesta, Borlänge och Ludvika, de tre kommuner i Dalarna med störst andel utrikes födda invånare, tillhör de kommuner som har lägst medelålder.
 
-En äldre befolkning kan naturligtvis få ett flertal följder för en kommun på längre sikt genom äldres potentiella behov av vård och omsorg. Ett sätt att mäta detta är genom den så kallade demografiska försörjningskvoten (se `r paste0("figur ",i+2)`). Den beräknas genom att relatera antalet personer i arbetsför ålder, de som är mellan 20 och 64 år, till unga (0-19 år) och äldre (>64år). Normalt är den kommunala kostnaden relativt låg för personer i arbetsför ålder, medan den är avsevärt högre för unga (kostnad för förskola och skola) och äldre (äldreomsorg mm). Det är därför intressant att relatera dessa grupper till personer i arbetsför ålder. I Dalarna är den demografiska försörjningskvoten högst i Rättvik, där grupperna unga och äldre sammantaget är större än gruppen i arbetsför ålder (en försörjningskvot som överstiger 100). Försörjningskvoten ökar dessutom i samtliga Dalarnas kommuner över tid, vilket är i linje med en allt äldre befolkning.
-<br>
-<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","demo_fors.png"))
-i=i+1
+
+gg_medel_demo$medelalder
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Demografisk försörjningskvot")`
-</p>
+
+En äldre befolkning kan naturligtvis få ett flertal följder för en kommun på längre sikt genom äldres potentiella behov av vård och omsorg. Ett sätt att mäta detta är genom den så kallade demografiska försörjningskvoten. Den beräknas genom att relatera antalet personer i arbetsför ålder, de som är mellan 20 och 64 år, till unga (0-19 år) och äldre (>64år). Normalt är den kommunala kostnaden relativt låg för personer i arbetsför ålder, medan den är avsevärt högre för unga (kostnad för förskola och skola) och äldre (äldreomsorg mm). Det är därför intressant att relatera dessa grupper till personer i arbetsför ålder. I Dalarna är den demografiska försörjningskvoten högst i Rättvik, där grupperna unga och äldre sammantaget är större än gruppen i arbetsför ålder (en försörjningskvot som överstiger 100). Försörjningskvoten ökar dessutom i samtliga Dalarnas kommuner över tid, vilket är i linje med en allt äldre befolkning.
+
+```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+
+gg_medel_demo$demo_fors
+
+```
 
 En annan aspekt som kan tänkas påverka sårbarheten i en kommun är utbildningsnivån. Hypotesen är att högre utbildade personer har lättare att få jobb och därför kan omlokaliseras vid större uppsägningar^[https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf]. Att det sambandet inte är ett till ett kan dock observeras om man jämför arbetslöshet med utbildningsnivån i Dalarnas kommuner. Malung-Sälens kommun har, exempelvis, en av de lägsta andelarna högutbildade bland Dalarnas kommuner, men samtidigt också den näst lägsta arbetslösheten (se avsnitt 2.3).
 
