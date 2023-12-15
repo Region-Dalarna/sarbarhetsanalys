@@ -2,35 +2,27 @@
 # Funktioner som sourcas från Region Dalarna
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
 
-#test_list=diag_utbniva(skapa_fil=FALSE)
-diag_utbniva <- function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Använd förslagsvis hamtakommuner eller hamtaallalan
-                         alder = c(as.character(25:64)), # antingen "tot16-74" eller annat intervall, exempelvis c(as.character(25:64)), "*" ger alla år
-                         utbildningsniva_klartext = "*", # För alternativ, se text nedan
-                         kon_klartext = c("män","kvinnor"), # c("män","kvinnor") eller var och en uppdelad. "*" funkar inte
+#test_list=diag_utbniva(spara_figur = FALSE,uppdelning_kon = FALSE)
+diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Använd förslagsvis hamtakommuner eller hamtaallalan
+                         lan_fokus = "20", # Vilket län vill man fokusera på (i diagrammet)
+                         alder = c(as.character(25:64)), # Välj ett intervall (inte "*"). 16-74 är möjligt
+                         uppdelning_kon = FALSE, 
+                         valda_farger = diagramfarger("rus_tre_fokus"),
+                         valda_farger_kon = diagramfarger("kon"),
                          output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Outputmapp
-                         returnera_data = TRUE, # Om man vill returnera data
-                         tid ="9999" # Sätts till "9999" om man enbart vill ha senaste år,"*" för alla alternativt intervall
-){
+                         spara_figur = TRUE,
+                         returnera_data = TRUE){
   
   # ===========================================================================================================
   #
-  # Skript för att hämta data för utbildningsnivå 
-  # Källa https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__UF__UF0506__UF0506B/UtbSUNBef/
-  # Förklaring av vissa variabler
-  # utbildningsniva_klartext:
-  #   förgymnasial utbildning kortare än 9 år
-  #   förgymnasial utbildning, 9 (10) år
-  #   gymnasial utbildning, högst 2 år
-  #   gymnasial utbildning, 3 år
-  #   eftergymnasial utbildning, mindre än 3 år
-  #   eftergymnasial utbildning, 3 år eller mer
-  #   forskarutbildning
-  #   uppgift om utbildningsnivå saknas
-  # Generellt gäller "*" om man vill ha alla variabler
+  # Diagram som tar fram andelen av befolkningen med minst 3 års eftergymnasial utbildning
+  # Finns uppdelat på kön men bara senaste år
   # Skapad av Jon Frank
-  # Uppdaterad senast 2023-12-14
+  # Uppdaterad senast 2023-12-15
   # ===========================================================================================================
   
+  gg_list = list()
+  objektnamn = c()
 
   # ========================================== Läser in data ============================================
   # Skapa en lista med information som vi vill ha hem -- skapas lättast via pxweb_interactive()
@@ -38,9 +30,12 @@ diag_utbniva <- function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket 
   if (!require("pacman")) install.packages("pacman")
   p_load(tidyverse)
   
+  source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
   source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/main/hamta_utbniva_SCB.R")
-  df <- hamta_data_utbniva (region = region,
-                            tid = tid, # "Om man enbart vill ha senaste år"9999" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.
+  df <- hamta_data_utbniva (region = region_vekt,
+                            alder = alder,
+                            utbildningsniva_klartext = "*",
+                            tid = "9999", # "Om man enbart vill ha senaste år"9999" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.
                             spara_data = FALSE, # Om man vill spara data
                             returnera_data = TRUE)
   
@@ -54,104 +49,61 @@ diag_utbniva <- function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket 
       utbildningsnivå == "eftergymnasial utbildning, 3 år eller mer"~ "Eftergymnasial utbildning, 3 år eller mer",
       utbildningsnivå == "forskarutbildning" ~ "Eftergymnasial utbildning, 3 år eller mer",
       utbildningsnivå == "uppgift om utbildningsnivå saknas" ~ "Uppgift saknas"))
+  
+  assign("df_ut", df, envir = .GlobalEnv)
 
-  # Tar bort uppgift saknas och beräknar hur stor andel som har en viss utbildning - ej uppdelat på kön
+  if(uppdelning_kon == TRUE){
+    variabler = c("år","kön","region","utbildningsnivå")
+    valda_farger = valda_farger_kon
+    
+  } else{
+    variabler = c("år","region","utbildningsnivå")
+    valda_farger = valda_farger
+  } 
+  
   df_utskrift <- df %>%
-    filter(utbildningsnivå != "Uppgift saknas") %>%
-      group_by(år,region,utbildningsnivå) %>%
+    filter(utbildningsnivå != "Uppgift saknas") %>% 
+      group_by(across(all_of(variabler))) %>%
         summarize(antal = sum(Befolkning)) %>%
-          mutate(andel = (antal/sum(antal))*100)
-
-  # Tar bort uppgift saknas och beräknar hur stor andel som har en viss utbildning - uppdelat på kön
-  px_df_utskrift_kon<-px_df %>%
-    filter(utb_niva!="Uppgift saknas") %>%
-    group_by(år,region,kön,utb_niva) %>%
-    summarize(antal=sum(Befolkning)) %>%
-    mutate(andel=(antal/sum(antal))*100)
-
-  # Gör om till en faktorvariabel för att styra vilken ordning utbildningsnivåer kommer i.
-  px_df_utskrift$utb_niva <- factor(px_df_utskrift$utb_niva, levels = c("Eftergymnasial utbildning, 3 år eller mer","Eftergymnasial utbildning, mindre än 3 år","Gymnasial utbildning","Förgymnasial utbildning"))
-
-  # Ta bort s och län i länsnamn
-  px_df_utskrift$region<-skapa_kortnamn_lan(px_df_utskrift$region)
-  px_df_utskrift_kon$region<-skapa_kortnamn_lan(px_df_utskrift_kon$region)
-
-  px_df_utskrift_fokus <- px_df_utskrift
-  # skapa fokusvariabel för att fokusera på valt län och riket
-  px_df_utskrift_fokus$fokus <- NA                      # en metod för att få bort warning messages för "Unknown or uninitialised column: `fokus`."
-  px_df_utskrift_fokus$fokus <- 0
-  px_df_utskrift_fokus$fokus[px_df_utskrift_fokus$region =="Dalarna"] <- 1
-  px_df_utskrift_fokus$fokus[px_df_utskrift_fokus$region =="Riket"] <- 2
-
-  if(diag_utb_kommun==TRUE){
-    diagramtitel <- paste0("Andel av befolkningen (25-64 år) med minst 3 års eftergymnasial utbildning ",unique(px_df_utskrift$år))
-    diagramtitel <- str_wrap(diagramtitel)
-    diagramfilnamn <- paste0("utbildningsniva_jmf_lan.png")
-    objektnamn <- c(objektnamn,diagramtitel)
-
-    gg_obj <- SkapaStapelDiagram(skickad_df =px_df_utskrift_fokus %>%
-                                   filter(utb_niva=="Eftergymnasial utbildning, 3 år eller mer") %>%
-                                   mutate(region=ifelse(region=="Riket", "Sverige",region)),
-                                 skickad_x_var = "region",
-                                 skickad_y_var = "andel",
-                                 #skickad_x_grupp = "utb_niva",
-                                 manual_x_axis_text_vjust=1,
-                                 manual_x_axis_text_hjust=1,
-                                 manual_color = valda_farger,
-                                 diagram_titel = diagramtitel,
-                                 diagram_capt =  diagram_capt,
-                                 diagram_facet = FALSE,
-                                 x_axis_sort_value = TRUE,
-                                 x_axis_lutning = 45,
-                                 x_var_fokus = "fokus",
-                                 diagram_liggande = FALSE,
-                                 legend_vand_ordning=FALSE,
-                                 geom_position_stack = FALSE,
-                                 manual_y_axis_title="procent",
-                                 berakna_index = FALSE,
-                                 output_mapp = output_mapp,
-                                 filnamn_diagram = diagramfilnamn,
-                                 skriv_till_diagramfil = skapa_fil)
-
-    gg_list[[i]] <-gg_obj
-    i=i+1
+          mutate(andel = (antal/sum(antal))*100) %>% 
+            mutate(region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE)) %>% 
+              ungroup()
+ 
+  if(returnera_data == TRUE){
+    assign("andel_hogutbildade", df_utskrift, envir = .GlobalEnv)
   }
 
-  if(diag_utb_kommun_kon==TRUE){
-    diagramtitel <- paste0("Andel av befolkningen (25-64 år) med minst 3 års eftergymnasial utbildning ",unique(px_df_utskrift$år))
-    diagramtitel <- str_wrap(diagramtitel)
-    diagramfilnamn <- paste0("utbildningsniva_jmf_lan_kon.png")
-    objektnamn <- c(objektnamn,diagramtitel)
+  diagram_capt <- "Källa: SCB:s öppna statistikdatabas.\nBearbetning: Samhällsanalys, Region Dalarna."
+  diagramtitel <- paste0("Andel av befolkningen (",min(df$ålder), " - ", max(df$ålder),") med minst 3 års eftergymnasial utbildning ",unique(df_utskrift$år))
+  diagramtitel <- str_wrap(diagramtitel,50)
+  diagramfilnamn <- paste0("andel_hogutbildade.png")
+  objektnamn <- c(objektnamn, "andel_hogutbildade")
 
-    gg_obj <- SkapaStapelDiagram(skickad_df =px_df_utskrift_kon %>%
-                                   filter(utb_niva=="Eftergymnasial utbildning, 3 år eller mer")%>%
-                                   mutate(region=ifelse(region=="Riket", "Sverige",region)),
-                                 skickad_x_var = "region",
-                                 skickad_y_var = "andel",
-                                 skickad_x_grupp = "kön",
-                                 manual_x_axis_text_vjust=1,
-                                 manual_x_axis_text_hjust=1,
-                                 manual_color = diagramfarger("kon"),
-                                 diagram_titel = diagramtitel,
-                                 diagram_capt =  diagram_capt,
-                                 diagram_facet = FALSE,
-                                 x_axis_sort_value = TRUE,
-                                 x_axis_lutning = 45,
-                                 #x_var_fokus = "fokus",
-                                 diagram_liggande = FALSE,
-                                 legend_vand_ordning=FALSE,
-                                 geom_position_stack = FALSE,
-                                 manual_y_axis_title="procent",
-                                 berakna_index = FALSE,
-                                 output_mapp = output_mapp,
-                                 filnamn_diagram = diagramfilnamn,
-                                 skriv_till_diagramfil = skapa_fil)
+  gg_obj <- SkapaStapelDiagram(skickad_df = df_utskrift %>%
+                                 filter(utbildningsnivå == "Eftergymnasial utbildning, 3 år eller mer") %>% 
+                                   mutate(fokus = ifelse(region == "Sverige", 2,
+                                                         ifelse(region == skapa_kortnamn_lan(hamtaregion_kod_namn(lan_fokus)$region),1,0))), 
+                               skickad_x_var = "region",
+                               skickad_y_var = "andel",
+                               skickad_x_grupp = ifelse(uppdelning_kon == TRUE,"kön",NA),
+                               manual_x_axis_text_vjust = 1,
+                               manual_x_axis_text_hjust = 1,
+                               manual_color = valda_farger,
+                               diagram_titel = diagramtitel,
+                               diagram_capt =  diagram_capt,
+                               diagram_facet = FALSE,
+                               x_axis_sort_value = TRUE,
+                               x_axis_lutning = 45,
+                               x_var_fokus = NA,
+                               legend_vand_ordning = FALSE,
+                               manual_y_axis_title = "procent",
+                               output_mapp = output_mapp,
+                               filnamn_diagram = diagramfilnamn,
+                               skriv_till_diagramfil = spara_figur)
 
-    gg_list[[i]] <-gg_obj
-    i=i+1
-  }
-
-  names(gg_list)<-c(objektnamn)
+  gg_list <- c(gg_list, list(gg_obj))
+  
+  names(gg_list) <- c(objektnamn)
   return(gg_list)
   
   
