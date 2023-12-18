@@ -37,7 +37,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
                                      kon_klartext = c("män","kvinnor"), 
                                      spara_data = FALSE,
                                      returnera_data = TRUE,
-                                     tid = "99")
+                                     tid = "9999")
   
   
   

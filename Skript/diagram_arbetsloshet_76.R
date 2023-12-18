@@ -3,7 +3,7 @@
 diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"),
                                          output_mapp_excel = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                          output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                         filnamn_excel = "/arbetsloshet_76.xlsx",
+                                         filnamn_excel = "arbetsloshet_76.xlsx",
                                          vald_farg = "rus_sex",
                                          filnamn_figur = "arbetsloshet_76.png",
                                          spara_data = TRUE,
@@ -36,7 +36,7 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"),
   df <-  hamta_data_arbetsloshet_76(region_vekt = region_vekt,
                                                   output_mapp = output_mapp_excel,
                                                   filnamn_excel = filnamn_excel,
-                                                  spara_data = FALSE,
+                                                  spara_data = spara_data,
                                                   returnera_data = TRUE) 
   
   if(diag_region == TRUE){

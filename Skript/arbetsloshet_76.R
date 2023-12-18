@@ -1,6 +1,6 @@
 hamta_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Enbart för regioner och riket ("00")
                                        output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                       filnamn_excel = "/arbetsloshet_76.xlsx",
+                                       filnamn_excel = "arbetsloshet_76.xlsx",
                                        Kon_klartext = c("män","kvinnor"), # Alternativ är män och/eller kvinnor (totalt saknas)
                                        spara_data = TRUE,
                                        returnera_data = TRUE # Om man vill att data skall returneras
@@ -74,7 +74,8 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Enbart för
     filter(arbetskraftstillhörighet%in%c("arbetslösa","sysselsatta")) %>% 
       group_by(region,år,kön,arbetskraftstillhörighet) %>% 
         summarize("Antal" = sum(`Befolkningen 16-64 år (AKU), 100-tal`)) %>% 
-          pivot_wider(names_from = arbetskraftstillhörighet,values_from=Antal )
+          pivot_wider(names_from = arbetskraftstillhörighet,values_from=Antal ) %>% 
+            ungroup()
   
   df_76_04$arbetsloshet=(df_76_04$arbetslösa/(df_76_04$arbetslösa+df_76_04$sysselsatta))*100
   
@@ -82,7 +83,8 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Enbart för
     filter(arbetskraftstillhörighet%in%c("arbetslösa","sysselsatta")) %>% 
       group_by(region,år,kön,arbetskraftstillhörighet) %>% 
         summarize("Antal" = sum(`1000-tal`))%>% 
-          pivot_wider(names_from=arbetskraftstillhörighet,values_from=Antal )
+          pivot_wider(names_from = arbetskraftstillhörighet,values_from = Antal) %>% 
+           ungroup()
   
   df_05_$arbetsloshet=(df_05_$arbetslösa/(df_05_$arbetslösa+df_05_$sysselsatta))*100
   

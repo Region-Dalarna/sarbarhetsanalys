@@ -15,6 +15,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache =TRUE)
 # Paket som används
 if (!require("pacman")) install.packages("pacman")
 p_load(sf,
@@ -27,22 +28,22 @@ source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_Sk
 #source("https://raw.githubusercontent.com/FaluPeppe/func/main/func_API.R")
 
 # Skall figurer sparas
-spara_figur <- TRUE
-output_mapp <- here("Figurer","/")
+# spara_figur <- TRUE
+# output_mapp <- here("Figurer","/")
 
 # Om man vill uppdatera den externa hemsidan sätts denna variabel till TRUE
 uppdatera_hemsida = FALSE
 
 # Läser in data
-# arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
-# arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus_kommun.xlsx")
+arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
+arbetsmarknadsstatus <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus.xlsx")
 # langtidsarbetsloshet_df <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet.csv",encoding="UTF-8")
 # andel_offentligt_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
 # pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling_kommun.xlsx")
 # arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/foretagarna.xlsx",sheet =1)
 # Nystartade_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
 # Konkurser_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
-# i=1
+i=1
 
 ```
 
@@ -62,7 +63,7 @@ I början av 2020 drabbades Sverige av pandemin orsakad av Covid-19. Krisen ledd
 När denna rapport skrivs pågår ytterligare en kris kopplad till Rysslands invasion av Ukraina och dess effekter på bland annat tillgången till råvaror. Denna kris, som tog sin början i februari 2022, kommer sannolikt att få stora effekter på Sveriges ekonomi över en längre tid, även om den ännu inte syns i arbetslöshetsstatistiken för Dalarna i någon större utsträckning.
 
 ```{r, include = TRUE}
-gg_arbetsloshet_76
+knitr::include_graphics(here("Figurer","arbetsloshet_76.png"))
 ```
 
 Sammanfattningsvis har detta avsnitt visat att Sverige med viss regelbundenhet drabbats av kriser av varierande omfattning. Det är därför viktigt att studera samhällets sårbarhet för denna typ av kriser.
@@ -87,19 +88,11 @@ En fungerande arbetsmarknad är viktig för en regions motståndskraft mot ekono
 
 En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför ålder (20-64 år) är sysselsatta, vilket mäts genom sysselsättningsgraden. Som sysselsatt räknas en person som under en viss vecka (referensveckan) utfört något arbete i minst en timme som anställd, egen företagare eller medhjälpare i företag tillhörande en familjemedlem. I Dalarna arbetar färre än 3 procent av de sysselsatta mindre än halvtid, och drygt 83 procent arbetar minst 35 timmar per vecka^[Överenskommen veckoarbetstid, regionala tabeller, AKU, SCB]. Om sysselsättningraden är låg är det ett tecken på att arbetslösheten är hög alternativt att många i arbetsför ålder (utöver studenter) står utanför arbetskraften, vilket ger ett sämre utgångsläge för att hantera en kris^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html]. Om personerna befinner sig i arbetslöshet kan de ses som en outnyttjad resurs för en region eller kommun (se `r paste0("figur ",i+2)`). Arbetslösa är personer som är villiga att ta ett arbete, men av olika skäl inte arbetar. Om denna outnyttjade resurs är stor, är det rimligt att sårbarheten vid varsel eller uppsägningar också är större^[https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf]. 
 
-```{r, include = FALSE}
-# För att kunna använda data nedan får variablerna inte vara "factors". Justeras nedan.
-arbetsmarknadsstatus <- arbetsmarknadsstatus %>% 
-  mutate(år = as.character(år),
-         månad = as.character(månad))
-
-```
-
 Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet (se `r paste0("figur ",i+1)`). Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent.
 
 ```{r, include = TRUE}
 
-gg_arbetsmarknadsstatus$sysselsattningsgrad_senastear
+knitr::include_graphics(here("Figurer","sysselsattningsgrad_senastear.png"))
 
 ```
 
@@ -107,7 +100,7 @@ I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus$månad)` `r max(arb
 
 ```{r, include = TRUE}
 
-gg_arbetsmarknadsstatus$arbetslosthet_senastear
+knitr::include_graphics(here("Figurer","arbetslöshet_senastear.png"))
 
 ```
 

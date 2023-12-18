@@ -8,7 +8,7 @@ diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket
                           diag_demo_medelalder = TRUE, # Medelålder
                           konsuppdelat = FALSE, # Om TRUE jämförs kön för senaset år, om FALSE jämförs första och sista år i sample
                           valda_farger = "rus_sex",
-                          tid = 1900:2100,
+                          tid = 2007:2100,
                           spara_figur = TRUE,
                           spara_data = FALSE, # Om man vill spara data
                           returnera_data = TRUE){ # Om TRUE returneras data till R-Studios globala miljö
@@ -16,6 +16,7 @@ diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket
   # ===========================================================================================================
   # 
   # Skript som skriver ut diagram för demografisk försörjningskvot och medelålder. Går att välja med eller utan uppdelning på kön
+  # Data för Dalarna som helhet finns enbart från 2007
   # Skapad av Jon Frank
   # Senast ändrad: 2023-12-08
   # ===========================================================================================================
@@ -33,11 +34,7 @@ diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket
   
   gg_list <- list() # Skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
   objektnamn <- c() # Används för att namnge
-  
-  vald_region = skapa_kortnamn_lan(hamtaregion_kod_namn(region)$region)
-  
-  region = paste0("00",region)
-  
+
   # =============================================== API-uttag ===============================================
   
   
@@ -82,8 +79,7 @@ diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket
     
     diagram_capt <- "Källa: SCB (via RKA/Kolada)\nBearbetning: Samhällsanalys, Region Dalarna\nDiagramförklaring: Den demografiska försörjningskvoten beräknas som summan av antal personer 0-19 år och antal personer 65 år och äldre dividerat med antal personer 20-64 år.\nEtt värde över 100 innebär att gruppen äldre och yngre är större än den i arbetsför ålder." 
     
-    gg_obj <- SkapaStapelDiagram(skickad_df = demo_df %>% 
-                                    filter(municipality != vald_region),
+    gg_obj <- SkapaStapelDiagram(skickad_df = demo_df ,
                                  skickad_x_var = "municipality", 
                                  skickad_y_var = "value", 
                                  skickad_x_grupp = ifelse(konsuppdelat == FALSE,"year","gender"),
@@ -132,8 +128,7 @@ diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket
     objektnamn <-  c(objektnamn,diagram_typ)
     diagram_capt <- "Källa: SCB (via RKA/Kolada)\nBearbetning: Samhällsanalys, Region Dalarna\n" 
     
-    gg_obj <- SkapaStapelDiagram(skickad_df = medelalder_df %>% 
-                                   filter(municipality != vald_region),
+    gg_obj <- SkapaStapelDiagram(skickad_df = medelalder_df ,
                                  skickad_x_var = "municipality", 
                                  skickad_y_var = "value", 
                                  skickad_x_grupp = ifelse(konsuppdelat == FALSE,"year","gender"),

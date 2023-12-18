@@ -2,10 +2,12 @@
 #test = diagram_arbetsmarknadsstatus_kommun(spara_figur = FALSE,diag_arbetskraftsdeltagande = FALSE,kon_klartext = c("kvinnor", "män"),diag_farger = "kon")
 diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20"), # Använd förslagsvis hamtakommuner och hamtaallalan
                                                fokus_lan = "20", # Måste väljas. Det län som, vid sidan om riket, fokuseras i figuren
-                                               output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Output-mapp för figur
+                                               spara_data = TRUE, # Vill man spara data till Excel
+                                               Output_mapp_Excel = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Outputmapp för data
+                                               filnamn_Excel = "arbetsmarknadsstatus.xlsx", # Filnamn för Excelfil
+                                               output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Outputmapp för figur
                                                spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                                returnera_figur = TRUE, # Returnerar en figur
-                                               returnera_data = TRUE, # Om true, returneras data
                                                kon_klartext = "totalt", # Finns även c("kvinnor","män") om man vill ha könsuppdelat
                                                alder_klartext = "20-64 år", # finns: 15-19 år, 16-19 år, 20-24 år, 25-29 år, 30-34 år, 35-39 år, 40-44 år, 45-49 år, 50-54 år, 55-59 år, 60-64 år, 65-69 år, 70-74 år, 15-74 år, 16-64 år, 16-65 år, 20-64 år, 20-65 år
                                                diag_farger = "rus_tre_fokus", # Ändra till kon om man vill ha de färgerna
@@ -43,8 +45,9 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
   # Tar bort län i länsnamn och gör om riket till Sverige
   arbetsmarknadsstatus_df$region = skapa_kortnamn_lan(arbetsmarknadsstatus_df$region,byt_ut_riket_mot_sverige = TRUE)
   
-  if(returnera_data == TRUE){
-    assign("arbetsmarknadsstatus", arbetsmarknadsstatus_df, envir = .GlobalEnv)
+  if(spara_data == TRUE){
+    flik_lista=lst("Arbetsmarknadsstatus" = arbetsmarknadsstatus_df)
+    write.xlsx(flik_lista,paste0(Output_mapp_Excel,filnamn_Excel))
   }
   
   

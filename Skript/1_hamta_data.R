@@ -8,7 +8,7 @@ p_load(here)
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
 
 # Här hamnar Excelfilerna
-Output_mapp = "G:/skript/projekt/data/sarbarhetsanalys/"
+Output_mapp_Excel = "G:/skript/projekt/data/sarbarhetsanalys/"
 Output_mapp_figur = here("Figurer","/")
 
 
@@ -19,20 +19,21 @@ Output_mapp_figur = here("Figurer","/")
 # Arbetslöshet 76
 source(here("Skript","diagram_arbetsloshet_76.R"), encoding="UTF-8")
 gg_arbetsloshet_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
-                                                   output_mapp_excel = Output_mapp,
+                                                   output_mapp_excel = Output_mapp_Excel,
                                                    output_mapp_figur = Output_mapp_figur,
                                                    vald_farg = "rus_sex",
-                                                   spara_data = FALSE,
+                                                   spara_data = TRUE,
                                                    returnera_figur = TRUE)
 
 # Arbetslöshet och sysselsättningsgrad
 source(here("Skript","diagram_arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
-gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(output_mapp_figur = Output_mapp_figur,
-                                                             diag_arbetskraftsdeltagande = FALSE,
-                                                             diag_farger = "rus_tre_fokus",
-                                                             returnera_data = TRUE,
-                                                             spara_figur = TRUE,
-                                                             returnera_figur = TRUE)
+gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(Output_mapp_Excel = Output_mapp_Excel,
+                                                              output_mapp_figur = Output_mapp_figur,
+                                                              diag_arbetskraftsdeltagande = FALSE,
+                                                              diag_farger = "rus_tre_fokus",
+                                                              spara_data = TRUE,
+                                                              spara_figur = TRUE,
+                                                              returnera_figur = TRUE)
 
 # Långtidsarbetslöshet
 source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")

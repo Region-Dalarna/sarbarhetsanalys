@@ -9,14 +9,14 @@
 
 diagram_langtidsarb = function(region = c("0020"),
                                ta_med_riket = FALSE,
-                               outputmapp = "G:/skript/projekt/data/uppfoljning_dalastrategin/Data/", 
-                               outputmapp_data = "G:/skript/projekt/data/uppfoljning_dalastrategin/Data/",
-                               vald_farg = "rus_sex",
+                               outputmapp_figur = "G:/skript/projekt/data/uppfoljning_dalastrategin/Data/", # Här hamnar sparad figur
+                               outputmapp_data = "G:/skript/projekt/data/uppfoljning_dalastrategin/Data/", # Här hamnar fil med data
+                               vald_farg = diagramfarger("rus_sex"), #Vilken färg vill vi använda
                                jmf_ar = TRUE, # Om true, jämförs långtidsarbetslöshet för första och sista år i vald tid
-                               spara_figur = TRUE, # Sparar figuren till output_mapp_figur
-                               returnera_figur = TRUE,
-                               returnera_data = FALSE, # Om true läggs data i den globala miljön i R-Studio
-                               tid = 2011:2100){ 
+                               spara_figur = TRUE, # Vill man spara figur
+                               spara_data = FALSE, # Vill man spara data
+                               returnera_figur = TRUE, # Skall figuren returneras som ett ggplot-objekt
+                               tid = 2011:2100){# Vilken tidsperiod vill vi fokusera på
   
   # =================================================================================================================
   # Diagram för långtidsarbetlöshet på kommunal nivå. Jämför första år i dataset med sista år i dataset
@@ -40,7 +40,8 @@ diagram_langtidsarb = function(region = c("0020"),
                                                    ta_med_riket = ta_med_riket,
                                                    cond_code = c("N03923"),
                                                    returnera_data = TRUE,
-                                                   spara_data = FALSE,
+                                                   spara_data = spara_data,
+                                                   outputmapp = outputmapp_data,
                                                    senaste_ar = FALSE,
                                                    tid = tid)
 
@@ -48,9 +49,9 @@ diagram_langtidsarb = function(region = c("0020"),
 
   valt_lan = skapa_kortnamn_lan(hamtaregion_kod_namn(region)$region)
   
-  if(returnera_data == TRUE){
-    assign("langtidsarbetsloshet", langtidsarbetsloshet_df %>% filter(gender == "T"), envir = .GlobalEnv)
-  }
+  # if(returnera_data == TRUE){
+  #   assign("langtidsarbetsloshet", langtidsarbetsloshet_df %>% filter(gender == "T"), envir = .GlobalEnv)
+  # }
   
   if(jmf_ar == TRUE){
     utskrift_df = langtidsarbetsloshet_df %>% 
@@ -76,7 +77,7 @@ diagram_langtidsarb = function(region = c("0020"),
                                     skickad_x_grupp = ifelse(jmf_ar == TRUE,"year",NA),
                                     manual_x_axis_text_vjust=1,
                                     manual_x_axis_text_hjust=1,
-                                    manual_color = diagramfarger(vald_farg),
+                                    manual_color = vald_farg,
                                     x_axis_sort_value = TRUE,
                                     x_axis_sort_grp = ifelse(jmf_ar == TRUE,4,NA),
                                     vand_sortering = vand_sortering,
