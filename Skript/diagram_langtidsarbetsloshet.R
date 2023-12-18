@@ -70,7 +70,7 @@ diagram_langtidsarb = function(region = c("0020"),
   diagramfil <- "langtidsarbetsloshet.png"
   objektnamn <- c(objektnamn,"langtidsarbetsloshet")
   
-  langtid_fig <- SkapaStapelDiagram(skickad_df = utskrift_df,
+  gg_obj <- SkapaStapelDiagram(skickad_df = utskrift_df,
                                     skickad_x_var = "municipality",
                                     skickad_y_var = "value",
                                     skickad_x_grupp = ifelse(jmf_ar == TRUE,"year",NA),
@@ -89,11 +89,11 @@ diagram_langtidsarb = function(region = c("0020"),
                                     output_mapp = outputmapp,
                                     filnamn_diagram = "langtidsarbetsloshet.png",
                                     skriv_till_diagramfil = spara_figur)
-  gg_list[[i]] <-gg_obj
+  gg_list[[i]] <- gg_obj
   i=i+1
   names(gg_list) <- c(objektnamn)
   
   
-  if(returnera_figur == TRUE) return(langtid_fig)
+  if(returnera_figur == TRUE) return(gg_list)
 
 }
