@@ -83,8 +83,7 @@ gg_andel_forv <- diag_sysselsatta_andel(region_vekt = "20",
 
 # Branschbredd
 source(here("Skript","diagram_branschbredd.R"), encoding="UTF-8")
-gg_branschbredd = diag_branschbredd(region_vekt = "0020", 
-                                    output_mapp = Output_mapp_figur,
+gg_branschbredd = diag_branschbredd(output_mapp = Output_mapp_figur,
                                     valda_farger = "rus_sex",
                                     spara_figur = TRUE,
                                     returnera_data = TRUE)

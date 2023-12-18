@@ -1,5 +1,5 @@
 #test_list <- diag_branschbredd(region_vekt = "0022",spara_figur = FALSE,returnera_data = TRUE)
-diag_branschbredd <-function(region_vekt = "0020", # Region vi är intresserade av. 00 före eftersom data kommer från Kolada
+diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av region.
                             output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                             valda_farger = "rus_sex",
                             spara_figur = TRUE, # Om true sparas figuren till output_mapp
@@ -27,10 +27,7 @@ diag_branschbredd <-function(region_vekt = "0020", # Region vi är intresserade 
   
   # Hämtar data
   source(here("Skript","hamta_data_branschbredd_kolada.R"), encoding="UTF-8")
-  df <- hamta_data_branschbredd (region = region_vekt, # Val av region. Börjar med 00 för regioner (och Sverige) i Kolada
-                                 alla_regioner = FALSE, # TRUE om man vill ha alla regioner. Övertrumfar region
-                                 alla_kommuner = TRUE, # TRUE om man vill ha alla kommuner för valda kommuner.
-                                 ta_med_riket = FALSE, # TRUE om man vill ha med riket.
+  df <- hamta_data_branschbredd (region = region_vekt,
                                  outputmapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                  filnamn = c("branschbredd.xlsx"), # Filnamn.
                                  tid = 1900:2100, # "Om man enbart vill ha senaste år"9999" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.

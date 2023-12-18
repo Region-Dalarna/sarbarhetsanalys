@@ -1,7 +1,9 @@
 #test_list <- hamta_data_branschbredd(spara_data = FALSE,ta_med_riket = FALSE)
-hamta_data_branschbredd <-function(region = c("0020"), # Val av region. Börjar med 00 för regioner (och Sverige) i Kolada
-                                   alla_regioner = FALSE, # TRUE om man vill ha alla regioner. Övertrumfar region
-                                   alla_kommuner = TRUE, # TRUE om man vill ha alla kommuner för valda kommuner.
+
+source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
+source("https://raw.githubusercontent.com/JonFrank81/funktioner/main/func_API_alternativ.R")
+
+hamta_data_branschbredd <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av region.
                                    ta_med_riket = TRUE, # TRUE om man vill ha med riket.
                                    outputmapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                    filnamn = c("branschbredd.xlsx"), # Filnamn.
@@ -22,24 +24,9 @@ hamta_data_branschbredd <-function(region = c("0020"), # Val av region. Börjar 
                  rKolada,
                  readxl)
   options(dplyr.summarise.inform = FALSE)
-
   
-  source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
-  source("https://raw.githubusercontent.com/JonFrank81/funktioner/main/func_API_alternativ.R")
-  
-  if(alla_regioner == TRUE){
-    region = hamtaAllaLan(tamedriket = FALSE) 
-    region = paste0("00",region)
-  }
-  
-  if(alla_kommuner == TRUE){
-    region_kommun = hamtakommuner(substr(region,3,4),tamedlan = FALSE,tamedriket = FALSE)
-    region = c(region,region_kommun)
-  }
-  
-  if(ta_med_riket == TRUE){
-    region = c("0000",region)
-  }
+  # I Kolada har alla regioner fyra siffror varför region och riket behöver justeras
+  region = ifelse(nchar(region) == 2,paste0("00",region),region)
   
   if("9999" %in% tid) tid <- max(unique(hamta_kolada_giltiga_ar("N45702",vald_region = region)))
   
