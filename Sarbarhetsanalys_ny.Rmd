@@ -34,15 +34,15 @@ output_mapp <- here("Figurer","/")
 uppdatera_hemsida = FALSE
 
 # Läser in data
-arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
-arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus_kommun.xlsx")
-langtidsarbetsloshet_df <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet.csv",encoding="UTF-8")
-andel_offentligt_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
-pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling_kommun.xlsx")
-arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/foretagarna.xlsx",sheet =1)
-Nystartade_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
-Konkurser_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
-i=1
+# arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
+# arbetsmarknadsstatus_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus_kommun.xlsx")
+# langtidsarbetsloshet_df <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet.csv",encoding="UTF-8")
+# andel_offentligt_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
+# pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling_kommun.xlsx")
+# arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/foretagarna.xlsx",sheet =1)
+# Nystartade_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
+# Konkurser_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
+# i=1
 
 ```
 
@@ -142,54 +142,26 @@ gg_pendling
 
 ```
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
-gg_pendling
-```
-
 Sammanfattningsvis är sårbarheten låg i Gagnef och Säter kopplad till arbetsmarknaden, med både hög sysselsättningsgrad, hög andel offentlig verksamhet och stor utpendling, medan det omvända gäller för Ludvika, där sysselsättningsgraden och utpendlingen är låg, samt få arbetar inom offentlig verksamhet.
 
 ### 2.3 Företagande
 Förutom det jobbskapande som sker i befintliga och expanderande företag, kan även nyskapade företag stå för en del av jobbskapandet^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html]. I det här avsnittet presenteras indikatorer som kan vara viktiga förutsättningar för ett gott företagsklimat, dessa är antalet privata arbetsställen/1000 invånare, nystartade företag/1000 invånare, antal konkurser/1000 invånare samt andel företagsamma individer.
 
-En indikator är antalet privata arbetsställen (med minst 1 anställd), och i Dalarna finns det något fler sådana i jämförelse med i Sverige. I Dalarna fanns `r max(arbetsstallen_df$year)` ungefär `r round(arbetsstallen_df %>% filter(Kommun == "Dalarna") %>% .$Arb_stallen,0)` privata arbetsställen per 1000 invånare, att jämföra med drygt `r round(arbetsstallen_df %>% filter(Kommun == "Riket") %>% .$Arb_stallen,0)` i Sverige. Bland Dalarnas kommuner är variationen stor, där `r arbetsstallen_df %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Kommun`  har klart flest med `r round(arbetsstallen_df %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Arb_stallen,0)` per 1000 invånare, medan Smedjebacken och Ludvika återfinns på andra sidan spektrumet med ungefär hälften så många privata arbetsställen per 1 000 invånare.
-<br>
-<br>
-```{r, include = FALSE}
-    # Används i de tre nästkommande diagrammen (alla kopplade till företagarna)
-    diagram_capt <- c("Källa: SCB.\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Gäller arbetsställen med minst 1 anställd")
-
-    diagramtitel <- paste0("Antal privata arbetsställen per 1000 invånare år ",max(arbetsstallen_df$year))
-    diagramfilnamn <- paste0("arbetsstallen_per_1000.png")
-    
-    arbetsstallen_fig <- SkapaStapelDiagram(skickad_df = arbetsstallen_df %>% 
-                                   mutate(Kommun = ifelse(Kommun == "Riket", "Sverige",Kommun),
-                                          fokus = ifelse(Kommun == "Riket",1,
-                                                         ifelse(Kommun == "Dalarna",2,0))),
-                                 skickad_x_var = "Kommun", 
-                                 skickad_y_var = "Arb_stallen",
-                                 manual_x_axis_text_vjust=1,
-                                 manual_x_axis_text_hjust=1,
-                                 manual_color = diagramfarger("rus_tre_fokus"),
-                                 diagram_titel = diagramtitel,
-                                 diagram_capt =  diagram_capt[1],
-                                 manual_y_axis_title = "Antal arbetsställen per 1000 invånare",
-                                 x_var_fokus = "fokus",
-                                 x_axis_lutning = 45,
-                                 x_axis_sort_value = TRUE,
-                                 output_mapp = output_mapp,
-                                 filnamn_diagram = diagramfilnamn,
-                                 skriv_till_diagramfil = spara_figur)
-```
+En indikator är antalet privata arbetsställen (med minst 1 anställd), och i Dalarna finns det något fler sådana i jämförelse med i Sverige. I Dalarna fanns `r max(Arbetsstallen$year)` ungefär `r round(Arbetsstallen %>% filter(Kommun == "Dalarna") %>% .$Arb_stallen,0)` privata arbetsställen per 1000 invånare, att jämföra med drygt `r round(Arbetsstallen %>% filter(Kommun == "Sverige") %>% .$Arb_stallen,0)` i Sverige. Bland Dalarnas kommuner är variationen stor, där `r Arbetsstallen %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Kommun`  har klart flest med `r round(Arbetsstallen %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Arb_stallen,0)` per 1000 invånare, medan Smedjebacken och Ludvika återfinns på andra sidan spektrumet med ungefär hälften så många privata arbetsställen per 1 000 invånare.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
-arbetsstallen_fig
+
+gg_arbetsstallen
+
 ```
 
 När det gäller nystartade företag har `r Nystartade %>% filter(substr(year,1,1) != "m") %>% filter(year == max(year)) %>% filter(nystartade_ftg == max(nystartade_ftg)) %>% .$municipality` kommun flest, med ungefär `r round(Nystartade %>% filter(substr(year,1,1) != "m") %>% filter(year == max(year)) %>% filter(nystartade_ftg == max(nystartade_ftg)) %>% .$nystartade_ftg,0)` nystartade företag per 1000 invånare `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)`. Även Malung-Sälen och Falun hade fler nystartade företag (per 1000 invånare) än Sverige `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)`. Glädjande är att antalet nystartade företag har ökat i en majoritet av Dalarnas kommuner om medelvärdet 2015-2020 jämförs med år `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)`.
 
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
+
 gg_nyst_konk$nystartade
+
 ```
 
 Antalet nystartade företag gör ju ingen större skillnad om många företag samtidigt går i konkurs. Generellt tenderar kommuner med många nystartade företag (Malung-Sälen, Älvdalen) också har relativt många konkurser (per invånare). Undantaget är Rättviks kommun, som både har många nystartade företag och få konkurser. Värt att notera är dock att många kommuner är relativt små (runt 10 000 invånare), vilket medför att ett par extra konkurser per år ger stora effekter i figuren nedan. Detta kan vara en av orsakerna till att antalet konkurser per 1000 invånare kan variera kraftigt från år till år.
@@ -389,16 +361,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-De två klart största arbetsgivarna i Falun år 2021 var Region Dalarna och Falu kommun, som tillsammans hade fler än 9 000 anställda. Bland privata arbetsgivare var Libra assistans störst, med strax under 500 anställda.
-<br>
-<br>
+Den största arbetsgivaren i Falun år `r unique(storsta_arbetsgivare$år)` var `r storsta_arbetsgivare %>% filter(Kommun == "Falun") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare`, som hade `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Falun") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Även Falu kommun är en stor arbetsgivare med nästan lika många anställda. Bland privata arbetsgivare var Libra assistans störst, med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Falun",Arbetsgivare == "Libra Assistans AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Falun_2021.png"))
-i=i+1
+
+gg_storsta_foretag
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 När det gäller företagande, ligger Falu kommun ungefär genomsnittligt för Dalarna för alla variabler som undersökts. Beroendet av enskilda branscher och företag i Falun är dessutom lågt, då kommunen har såväl Dalarnas största branschbredd som det största antalet företag (102 st) som krävs för att komma upp i 50 procent av lönesumman inom det privata näringslivet.
 
@@ -426,16 +395,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-I Gagnef är den klart största arbetsgivaren Gagnefs kommun med drygt 1 200 anställda. Inom det privata näringslivet har Shamsen Omsorg och 3m flest anställda, med ungefär 125 vardera.
-<br>
-<br>
+I Gagnef är den klart största arbetsgivaren `r storsta_arbetsgivare %>% filter(Kommun == "Gagnef") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med drygt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Gagnef") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata näringslivet har Shamsen Omsorg och 3m flest anställda, med ungefär `r format(storsta_arbetsgivare %>% filter(Kommun == "Gagnef",Arbetsgivare == "Shamsen Omsorg AB") %>% .$antal_anstallda,big.mark =" ")` vardera.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Gagnef_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Gagnef
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Gagnef har relativt få arbetsställen per 1 000 invånare (3:e lägsta värdet i Dalarna), men däremot många nystartade företag. Antal nystartade företag (per 1 000 invånare) ökade dessutom kraftigt mellan 2015 och 2021, efter att dessförinnan varit mer eller mindre konstant sedan 2007. Dessutom är antalet konkurser (per 1 000 invånare) bland de lägsta i Dalarna, även om dessa ökade rejält mellan 2013 och 2021.
 
@@ -465,16 +431,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Hedemora var år 2021 Hedemora kommun med drygt 1 500 anställda. Bland privata arbetsgivare hade Boliden mineral flest anställda med nästan 500 anställda. I övrigt finns ett antal arbetsgivare med mellan 100 och 300 anställda.
-<br>
-<br>
+Den största arbetsgivaren i Hedemora var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Hedemora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Hedemora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade Boliden mineral flest anställda med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Hedemora",Arbetsgivare == "Boliden Mineral AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda. I övrigt finns ett antal arbetsgivare med mellan 100 och 300 anställda.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Hedemora_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Hedemora
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Såväl antal arbetsställen som antal nystartade företag (per 1000 invånare) i Hedemora ligger under genomsnittet i Dalarna. Positivt är att detsamma även gäller antalet konkurser, vilka dessutom har minskat sedan 2013.
 
@@ -504,16 +467,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Leksands var år 2021 Leksands kommun med drygt 1 800 anställda. Bland privata arbetsgivare är Clas Ohlson, med säte i Insjön, klart störst med nästan 1 000 anställda.
-<br>
-<br>
+Den största arbetsgivaren i Leksands var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Leksand") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Leksand") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare är Clas Ohlson, med säte i Insjön, klart störst med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Leksand",Arbetsgivare == "Clas Ohlson AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Leksand_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Leksand
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Såväl vad gäller antal nystartade företag, som personer som beskrivs som företagssamma, tillhör Leksand Dalarnas bättre kommuner. Samtidigt är dock konkurserna något högre än genomsnittet i länet.
 
@@ -543,18 +503,15 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Ludvika var år 2021 Hitachi med drygt 2 700 anställda. Nästan lika många anställda hade Ludvika kommun. Bland andra stora arbetsgivare finns Spendrups och Region Dalarna, med strax över 500 anställda vardera.
-<br>
-<br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Ludvika_2021.png"))
-i=i+1
-```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
+Den största arbetsgivaren i Ludvika var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Ludvika") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Ludvika") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Nästan lika många anställda hade Ludvika kommun. Bland andra stora arbetsgivare finns Spendrups, med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Ludvika",Arbetsgivare == "Spendrups Bryggeriaktiebolag") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
-Ludvika har både lägst antal arbetställen och lägst antal nystartade företag i Dalarna (per 1000 invånare), samtidigt som konkurserna ligger runt genomsnittet. Positivt är dock att antalet nystartade företag har ökat stadigt sedan slutet av 00-talet.
+```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+
+gg_storsta_foretag$Ludvika
+
+```
+
+Ludvika har både lägst antal arbetsställen och lägst antal nystartade företag i Dalarna (per 1000 invånare), samtidigt som konkurserna ligger runt genomsnittet. Positivt är dock att antalet nystartade företag har ökat stadigt sedan slutet av 00-talet.
 
 Av skäl som diskuterades tidiagare är Ludvika den kommun i Dalarna som är överlägset mest beroende av enskilda arbetsgivare. I Ludvika krävs tre företag för att uppnå en aggregerad lönesumma som överstiger 50 procent av de privata företagens totala lönesumma, klart mindre än övriga kommuner i Dalarna. Samtidigt gör kommunens storlek att relativt många branscher är representerade, vilket är positivt.
 
@@ -582,16 +539,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Malung-Sälen var år 2021 Malung-Sälens kommun med nästan 1 000 anställda. Skistar är den största privata arbetsgivaren med strax över 500 anställda.  
-<br>
-<br>
+Den största arbetsgivaren i Malung-Sälen var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Skistar är den största privata arbetsgivaren med strax över `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen",Arbetsgivare == "Skistar AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.  
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Malung-Sälen_2021.png"))
-i=i+1
+
+gg_storsta_foretag$`Malung-Sälen`
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Malung-Sälen är den kommun i Dalarna som har klart störst antal privata arbetsställen per 1000 invånare, vilket är en indikator på ett bra företagsklimat. Det startas dessutom många företag i Malung-Sälen, men samtidigt är antalet konkurser per 1000 invånare bland de högsta i länet.
 
@@ -621,16 +575,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Mora var år 2021 Mora kommun med drygt 1 800 anställda. Många i Mora jobbar även för Region Dalarna, medan FM Mattsson är den största privata arbetsgivaren med drygt 300 anställda.
-<br>
-<br>
+Den största arbetsgivaren i Mora var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Mora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Mora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Många i Mora jobbar även för Region Dalarna, medan FM Mattsson är den största privata arbetsgivaren med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Mora",Arbetsgivare == "Fm Mattsson Mora Group AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Mora_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Mora
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Precis som många andra kommuner i norra Dalarna har Mora ett stort antal arbetsställen i förhållande till sin befolkning, vilket är en indikation på ett väl fungerande företagande i kommunen.
 
@@ -660,16 +611,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Orsa var år 2021 Orsa kommun med drygt 620 anställda. Bland privata arbetsgivare hade Transdev, som under 2021 köpte Siljans buss, flest anställda med drygt 220.
-<br>
-<br>
+Den största arbetsgivaren i Orsa var  `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Orsa") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Orsa") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade Transdev, som under 2021 köpte Siljans buss, flest anställda med drygt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Orsa",Arbetsgivare == "Transdev Nord AB") %>% .$antal_anstallda,100),big.mark =" ")`.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Orsa_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Orsa
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetgivare")`
-</p>
 
 Orsa är som sagt en av Dalarnas minsta kommuner sett till folkmängd och har följaktligen en låg branschbredd (lägst i Dalarna). Kommunen tillhör även de kommuner i Dalarna där det krävs minst antal företag för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman (inom det privata näringslivet). Samtidigt startas relativt få nya företag i Orsa, något som dock har förbättrats de senaste 6-7 åren.
 
@@ -697,16 +645,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den klart största arbetsgivaren i Rättvik var år 2021 Rättviks kommun med drygt 1 200 anställda. Bland övriga arbetsgivare är de flesta avsevärt mindre. 
-<br>
-<br>
+Den klart största arbetsgivaren i Rättvik var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Rättvik") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Rättvik") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland övriga arbetsgivare är de flesta avsevärt mindre. 
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Rättvik_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Rättvik
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Rättvik tillhör Dalarnas bästa kommuner både vad gäller antalet privata arbetsställen och antalet nystartade företag (per 1000 invånare). Till skillnad från många andra kommuner med många nystartade företag är konkurserna i Rättvik dessutom förhållandevis få.
 
@@ -736,16 +681,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Smedjebacken var år 2021 Smedjebackens kommun med närmare 1 100 antsällda. Bland privata arbetsgivare var Ovako störst, med drygt 350 anställda.
-<br>
-<br>
+Den största arbetsgivaren i Smedjebacken var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare var Ovako störst, med bortåt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken",Arbetsgivare == "Ovako Bar AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Smedjebacken_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Smedjebacken
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Smedjebacken har Dalarnas näst lägsta antal privata arbetsställen per 1 000 invånare, men samtidigt har antalet nystartade företag ökat avsevärt mellan 2015 och 2020.
 
@@ -775,16 +717,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Säter var år 2021 Säters kommun med närmare 1 250 antsällda. Även Region Dalarna är en stor arbetsgivare, medan det inom det privata näringslivet bara finns ett företag med mer än 50 anställda (Gustafs Scandinavia).
-<br>
-<br>
+Den största arbetsgivaren i Säter var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Säter") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med strax under `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Säter") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Även Region Dalarna är en stor arbetsgivare, medan det inom det privata näringslivet bara finns ett företag med mer än 50 anställda (Gustafs Scandinavia).
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Säter_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Säter
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Antalet arbetsställen per 1 000 invånare i Säter är bland det lägsta i Dalarna, men samtidigt har antalet nystartade företag (per 1 000 invånare) ökat under en längre period och ligger idag över genomsnittet i Dalarna. Branschbredden i Säter är i linje med många andra kommuner av samma storlek, men antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman i det privata näringslivet (44) är avsevärt mycket större än många jämförbara kommuner. Säter kan därför sägas vara en kommun med relativt litet beroende. Samtidigt skall man vara medveten om att andelen som arbetar inom vård och omsorg i Säter (där många arbetsgivare tillhör det offentliga) är högst i Dalarna, vilket är ett annat typ av beroende.
 
@@ -813,16 +752,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Vansbro var år 2021 Vansbro kommun med närmare 900 anställda. Inom det privata arbetslivet jobbade flest, drygt 350 fördelat på två företag, på Lyko.
-<br>
-<br>
+Den största arbetsgivaren i Vansbro var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Vansbro") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Vansbro") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata arbetslivet jobbade flest, drygt 350 fördelat på två företag, på Lyko.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Vansbro_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Vansbro
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Vansbro är som sagt Dalarnas minsta kommun sett till befolkning och har följaktligen också en av de minsta branschbredderna i länet (ca 24 procent av branscherna är representerade). Även antalet företag som utgör 50 procent av den aggregerade lönesumman är bland de lägsta i Dalarna (13), vilket indikerar att Vansbro är en kommun med relativt högt beroende. Samtidigt är antalet arbetsställen per 1 000 invånare högre i Vansbro än genomsnittet i Dalarna, vilket är positivt.
 
@@ -851,16 +787,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Älvdalen var år 2021 Älvdalens kommun med närmare 800 anställda. Inom det privata närngslivet hade Idre Fjäll flest anställda, med strax över 200.
-<br>
-<br>
+Den största arbetsgivaren i Älvdalen var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Älvdalen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med närmare `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Älvdalen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata näringslivet hade Idre Fjäll flest anställda, med strax över `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Älvdalen",Arbetsgivare == "Stiftelsen Idre Fjäll") %>% .$antal_anstallda,100),big.mark =" ")`.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Älvdalen_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Älvdalen
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Befolkningsmässigt är Älvdalen en liten kommun och har följaktligen en låg branschbredd (drygt 24 procent av branscherna finns representerade i kommunen). Dock är antalet företag som utgör 50 procent av den aggregerade lönesumman högre än i många jämförbara kommuner, vilket indikerar att Älvdalen inte är en kommun med överdrivet stort beroende. Älvdalen är dessutom den kommun i Dalarna där de startas flest nya företag per 1 000 invånare och kommunen har dessutom 3:e flest antal arbetsställen per 1 000 invånare. Baksidan är att Älvdalen samtidigt är den kommun som har flest antal konkurser per 1 000 invånare i Dalarna, ett antal som dessutom ökade avsevärt mellan 2013 och 2021.
 

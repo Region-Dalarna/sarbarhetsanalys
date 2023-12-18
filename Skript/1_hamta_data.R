@@ -55,7 +55,7 @@ gg_andel_offentligt = diagram_andel_offentligt(output_mapp_figur= Output_mapp_fi
                                                returnera_figur = TRUE,
                                                spara_figur = TRUE)
 
-# Andel pendling i kommun 
+# Andel pendling i kommun  
 source("G:/skript/diagram/diag_pendlare_over_kommungrans.R")
 gg_pendling = diag_pendling_over_kommungrans(output_mapp = Output_mapp_figur,
                                              skapa_fil = TRUE, 
@@ -64,6 +64,15 @@ gg_pendling = diag_pendling_over_kommungrans(output_mapp = Output_mapp_figur,
                                              diag_absoluta_tal = FALSE,           
                                              diag_procent = TRUE,
                                              returnera_data = TRUE)
+
+# Antal arbetsställen 
+source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
+gg_arbetsstallen = diag_foretagarna(output_mapp = Output_mapp_figur,
+                                    spara_figur = TRUE, 
+                                    diag_arbetsstallen = TRUE,
+                                    diag_nyforetagsamma = FALSE,
+                                    diag_foretagsamma = FALSE,
+                                    returnera_data = TRUE)
 
 # Antal nystartade företag och antalet konkurser
 source(here("Skript","diagram_nyst_arbetslosa.R"), encoding="UTF-8")
