@@ -1,9 +1,6 @@
 #test = diagram_nystartade_konkurser(spara_figur = FALSE,returnera_data = TRUE)
 
-diagram_nystartade_konkurser <- function(region_vekt = "0020", # Val av region. Börjar med 00 för regioner (och Sverige) i Kolada
-                                         alla_regioner = FALSE, # TRUE om man vill ha alla regioner. Övertrumfar region
-                                         alla_kommuner = TRUE, # TRUE om man vill ha alla kommuner för valda kommuner.
-                                         ta_med_riket = TRUE, # TRUE om man vill ha med riket.
+diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av region. 
                                          output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                          vald_farg = "rus_sex", # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
                                          spara_figur = TRUE, # Sparar figuren till output_mapp_figur
@@ -33,16 +30,13 @@ diagram_nystartade_konkurser <- function(region_vekt = "0020", # Val av region. 
   source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/main/hamta_nystart_konkurser_kolada.R")
   options(dplyr.summarise.inform = FALSE)
   
-  ny_konk_list <- hamta_data_nystartade_konkurser(region = region_vekt, # Val av region. Börjar med 00 för regioner (och Sverige) i Kolada
-                                              alla_regioner = FALSE, # TRUE om man vill ha alla regioner. Övertrumfar region
-                                              alla_kommuner = TRUE, # TRUE om man vill ha alla kommuner för valda kommuner.
-                                              ta_med_riket = TRUE, # TRUE om man vill ha med riket.
-                                              outputmapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                              filnamn = c("nystartade.xlsx","konkurser.xlsx"), # Filnamn. Bör inte ändras.
-                                              cont_cod = c("N00999","N00926"), # "N00999" om man vill ha nystartade, "N00926" om man vill ha konkurser. Ordning bör vara samma som filnamn
-                                              tid = 1900:2100, # "Om man enbart vill ha senaste år"99" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.
-                                              spara_data = FALSE, # Om man vill spara data
-                                              returnera_data = TRUE)
+  ny_konk_list <- hamta_data_nystartade_konkurser(region = region_vekt, # Val av region.
+                                                  outputmapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
+                                                  filnamn = c("nystartade.xlsx","konkurser.xlsx"), # Filnamn. Bör inte ändras.
+                                                  cont_cod = c("N00999","N00926"), # "N00999" om man vill ha nystartade, "N00926" om man vill ha konkurser. Ordning bör vara samma som filnamn
+                                                  tid = 1900:2100, # "Om man enbart vill ha senaste år"99" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.
+                                                  spara_data = FALSE, # Om man vill spara data
+                                                  returnera_data = TRUE)
   
   
   

@@ -1,10 +1,7 @@
 
 #test_list <- diag_demografi(spara_figur = FALSE,region ="22")
 
-diag_demografi <-function(region = "20", # Val av region. 
-                          alla_regioner = FALSE, # TRUE om man vill ha alla regioner. Övertrumfar region
-                          alla_kommuner = TRUE, # TRUE om man vill ha alla kommuner för valda kommuner.
-                          ta_med_riket = TRUE, # TRUE om man vill ha med riket.
+diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av region. 
                           outputmapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                           filnamn = c("nystartade.xlsx","konkurser.xlsx"), # Filnamn. Bör inte ändras.
                           diag_demo_forsorjning = TRUE, # Demografisk försörjningskvot
@@ -47,10 +44,7 @@ diag_demografi <-function(region = "20", # Val av region.
   # Hämtar data
   source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/main/hamta_data_medelald_demfors_kolada.R")
   
-  df_list = hamta_data_medel_demo(region = region,
-                                  alla_regioner = alla_regioner, 
-                                  alla_kommuner = alla_kommuner, 
-                                  ta_med_riket = ta_med_riket, 
+  df_list = hamta_data_medel_demo(region = region, 
                                   konsuppdelat = konsuppdelat,
                                   cont_cod = c("N00959","N00927"), 
                                   tid = tid, 
