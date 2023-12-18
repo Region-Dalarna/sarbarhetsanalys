@@ -273,16 +273,13 @@ En annan aspekt som kan tänkas påverka sårbarheten i en kommun är utbildning
 
 Sambandet mellan ekonomisk tillväxt/arbetslöshet och utbildningsnivå har även studerats inom akademin. I en rapport från 2006 sammanställde Björklund och Lindahl^[https://www.regeringen.se/rapporter/2005/10/ess-20051/] resultaten från ett stort antal tidigare studier. De kom bland annat fram till att det verkar finnas en kausal (orsak-verkan) koppling mellan utbildningsnivå och dödlighet och att det därför även är rimligt att tänka sig att utbildningsnivån är kopplad till hälsa. Kopplingen mellan utbildning och ekonomisk tillväxt, förändring BNP i detta fall, är däremot mer oklar enligt Björklund och Lindahl. Heller-Sahlgren och Jordahl (2021)^[https://www.ifn.se/publikationer/working-papers/2021/1408/] undersökte sambandet mellan resultaten på PISA undersökningen, vilken mäter hur väl ett lands utbildningssystem fungerar, och ekonomisk tillväxt och fann att länder med bättre PISA-resultat hade högre ekonomisk tillväxt. Enligt författarna är kvaliteten på utbildningen därför viktig för en regions ekonomiska utveckling. Agasisti och Bertoletti (2017)^[https://www.sciencedirect.com/science/article/abs/pii/S0038012119306809] undersökte ett stort antal europeiska regioner och fann att ett större antal universitet i en region medförde att den ekonomiska tillväxten i regionen blev högre. De visade även, precis som Heller-Sahlgren och Jordahl, att kvaliteten på utbildningen är viktig för den ekonomiska utvecklingen.
 
-Andelen av befolkningen (25-64 år) med minst 3 års eftergymnasial utbildning (fortsättningsvis högre utbildning) var 2021 relativt låg i Dalarnas kommuner (se `r paste0("figur ",i+1)`). Bland länets 15 kommuner var det bara Falun som hade en högre utbildningsnivå än Sverige som helhet. Detta beror sannolikt på att Falu lasarett, där många har högre utbildning, är en av stadens största arbetsgivare. Utbildningsnivån i övriga kommuner är avsevärt mycket lägre och i exempelvis Vansbro är andelen med högre utbildning mindre än hälften av andelen med högre utbildning i Falun och Sverige. Dalarna tillhör Sveriges lägst utbildade län, där drygt 21 procent av befolkningen har en högre utbildning, att jämföra med Sverige där ungefär 30 procent av befolkningen (25-64 år) har en högre utbilning. Det är dock viktigt att notera att utbildningsnivån anpassar sig efter efterfrågan i kommunen eller regionen. Om Vansbros arbetsgivare efterfrågar arbetskraft med framförallt gymnasial bakgrund är det orimligt om kommunen har samma genomsnittliga utbildningsnivå som Falun. Matchningen mellan arbetsgivare och arbetstagare skulle helt enkelt bli för dålig. 
-<br>
-<br>
+Andelen av befolkningen (25-64 år) med minst 3 års eftergymnasial utbildning (fortsättningsvis högre utbildning) var 2021 relativt låg i Dalarnas kommuner. Bland länets 15 kommuner var det bara Falun som hade en högre utbildningsnivå än Sverige som helhet. Detta beror sannolikt på att Falu lasarett, där många har högre utbildning, är en av stadens största arbetsgivare. Utbildningsnivån i övriga kommuner är avsevärt mycket lägre och i exempelvis Vansbro är andelen med högre utbildning mindre än hälften av andelen med högre utbildning i Falun och Sverige. Dalarna tillhör Sveriges lägst utbildade län, där drygt `r round(andel_hogutbildade %>% filter(region == "Dalarna", utbildningsnivå == "Eftergymnasial utbildning, 3 år eller mer") %>% .$andel,0)` procent av befolkningen har en högre utbildning, att jämföra med Sverige där ungefär `r round(andel_hogutbildade %>% filter(region == "Sverige", utbildningsnivå == "Eftergymnasial utbildning, 3 år eller mer") %>% .$andel,0)` procent av befolkningen (25-64 år) har en högre utbildning. Det är dock viktigt att notera att utbildningsnivån anpassar sig efter efterfrågan i kommunen eller regionen. Om Vansbros arbetsgivare efterfrågar arbetskraft med framförallt gymnasial bakgrund är det orimligt om kommunen har samma genomsnittliga utbildningsnivå som Falun. Matchningen mellan arbetsgivare och arbetstagare skulle helt enkelt bli för dålig. 
+
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-knitr::include_graphics(here("Diagram","utbildningsniva_jmf_lan.png"))
-i=i+1
+
+gg_utbniva
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Utbildningsnivå")`
-</p>
 
 ### 2.6 Sammanfattning
 Syftet med den här rapporten har varit att illustrera hur väl Dalarnas kommuner skulle hantera en företags- eller branschkris som får stora effekter på samhällets, eller det enskilda företagets, ekonomi. Utgångspunkten har varit Tillväxtverkets rapport "Kommuners sårbarhet vid företagsnedläggningar", där kommuners sårbarhet och förutsättning till återhämtning efter stora nedläggningar eller andra kriser studeras.Vid sidan om en klassificering av kommuner som sårbara och icke sårbara, innehåller Tillväxtverkets rapport såväl tips för hur kommuner kan minska sin sårbarhet, som sårbarhetens utveckling över tid. Tillväxtverkets rapport bör därför läsas av alla kommuner. 
@@ -316,16 +313,21 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Avesta var år 2021 Avesta kommun med strax över 2000 anställda. Bland privata arbetsgivare hade Outokumpu Stainless flest anställda med ca 850. Även Stora Enso och Region Dalarna är stora arbetsgivare i Avesta
-<br>
-<br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Avesta_2021.png"))
-i=i+1
+```{r, echo=FALSE, include = FALSE}
+# Mindre justering av inläst data
+
+storsta_arbetsgivare <- storsta_arbetsgivare %>% 
+  rename(antal_anstallda = `antal anställda`)
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
+
+Den största arbetsgivaren i Avesta var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Avesta") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med strax över 2000 anställda. Bland privata arbetsgivare hade Outokumpu Stainless flest anställda med ca `r storsta_arbetsgivare %>% filter(Kommun == "Avesta",Arbetsgivare == "Outokumpu Stainless AB") %>% .$antal_anstallda`. Även Stora Enso och Region Dalarna är stora arbetsgivare i Avesta
+
+```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+
+gg_storsta_foretag$Avesta
+
+```
 
 När det kommer till företagandet ligger Avesta något under genomsnittet i Dalarna både vad gäller antalet arbetsställen och antalet nystartade företag (per 1000 invånare). Antalet företag som krävs för att komma upp i hälften av den totala lönesumman inom det privata näringslivet är dessutom relativt få (19 st), vilket indikerar ett ganska stort beroende. Det kan delvis förklaras med att Avesta har ett antal stora arbetsgivare inom framförallt tillverkningsindustrin. Positivt är att Avesta samtidigt har en relativt stor branschbredd, 5:e bäst i Dalarna med runt 40 procent av alla branscher representerade.
 
@@ -353,16 +355,13 @@ i=i+1
     `r paste0("Figur ",i," : Största branscher")`
 </p>
 
-Den största arbetsgivaren i Borlänge var år 2021 Borlänge kommun med runt 5 500 anställda. Bland privata arbetsgivare hade SSAB flest anställda med ca 1 600. Även Trafikverket är en viktig arbetsgivare med ungefär 1 500 anställda på sitt huvudkontor i Borlänge.
-<br>
-<br>
+Den största arbetsgivaren i Borlänge var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Borlänge") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade SSAB flest anställda med ca `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge",Arbetsgivare == "SSAB Emea AB") %>% .$antal_anstallda,100),big.mark =" ")`. Även Trafikverket är en viktig arbetsgivare med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge",Arbetsgivare == "Trafikverket") %>% .$antal_anstallda,100),big.mark =" ")` anställda på sitt huvudkontor i Borlänge.
+
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","Storsta_arbetsgivare_Borlänge_2021.png"))
-i=i+1
+
+gg_storsta_foretag$Borlänge
+
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största arbetsgivare")`
-</p>
 
 Antal företag per 1 000 invånare i Borlänge är ungefär på samma nivå som genomsnittligt för Dalarna, men antalet nystartade företag är relativt få i kommunen. Borlänge är dessutom den kommun där näst minst antal personer per 1 000 invånare räknas som företagssamma. Positivt ur sårbarhetssynvinkel är dock att Borlänge är näst bäst i Dalarna vad gäller såväl branschbredd som antal företag som står för minst 50 procent av lönesumman, något som delvis kan tillskrivas kommunens storlek (Dalarnas största kommun näst efter Falun). Noterbart är dock att Borlänge har ett par stora företag inom det privata näringslivet, exempelvis SSAB, vilket ses som en potentiell riskfaktor enligt denna modell.
 

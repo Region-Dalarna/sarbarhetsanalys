@@ -2,19 +2,18 @@
 # Funktioner som sourcas från Region Dalarna
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
 
-#test_list=diag_utbniva(spara_figur = FALSE,uppdelning_kon = FALSE)
+#test_list=diag_utbniva(spara_figur = FALSE,uppdelning_kon = TRUE)
 diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Använd förslagsvis hamtakommuner eller hamtaallalan
                          lan_fokus = "20", # Vilket län vill man fokusera på (i diagrammet)
                          alder = c(as.character(25:64)), # Välj ett intervall (inte "*"). 16-74 är möjligt
-                         uppdelning_kon = FALSE, 
-                         valda_farger = diagramfarger("rus_tre_fokus"),
-                         valda_farger_kon = diagramfarger("kon"),
+                         uppdelning_kon = FALSE, # Dela upp diagram på kön eller inte
+                         valda_farger = diagramfarger("rus_tre_fokus"), # Valda färger.
+                         valda_farger_kon = diagramfarger("kon"), # Valda färger för könsuppdelat digram
                          output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Outputmapp
-                         spara_figur = TRUE,
-                         returnera_data = TRUE){
+                         spara_figur = TRUE, # Skall figuren sparas
+                         returnera_data = TRUE){ # Skall data returneras
   
-  # ===========================================================================================================
-  #
+  # ===========================================================================================================  #
   # Diagram som tar fram andelen av befolkningen med minst 3 års eftergymnasial utbildning
   # Finns uppdelat på kön men bara senaste år
   # Skapad av Jon Frank
@@ -36,7 +35,7 @@ diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedr
                             alder = alder,
                             utbildningsniva_klartext = "*",
                             tid = "9999", # "Om man enbart vill ha senaste år"9999" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.
-                            spara_data = FALSE, # Om man vill spara data
+                            spara_data = FALSE, 
                             returnera_data = TRUE)
   
   df <- df %>% 
@@ -94,7 +93,7 @@ diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedr
                                diagram_facet = FALSE,
                                x_axis_sort_value = TRUE,
                                x_axis_lutning = 45,
-                               x_var_fokus = NA,
+                               x_var_fokus = ifelse(uppdelning_kon == TRUE,NA,"fokus"),
                                legend_vand_ordning = FALSE,
                                manual_y_axis_title = "procent",
                                output_mapp = output_mapp,

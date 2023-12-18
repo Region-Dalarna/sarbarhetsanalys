@@ -5,6 +5,8 @@
 if (!require("pacman")) install.packages("pacman")
 p_load(here)
 
+source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
+
 # Här hamnar Excelfilerna
 Output_mapp = "G:/skript/projekt/data/sarbarhetsanalys/"
 Output_mapp_figur = here("Figurer","/")
@@ -96,6 +98,19 @@ gg_medel_demo <- diag_demografi(outputmapp = Output_mapp_figur,
                                 valda_farger = "rus_sex",
                                 spara_figur = TRUE,
                                 returnera_data = TRUE)
+
+# Andel av befolkningen med eftergymnasial utbildning (3 år)
+source(here("Skript","diagram_utbniva_andelhog.R"), encoding="UTF-8")
+gg_utbniva <- diag_utbniva(output_mapp = Output_mapp_figur,
+                           spara_figur = TRUE,
+                           returnera_data = TRUE)
+
+# De största företagen i varje kommun
+source("G:/skript/diagram/diag_storsta_arbetsgivare_kommun.R", encoding = "utf-8", echo = FALSE)
+gg_storsta_foretag <- diag_storsta_arbetsgivare_kommun(valda_kommuner = hamtakommuner("20",tamedlan=FALSE,tamedriket=FALSE),
+                                                      skriv_fil = FALSE,
+                                                      output_mapp = Output_mapp,
+                                                      returnera_data = TRUE)
 
 #####################
 ##### Inte API #####
