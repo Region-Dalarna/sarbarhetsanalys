@@ -144,7 +144,7 @@ En indikator är antalet privata arbetsställen (med minst 1 anställd), och i D
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
-gg_arbetsstallen
+knitr::include_graphics(here("Figurer","antal_arbetsstallen.png"))
 
 ```
 

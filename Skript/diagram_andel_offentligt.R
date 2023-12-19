@@ -24,8 +24,10 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
          openxlsx)
   
   gg_list <- list() # Skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
+  list_data <- list() # Skapar en tom lista som används för att spara data 
   i <- 1 # Räknare
   objektnamn <- c() # Används för att namnge
+  
   
   # Data som sourcas från Region Dalarna
   source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
@@ -60,10 +62,9 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
              region = region %>% skapa_kortnamn_lan()) %>% 
          rename(sektor = `arbetsställets sektortillhörighet`) %>% 
           ungroup()
-    
+
     if(spara_data == TRUE){
-      write.xlsx(andel_totalt_utskrift,paste0(output_mapp_data,"andel_offentligt.xlsx"))
-      # assign("andel_off_tot_df", andel_totalt_utskrift, envir = .GlobalEnv)
+      list_data <- c(list_data,list("Totalt" = andel_totalt_utskrift))
     }
       
     diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_totalt_utskrift$år))
@@ -115,9 +116,9 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
                region = region %>% skapa_kortnamn_lan()) %>% 
           rename(sektor = `arbetsställets sektortillhörighet`) %>% 
             ungroup()
-    
-    if(returnera_data == TRUE){
-      assign("andel_off_kon_df", andel_kon_utskrift, envir = .GlobalEnv)
+
+    if(spara_data == TRUE){
+      list_data <- c(list_data,list("Kön" = andel_kon_utskrift))
     }
     
     diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_kon_utskrift$år))
@@ -149,6 +150,10 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
     gg_list[[i]] <- gg_obj
     i=i+1
     
+  }
+  
+  if(spara_data == TRUE){
+    write.xlsx(list_data,paste0(output_mapp_data,"andel_offentligt.xlsx"))
   }
   
   names(gg_list) <- c(objektnamn)

@@ -1,14 +1,15 @@
 
 #test_list=diag_foretagarna(spara_figur=FALSE,region_vekt = "22")
 diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
-                             output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
+                             output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
+                             output_mapp_data = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", 
                              spara_figur = TRUE, # Skall figuren sparas
                              valda_farger = "rus_tre_fokus",
                              valda_farger_foretagssamma = "rus_sex",
                              diag_arbetsstallen = TRUE, # Figur över arbetsstälen
                              diag_nyforetagsamma = TRUE, # Nyförtagssamma 
                              diag_foretagsamma = TRUE,# Företagssamma
-                             returnera_data = FALSE){ # Skall data läggas i R-studios globala miljö
+                             spara_data = FALSE){ # Skall data läggas i R-studios globala miljö
   
   # ========================================== Allmän info ============================================
   
@@ -36,6 +37,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
   ValdGeografi <- hamtaregion_kod_namn(region_vekt)$region
   
   gg_list <- list()  # skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
+  list_data <- list() # Skapar en tom lista som används för att spara data 
   objektnamn <- c()
   # ========================================== Läser in data ============================================
   # Vilka kommuner skall väljas
@@ -71,12 +73,16 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
     
     arbetsstallen_df_utskrift<-rbind(arbetsstallen_df_kommun,arbetsstallen_df_kommun_sum,arbetsstallen_df_riket)
     
-    if(returnera_data == TRUE){
-      assign("Arbetsstallen", arbetsstallen_df_utskrift, envir = .GlobalEnv)
+    # if(returnera_data == TRUE){
+    #   assign("Arbetsstallen", arbetsstallen_df_utskrift, envir = .GlobalEnv)
+    # }
+    
+    if(spara_data == TRUE){
+      list_data <- c(list_data,list("Arbetsstallen" = arbetsstallen_df_utskrift))
     }
     
     diagramtitel <- paste0("Antal privata arbetsställen per 1000 invånare år ",max(arbetsstallen_df_utskrift$year))
-    diagramfilnamn <- paste0("arbetsstallen_per_1000.png")
+    diagramfilnamn <- paste0("antal_arbetsstallen.png")
     objektnamn <- c(objektnamn,"arbetsställen")
     
     gg_obj <- SkapaStapelDiagram(skickad_df =arbetsstallen_df_utskrift %>% 
@@ -94,7 +100,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                                  x_var_fokus = "fokus",
                                  x_axis_lutning = 45,
                                  x_axis_sort_value = TRUE,
-                                 output_mapp = output_mapp,
+                                 output_mapp = output_mapp_figur,
                                  filnamn_diagram = diagramfilnamn,
                                  skriv_till_diagramfil = spara_figur)
     
@@ -129,13 +135,13 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
       mutate("Kommun" = "Sverige")
     
     nyforetagsamma_df_utskrift<-rbind(nyforetagsamma_df_kommun,nyforetagsamma_df_kommun_sum,nyforetagsamma_df_riket)
-    
-    if(returnera_data == TRUE){
-      assign("nyforetagsamma", nyforetagsamma_df_utskrift, envir = .GlobalEnv)
+
+    if(spara_data == TRUE){
+      list_data <- c(list_data,list("Nyforetagsamma" = nyforetagsamma_df_utskrift))
     }
     
     diagramtitel <- paste0("Antal nyföretagsamma per 1000 invånare i Dalarnas län ",max(nyforetagsamma_df_utskrift$year))
-    diagramfilnamn <- paste0("nyforetagsamma_per_1000.png")
+    diagramfilnamn <- paste0("antal_nyforetagsamma.png")
     objektnamn <- c(objektnamn,"nyföretagssamma")
     
     gg_obj <- SkapaStapelDiagram(skickad_df =nyforetagsamma_df_utskrift %>% 
@@ -153,7 +159,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                                  x_axis_lutning = 45,
                                  x_var_fokus = "fokus",
                                  x_axis_sort_value = TRUE,
-                                 output_mapp = output_mapp,
+                                 output_mapp = output_mapp_figur,
                                  filnamn_diagram = diagramfilnamn,
                                  skriv_till_diagramfil = spara_figur)
     
@@ -171,12 +177,12 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
       pivot_longer(3:(ncol(foretagsamma_df)-1),names_to="year",values_to = "Andel_foretagsamma") %>% 
       rename("Kategorier"=Delserie.1)
     
-    # Filtrerar ut Dalarnas kommuner
+    # Filtrerar ut kommuner
     foretagsamma_df_kommun <- foretagsamma_df %>% 
       filter(Kommun %in% kommuner$region,Kategorier == "Andel företagsamma individer",year %in% max(year))
-    
-    if(returnera_data == TRUE){
-      assign("företagssamma", foretagsamma_df_kommun, envir = .GlobalEnv)
+
+    if(spara_data == TRUE){
+      list_data <- c(list_data,list("Foretagsamma" = foretagsamma_df_kommun))
     }
     
     diagramtitel <- paste0("Andel företagsamma ",max(foretagsamma_df_kommun$year))
@@ -195,12 +201,17 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                                  diagram_facet = FALSE,
                                  x_axis_lutning = 45,
                                  x_axis_sort_value = TRUE,
-                                 output_mapp = output_mapp,
+                                 output_mapp = output_mapp_figur,
                                  filnamn_diagram = diagramfilnamn,
                                  skriv_till_diagramfil = spara_figur)
     
     gg_list <- c(gg_list, list(gg_obj))
     
+  }
+  
+  # Sparar data
+  if(spara_data == TRUE){
+    write.xlsx(list_data,paste0(output_mapp_data,"data_foretagarna_ut.xlsx"))
   }
 
   names(gg_list) <- objektnamn

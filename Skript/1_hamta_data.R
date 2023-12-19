@@ -71,12 +71,13 @@ gg_pendling = diag_pendling_over_kommungrans(output_mapp_figur = Output_mapp_fig
 
 # Antal arbetsställen 
 source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
-gg_arbetsstallen = diag_foretagarna(output_mapp = Output_mapp_figur,
-                                    spara_figur = TRUE, 
+gg_arbetsstallen = diag_foretagarna(output_mapp_figur = Output_mapp_figur,
+                                    output_mapp_data = Output_mapp_data,
+                                    spara_figur = TRUE,
+                                    spara_data = TRUE,
                                     diag_arbetsstallen = TRUE,
                                     diag_nyforetagsamma = FALSE,
-                                    diag_foretagsamma = FALSE,
-                                    returnera_data = TRUE)
+                                    diag_foretagsamma = FALSE)
 
 # Antal nystartade företag och antalet konkurser
 source(here("Skript","diagram_nyst_arbetslosa.R"), encoding="UTF-8")
