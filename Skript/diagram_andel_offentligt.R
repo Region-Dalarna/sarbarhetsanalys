@@ -3,10 +3,11 @@
 diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Kräver att man laddat 
                                      alder_klartext = "*", # Ålder. Andra val: 16-19 år, 20-24 år, 25-34 år, 35-44 år, 45-54 år, 55-59 år, 60-64 år, 65+ år. Max 1 åt gången
                                      output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
+                                     output_mapp_data = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                                      vald_farg = "rus_sex", # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
                                      spara_figur = TRUE, # Sparar figuren till output_mapp_figur
+                                     spara_data = FALSE, # Sparar den data som används i figuren till Excel.
                                      returnera_figur = TRUE, # Om man vill att figuren skall returneras från funktionen
-                                     returnera_data = FALSE, # Data läggs upp i R-Studios globala miljö (för användning i exempelvis R-markdown)
                                      diag_totalt = TRUE, # Skriver ut diagram för kön totalt
                                      diag_kon = TRUE # Skriver ut diagram uppdelat på kön
 ){
@@ -60,8 +61,9 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
          rename(sektor = `arbetsställets sektortillhörighet`) %>% 
           ungroup()
     
-    if(returnera_data == TRUE){
-      assign("andel_off_tot_df", andel_totalt_utskrift, envir = .GlobalEnv)
+    if(spara_data == TRUE){
+      write.xlsx(andel_totalt_utskrift,paste0(output_mapp_data,"andel_offentligt.xlsx"))
+      # assign("andel_off_tot_df", andel_totalt_utskrift, envir = .GlobalEnv)
     }
       
     diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_totalt_utskrift$år))

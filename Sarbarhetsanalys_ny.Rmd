@@ -37,10 +37,10 @@ uppdatera_hemsida = FALSE
 # Läser in data
 arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
 arbetsmarknadsstatus <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus.xlsx")
-# langtidsarbetsloshet_df <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet.csv",encoding="UTF-8")
-# andel_offentligt_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
-# pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling_kommun.xlsx")
-# arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/foretagarna.xlsx",sheet =1)
+langtidsarbetsloshet <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/langtidsarbetsloshet.csv",encoding="UTF-8")
+andel_offentligt <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
+pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling.xlsx")
+arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/foretagarna.xlsx",sheet =1)
 # Nystartade_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
 # Konkurser_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
 i=1
@@ -113,17 +113,17 @@ I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma m
 
 ```{r, include = TRUE}
 
-gg_långtidsarbetsloshet
+knitr::include_graphics(here("Figurer","langtidsarbetsloshet.png"))
 
 ```
 
 Verksamheter som finansieras genom offentliga medel, såsom kommuner och regioner, kan påverkas annorlunda än privata företag i sämre tider. Exempelvis bör finnas ett grundläggande behov av vissa offentliga tjänster som torde vara åtminstone konstant. En lågkonjunktur som drabbar näringslivet ger ofta ett snabbt utslag genom en högre arbetslöshet i privat sektor^[https://www.nationalekonomi.se/sites/default/files/legacy/29-1-pl.pdf], medan offentlig sektor kan fungera som vanligt ett par år i början av en kris. När skatteintäkterna minskar kan det kräva neddragningar även för offentliga verksamheter, alternativt kan politiker genom offentlig sektor bidra till att stimulera efterfrågan i ekonomin. Hypotesen är således att kommuner med en stadig andel offentlig verksamhet både har en arbetsmarknad som är mer varierad och kan stå emot en kris bättre på grund av att offentlig sektor har verktyg att stimulera efterfrågan med.
 
-I Dalarna är `r andel_off_tot_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$region` den kommun där störst andel arbetar inom offentlig verksamhet, ungefär `r round(andel_off_tot_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$Andel_forv,0)` procent av de förvärvsarbetande. Motsvarande siffra i `r andel_off_tot_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$region`, med lägst andel, är bara runt `r round(andel_off_tot_df %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$Andel_forv,0)` procent. Även i Falun arbetar många inom offentlig verksamhet, vilket delvis kan förklaras av att Dalarnas största arbetsgivare, Falu lasarett med över 3 000 anställda, ligger där.
+I Dalarna är `r andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$region` den kommun där störst andel arbetar inom offentlig verksamhet, ungefär `r round(andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$Andel_forv,0)` procent av de förvärvsarbetande. Motsvarande siffra i `r andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$region`, med lägst andel, är bara runt `r round(andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$Andel_forv,0)` procent. Även i Falun arbetar många inom offentlig verksamhet, vilket delvis kan förklaras av att Dalarnas största arbetsgivare, Falu lasarett med över 3 000 anställda, ligger där.
 
 ```{r, include = FALSE}
 
-gg_andel_offentligt
+knitr::include_graphics(here("Figurer","andel_offentligt_totalt.png"))
 
 ```
 
@@ -131,7 +131,7 @@ För att fördjupa förståelsen för arbetsmarknaders funktionssätt bör lokal
 
 ```{r, include = TRUE}
 
-gg_pendling
+knitr::include_graphics(here("Figurer","in_utpendling_procent_Dalarna2021.png"))
 
 ```
 

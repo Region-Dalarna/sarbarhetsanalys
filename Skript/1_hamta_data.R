@@ -8,7 +8,7 @@ p_load(here)
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
 
 # Här hamnar Excelfilerna
-Output_mapp_Excel = "G:/skript/projekt/data/sarbarhetsanalys/"
+Output_mapp_data = "G:/skript/projekt/data/sarbarhetsanalys/"
 Output_mapp_figur = here("Figurer","/")
 
 
@@ -19,7 +19,7 @@ Output_mapp_figur = here("Figurer","/")
 # Arbetslöshet 76
 source(here("Skript","diagram_arbetsloshet_76.R"), encoding="UTF-8")
 gg_arbetsloshet_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
-                                                   output_mapp_excel = Output_mapp_Excel,
+                                                   output_mapp_excel = Output_mapp_data,
                                                    output_mapp_figur = Output_mapp_figur,
                                                    vald_farg = "rus_sex",
                                                    spara_data = TRUE,
@@ -27,7 +27,7 @@ gg_arbetsloshet_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
 
 # Arbetslöshet och sysselsättningsgrad
 source(here("Skript","diagram_arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
-gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(Output_mapp_Excel = Output_mapp_Excel,
+gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(Output_mapp_Excel = Output_mapp_data,
                                                               output_mapp_figur = Output_mapp_figur,
                                                               diag_arbetskraftsdeltagande = FALSE,
                                                               diag_farger = "rus_tre_fokus",
@@ -40,31 +40,34 @@ source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")
 gg_långtidsarbetsloshet = diagram_langtidsarb(region = c("0020"),
                                               ta_med_riket = TRUE,
                                               outputmapp = Output_mapp_figur,
+                                              outputmapp_data = Output_mapp_data,
                                               jmf_ar = TRUE,
                                               returnera_figur = TRUE,
-                                              returnera_data = TRUE,
                                               spara_figur = TRUE,
-                                              vald_farg = "rus_sex")
+                                              spara_data = TRUE,
+                                              vald_farg = diagramfarger("rus_sex"))
 
 # Andel som jobbar i offentlig sektor
 source(here("Skript","diagram_andel_offentligt.R"), encoding="UTF-8")
 gg_andel_offentligt = diagram_andel_offentligt(output_mapp_figur= Output_mapp_figur,
+                                               output_mapp_data = Output_mapp_data,
                                                diag_totalt = TRUE,
                                                diag_kon = FALSE,
                                                vald_farg = "rus_sex",
-                                               returnera_data = TRUE,
                                                returnera_figur = TRUE,
-                                               spara_figur = TRUE)
+                                               spara_figur = TRUE,
+                                               spara_data = TRUE)
 
 # Andel pendling i kommun  
 source("G:/skript/diagram/diag_pendlare_over_kommungrans.R")
-gg_pendling = diag_pendling_over_kommungrans(output_mapp = Output_mapp_figur,
+gg_pendling = diag_pendling_over_kommungrans(output_mapp_figur = Output_mapp_figur,
+                                             output_mapp_data = Output_mapp_data,
+                                             spara_data = TRUE,
                                              skapa_fil = TRUE, 
                                              diagramfarg_vektor = diagramfarger("rus_sex"),
                                              enbart_in_ut = TRUE,
                                              diag_absoluta_tal = FALSE,           
-                                             diag_procent = TRUE,
-                                             returnera_data = TRUE)
+                                             diag_procent = TRUE)
 
 # Antal arbetsställen 
 source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")

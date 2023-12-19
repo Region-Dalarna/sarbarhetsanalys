@@ -41,6 +41,7 @@ diagram_langtidsarb = function(region = c("0020"),
                                                    cond_code = c("N03923"),
                                                    returnera_data = TRUE,
                                                    spara_data = spara_data,
+                                                   filnamn = "langtidsarbetsloshet.csv",
                                                    outputmapp = outputmapp_data,
                                                    senaste_ar = FALSE,
                                                    tid = tid)
@@ -87,7 +88,7 @@ diagram_langtidsarb = function(region = c("0020"),
                                     diagram_capt = diagram_capt,
                                     procent_0_100_10intervaller = TRUE,
                                     stodlinjer_avrunda_fem = TRUE,
-                                    output_mapp = outputmapp,
+                                    output_mapp = outputmapp_figur,
                                     filnamn_diagram = "langtidsarbetsloshet.png",
                                     skriv_till_diagramfil = spara_figur)
   gg_list[[i]] <- gg_obj
