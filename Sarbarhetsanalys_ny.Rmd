@@ -39,8 +39,8 @@ arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsl
 arbetsmarknadsstatus <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus.xlsx")
 langtidsarbetsloshet <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/langtidsarbetsloshet.csv",encoding="UTF-8")
 andel_offentligt <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
-pendling_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling.xlsx")
-arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/foretagarna.xlsx",sheet =1)
+pendling <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling.xlsx")
+Arbetsstallen <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/data_foretagarna_ut.xlsx",sheet =1)
 # Nystartade_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
 # Konkurser_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
 i=1
@@ -140,7 +140,7 @@ Sammanfattningsvis är sårbarheten låg i Gagnef och Säter kopplad till arbets
 ### 2.3 Företagande
 Förutom det jobbskapande som sker i befintliga och expanderande företag, kan även nyskapade företag stå för en del av jobbskapandet^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html]. I det här avsnittet presenteras indikatorer som kan vara viktiga förutsättningar för ett gott företagsklimat, dessa är antalet privata arbetsställen/1000 invånare, nystartade företag/1000 invånare, antal konkurser/1000 invånare samt andel företagsamma individer.
 
-En indikator är antalet privata arbetsställen (med minst 1 anställd), och i Dalarna finns det något fler sådana i jämförelse med i Sverige. I Dalarna fanns `r max(Arbetsstallen$year)` ungefär `r round(Arbetsstallen %>% filter(Kommun == "Dalarna") %>% .$Arb_stallen,0)` privata arbetsställen per 1000 invånare, att jämföra med drygt `r round(Arbetsstallen %>% filter(Kommun == "Sverige") %>% .$Arb_stallen,0)` i Sverige. Bland Dalarnas kommuner är variationen stor, där `r Arbetsstallen %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Kommun`  har klart flest med `r round(Arbetsstallen %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Arb_stallen,0)` per 1000 invånare, medan Smedjebacken och Ludvika återfinns på andra sidan spektrumet med ungefär hälften så många privata arbetsställen per 1 000 invånare.
+En indikator är antalet privata arbetsställen (med minst 1 anställd), och i Dalarna finns det något fler sådana i jämförelse med i Sverige. I Dalarna fanns `r max(Arbetsstallen$year)` ungefär `r round(Arbetsstallen %>% filter(Kommun == "Dalarna") %>% .$Arb_stallen,0)` privata arbetsställen per 1000 invånare, att jämföra med drygt `r round(Arbetsstallen %>% filter(Kommun == "Sverige") %>% .$Arb_stallen,0)` i Sverige. Bland Dalarnas kommuner är variationen stor, där `r Arbetsstallen %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Kommun` har klart flest med `r round(Arbetsstallen %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Arb_stallen,0)` per 1000 invånare, medan Smedjebacken och Ludvika återfinns på andra sidan spektrumet med ungefär hälften så många privata arbetsställen per 1 000 invånare.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 

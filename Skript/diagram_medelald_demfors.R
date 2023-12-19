@@ -3,14 +3,12 @@
 
 diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av region. 
                           outputmapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                          filnamn = c("nystartade.xlsx","konkurser.xlsx"), # Filnamn. Bör inte ändras.
                           diag_demo_forsorjning = TRUE, # Demografisk försörjningskvot
                           diag_demo_medelalder = TRUE, # Medelålder
-                          konsuppdelat = FALSE, # Om TRUE jämförs kön för senaset år, om FALSE jämförs första och sista år i sample
+                          konsuppdelat = FALSE, # Om TRUE jämförs kön för senaste år, om FALSE jämförs första och sista år i sample
                           valda_farger = "rus_sex",
                           tid = 2007:2100,
                           spara_figur = TRUE,
-                          spara_data = FALSE, # Om man vill spara data
                           returnera_data = TRUE){ # Om TRUE returneras data till R-Studios globala miljö
   
   # ===========================================================================================================
@@ -44,14 +42,13 @@ diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket
   df_list = hamta_data_medel_demo(region = region, 
                                   konsuppdelat = konsuppdelat,
                                   cont_cod = c("N00959","N00927"), 
-                                  tid = tid, 
-                                  spara_data = spara_data, 
+                                  tid = tid,
                                   returnera_data = returnera_data)
 
   
   if(diag_demo_forsorjning==TRUE){
     
-    demo_df <- df_list[[2]] %>% 
+    demo_df <- df_list[["Demografisk_forsorjningskvot"]] %>% 
       mutate(municipality = skapa_kortnamn_lan(byt_namn_lan_kolada(municipality),TRUE),
              value = value*100)
     
@@ -103,7 +100,7 @@ diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket
   
   if(diag_demo_medelalder==TRUE){
     
-    medelalder_df <- df_list[[1]] %>% 
+    medelalder_df <- df_list[["Medelalder"]] %>% 
       mutate(municipality = skapa_kortnamn_lan(byt_namn_lan_kolada(municipality),TRUE))
     
     if(returnera_data == TRUE){
