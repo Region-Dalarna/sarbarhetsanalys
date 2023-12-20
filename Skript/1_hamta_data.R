@@ -26,11 +26,10 @@ diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
 
 # Arbetslöshet och sysselsättningsgrad
 source(here("Skript","diagram_arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
-gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(Output_mapp_Excel = Output_mapp_data,
+gg_arbetsmarknadsstatus = diagram_arbetsmarknadsstatus_kommun(output_mapp_data = Output_mapp_data,
                                                               output_mapp_figur = Output_mapp_figur,
                                                               diag_arbetskraftsdeltagande = FALSE,
-                                                              diag_farger = "rus_tre_fokus",
-                                                              spara_data = TRUE,
+                                                              valda_farger = diagramfarger("rus_tre_fokus"),
                                                               spara_figur = TRUE,
                                                               returnera_figur = TRUE)
 

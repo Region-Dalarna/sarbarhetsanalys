@@ -2,15 +2,14 @@
 #test = diagram_arbetsmarknadsstatus_kommun(spara_figur = FALSE,diag_arbetskraftsdeltagande = FALSE,kon_klartext = c("kvinnor", "män"),diag_farger = "kon")
 diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20"), # Använd förslagsvis hamtakommuner och hamtaallalan
                                                fokus_lan = "20", # Måste väljas. Det län som, vid sidan om riket, fokuseras i figuren
-                                               spara_data = TRUE, # Vill man spara data till Excel
-                                               Output_mapp_Excel = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Outputmapp för data
-                                               filnamn_Excel = "arbetsmarknadsstatus.xlsx", # Filnamn för Excelfil
+                                               output_mapp_data = NA, # Outputmapp för data
+                                               filnamn_data = "arbetsmarknadsstatus.xlsx", # Filnamn för datafil
                                                output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Outputmapp för figur
                                                spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                                returnera_figur = TRUE, # Returnerar en figur
                                                kon_klartext = "totalt", # Finns även c("kvinnor","män") om man vill ha könsuppdelat
                                                alder_klartext = "20-64 år", # finns: 15-19 år, 16-19 år, 20-24 år, 25-29 år, 30-34 år, 35-39 år, 40-44 år, 45-49 år, 50-54 år, 55-59 år, 60-64 år, 65-69 år, 70-74 år, 15-74 år, 16-64 år, 16-65 år, 20-64 år, 20-65 år
-                                               diag_farger = "rus_tre_fokus", # Ändra till kon om man vill ha de färgerna
+                                               valda_farger = diagramfarger("rus_tre_fokus"), # Ändra till kon om man vill ha de färgerna
                                                diag_arbetslosthet = TRUE, # True för figur för arbetsloshet
                                                diag_arbetskraftsdeltagande = TRUE, # "" arbetskraftsdeltagande
                                                diag_sysselsattningsgrad = TRUE){ # "" sysselsättningsgrad
@@ -45,9 +44,9 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
   # Tar bort län i länsnamn och gör om riket till Sverige
   arbetsmarknadsstatus_df$region = skapa_kortnamn_lan(arbetsmarknadsstatus_df$region,byt_ut_riket_mot_sverige = TRUE)
   
-  if(spara_data == TRUE){
+  if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
     flik_lista=lst("Arbetsmarknadsstatus" = arbetsmarknadsstatus_df)
-    write.xlsx(flik_lista,paste0(Output_mapp_Excel,filnamn_Excel))
+    write.xlsx(flik_lista,paste0(output_mapp_data,filnamn_data))
   }
   
   
@@ -68,7 +67,7 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  manual_y_axis_title = "procent",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger(diag_farger),
+                                 manual_color = valda_farger,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,
                                  x_var_fokus = ifelse("totalt" %in% kon_klartext,"fokus",NA),
@@ -99,7 +98,7 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  manual_y_axis_title = "procent",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger(diag_farger),
+                                 manual_color = valda_farger,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,
                                  x_var_fokus = ifelse("totalt" %in% kon_klartext,"fokus",NA),
@@ -130,7 +129,7 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  manual_y_axis_title = "procent",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger(diag_farger),
+                                 manual_color = valda_farger,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,
                                  x_var_fokus = ifelse("totalt" %in% kon_klartext,"fokus",NA),
