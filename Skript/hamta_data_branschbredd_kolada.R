@@ -4,7 +4,7 @@ source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_AP
 source("https://raw.githubusercontent.com/JonFrank81/funktioner/main/func_API_alternativ.R")
 
 hamta_data_branschbredd <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av region.
-                                   outputmapp = NA, # Här hamnar data som sparas
+                                   output_mapp = NA, # Här hamnar data som sparas
                                    filnamn = c("branschbredd.xlsx"), # Filnamn.
                                    tid = 1900:2100, # "Om man enbart vill ha senaste år skriv "9999". Välj ett högt värde som sista värde om alla år skall vara med
                                    returnera_data = TRUE){ # Om data skall returneras som en dataframe
