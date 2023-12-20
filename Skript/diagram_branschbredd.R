@@ -1,7 +1,9 @@
 #test_list <- diag_branschbredd(region_vekt = "0022",spara_figur = FALSE,returnera_data = TRUE)
 diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av region.
-                            output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                            valda_farger = "rus_sex",
+                            output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
+                            output_mapp_data = NA,
+                            filnamn_data = "branschbredd.xlsx",
+                            valda_farger = diagramfarger("rus_sex"),
                             spara_figur = TRUE, # Om true sparas figuren till output_mapp
                             returnera_data = FALSE){ # Om TRUE, returneras data till R-studios globala miljö 
   
@@ -28,10 +30,9 @@ diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,ta
   # Hämtar data
   source(here("Skript","hamta_data_branschbredd_kolada.R"), encoding="UTF-8")
   df <- hamta_data_branschbredd (region = region_vekt,
-                                 outputmapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                 filnamn = c("branschbredd.xlsx"), # Filnamn.
-                                 tid = 1900:2100, # "Om man enbart vill ha senaste år"9999" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.
-                                 spara_data = FALSE, # Om man vill spara data
+                                 outputmapp = output_mapp_data,
+                                 filnamn = filnamn_data, 
+                                 tid = 1900:2100, 
                                  returnera_data = TRUE)
   
 
@@ -51,7 +52,7 @@ diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,ta
                                skickad_x_grupp = "year",
                                manual_x_axis_text_vjust=1,
                                manual_x_axis_text_hjust=1,
-                               manual_color = diagramfarger(valda_farger),
+                               manual_color = valda_farger,
                                x_axis_sort_value = TRUE,
                                x_axis_sort_grp = 2,
                                vand_sortering = TRUE,
