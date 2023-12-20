@@ -3,13 +3,14 @@
 diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                              output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
                              output_mapp_data = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", 
+                             filnamn_data = "data_foretagarna_ut.xlsx",
+                             returnera_figur = TRUE,
                              spara_figur = TRUE, # Skall figuren sparas
-                             valda_farger = "rus_tre_fokus",
-                             valda_farger_foretagssamma = "rus_sex",
+                             valda_farger = diagramfarger("rus_tre_fokus"),
+                             valda_farger_foretagssamma = diagramfarger("rus_sex")[1],
                              diag_arbetsstallen = TRUE, # Figur över arbetsstälen
                              diag_nyforetagsamma = TRUE, # Nyförtagssamma 
-                             diag_foretagsamma = TRUE,# Företagssamma
-                             spara_data = FALSE){ # Skall data läggas i R-studios globala miljö
+                             diag_foretagsamma = TRUE){ # Skall data läggas i R-studios globala miljö
   
   # ========================================== Allmän info ============================================
   
@@ -77,7 +78,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
     #   assign("Arbetsstallen", arbetsstallen_df_utskrift, envir = .GlobalEnv)
     # }
     
-    if(spara_data == TRUE){
+    if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Arbetsstallen" = arbetsstallen_df_utskrift))
     }
     
@@ -92,7 +93,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                                  skickad_y_var = "Arb_stallen",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger(valda_farger),
+                                 manual_color = valda_farger,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt[1],
                                  manual_y_axis_title = "Antal arbetsställen per 1000 invånare",
@@ -136,7 +137,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
     
     nyforetagsamma_df_utskrift<-rbind(nyforetagsamma_df_kommun,nyforetagsamma_df_kommun_sum,nyforetagsamma_df_riket)
 
-    if(spara_data == TRUE){
+    if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Nyforetagsamma" = nyforetagsamma_df_utskrift))
     }
     
@@ -151,7 +152,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                                  skickad_y_var = "Antal_nyforetagsamma",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger(valda_farger),
+                                 manual_color = valda_farger,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt[2],
                                  manual_y_axis_title = "Antal nyföretagsamma per 1000 invånare",
@@ -181,7 +182,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
     foretagsamma_df_kommun <- foretagsamma_df %>% 
       filter(Kommun %in% kommuner$region,Kategorier == "Andel företagsamma individer",year %in% max(year))
 
-    if(spara_data == TRUE){
+    if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Foretagsamma" = foretagsamma_df_kommun))
     }
     
@@ -194,7 +195,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                                  skickad_y_var = "Andel_foretagsamma",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger(valda_farger_foretagssamma)[1],
+                                 manual_color = valda_farger_foretagssamma,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt[3],
                                  manual_y_axis_title = "procent",
@@ -210,10 +211,11 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
   }
   
   # Sparar data
-  if(spara_data == TRUE){
-    write.xlsx(list_data,paste0(output_mapp_data,"data_foretagarna_ut.xlsx"))
+  if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
+    write.xlsx(list_data,paste0(output_mapp_data,filnamn_data))
   }
 
   names(gg_list) <- objektnamn
-  return(gg_list)
+  
+  if (returnera_figur == TRUE) return(gg_list)
 }

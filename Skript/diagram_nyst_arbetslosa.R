@@ -1,19 +1,19 @@
-#test = diagram_nystartade_konkurser(spara_figur = FALSE,returnera_data = TRUE)
+#test = diagram_nystartade_konkurser(spara_figur = FALSE)
 
 diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av region. 
-                                         output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                         vald_farg = "rus_sex", # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
+                                         output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Här hamnar figur
+                                         output_mapp_data = NA, # Här hamnar data
+                                         filnamn_data = "nystartade_konkurser.xlsx", # Filnamn för datafil.
+                                         vald_farg = diagramfarger("rus_sex"), # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
                                          spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                          returnera_figur = TRUE, # Om man vill att figuren skall returneras från funktionen
-                                         returnera_data = FALSE, # Data läggs upp i R-Studios globala miljö (för användning i exempelvis R-markdown)
-                                         diag_nystartade = TRUE, # Skriver ut diagram för nystartade företag
-                                         diag_konkurser = TRUE # Skriver ut ett diagram för konkurser
+                                         cont_cod = c("N00999","N00926") # "N00999" om man vill ha nystartade, "N00926" om man vill ha konkurser
 ){
   
   # ===========================================================================================================
   #
   # Diagram som visar antal nystartade förertag och antalet konkurser (per 1000 invånare) för de två senaste åren samt 5-årsperioden
-  # dessförinnan
+  # dessförrinnan
   # ===========================================================================================================
   
   if (!require("pacman")) install.packages("pacman")
@@ -22,7 +22,7 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
          openxlsx)
   
   gg_list <- list() # Skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
-  #i <- 1 # Räknare
+  lista_data = lst() # Används för att spara till Excel
   objektnamn <- c() # Används för att namnge
   
   # Data som sourcas från Region Dalarna
@@ -31,32 +31,31 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
   options(dplyr.summarise.inform = FALSE)
   
   ny_konk_list <- hamta_data_nystartade_konkurser(region = region_vekt, # Val av region.
-                                                  outputmapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                                  filnamn = c("nystartade.xlsx","konkurser.xlsx"), # Filnamn. Bör inte ändras.
-                                                  cont_cod = c("N00999","N00926"), # "N00999" om man vill ha nystartade, "N00926" om man vill ha konkurser. Ordning bör vara samma som filnamn
-                                                  tid = 1900:2100, # "Om man enbart vill ha senaste år"99" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.
-                                                  spara_data = FALSE, # Om man vill spara data
+                                                  output_mapp = NA, # Data sparas i ett senare skede
+                                                  cont_cod = cont_cod, # "N00999" om man vill ha nystartade, "N00926" om man vill ha konkurser. 
+                                                  tid = 1900:2100, 
                                                   returnera_data = TRUE)
   
   
   
-  if(diag_nystartade == TRUE){
+  if("N00999" %in% cont_cod){
     
-    senaste_ar_nystartade = max(ny_konk_list$Nystartade_df$year)
+    senaste_ar_nystartade = max(ny_konk_list[["Nystartade"]]$year)
     
     valda_år_nystartade = paste0("medelvärde ",senaste_ar_nystartade-7,"-",senaste_ar_nystartade-2)
     
     # Beräknar medelvärde för de fem år som föranleder näst senaste år
-    Nystartade_medel <- ny_konk_list$Nystartade_df %>%
+    Nystartade_medel <- ny_konk_list[["Nystartade"]] %>%
       filter(year %in% c((senaste_ar_nystartade-7):(senaste_ar_nystartade-2))) %>% 
         group_by(municipality) %>% 
           summarize(nystartade_ftg = mean(nystartade_ftg)) %>% 
             mutate(year = valda_år_nystartade)
     
-    Nystartade_utskrift <- rbind(ny_konk_list$Nystartade_df %>% filter(year%in%c(max(year),max(year-1))),Nystartade_medel)    
+    Nystartade_utskrift <- rbind(ny_konk_list[["Nystartade"]] %>% filter(year%in%c(max(year),max(year-1))),Nystartade_medel)    
     
-    if(returnera_data == TRUE){
-      assign("Nystartade", Nystartade_utskrift, envir = .GlobalEnv)
+    if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
+      #assign("Nystartade", Nystartade_utskrift, envir = .GlobalEnv)
+      lista_data = c(lista_data,lst("Nystartade" = Nystartade_utskrift))
     }
     
     diagram_capt <- "Källa: SCB (via Kolada/RKA)\nBearbetning: Samhällsanalys, Region Dalarna"
@@ -73,7 +72,7 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
                                  skickad_x_grupp = "year",
                                  manual_x_axis_text_vjust=1,
                                  manual_x_axis_text_hjust=1,
-                                 manual_color = diagramfarger(vald_farg),
+                                 manual_color = vald_farg,
                                  x_axis_sort_value = TRUE,
                                  x_axis_sort_grp = 3,
                                  vand_sortering=TRUE,
@@ -92,21 +91,22 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
     
   }
   
-  if(diag_konkurser == TRUE){
+  if("N00926" %in% cont_cod){
     
-    senaste_ar_konk = max(ny_konk_list$Konkurser_df$year)
+    senaste_ar_konk = max(ny_konk_list[["Konkurser"]]$year)
     valda_år_konk = paste0("medelvärde ",(senaste_ar_konk-7),"-",(senaste_ar_konk-2))
     
-    konkurser_medel <- ny_konk_list$Konkurser_df %>%
+    konkurser_medel <- ny_konk_list[["Konkurser"]] %>%
       filter(year %in% c((senaste_ar_konk-7):(senaste_ar_konk-2))) %>% 
         group_by(municipality) %>% 
           summarize(konkurser = mean(konkurser)) %>% 
             mutate(year = valda_år_konk)
     
-    konkurser_utskrift <- rbind(ny_konk_list$Konkurser_df %>% filter(year%in%c(max(year),max(year-1))),konkurser_medel)
+    konkurser_utskrift <- rbind(ny_konk_list[["Konkurser"]] %>% filter(year%in%c(max(year),max(year-1))),konkurser_medel)
     
-    if(returnera_data == TRUE){
-      assign("Konkurser", konkurser_utskrift, envir = .GlobalEnv)
+    if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
+      #assign("Konkurser", konkurser_utskrift, envir = .GlobalEnv)
+      lista_data = c(lista_data,lst("Konkurser" = konkurser_utskrift))
     }
     
     diagram_titel <- paste0("Antal konkurser per 1000 invånare (16-64 år)")
@@ -122,7 +122,7 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
                                         skickad_x_grupp = "year",
                                         manual_x_axis_text_vjust=1,
                                         manual_x_axis_text_hjust=1,
-                                        manual_color = diagramfarger(vald_farg),
+                                        manual_color = vald_farg,
                                         x_axis_sort_value = TRUE,
                                         x_axis_sort_grp = 3,
                                         vand_sortering=TRUE,
@@ -138,6 +138,10 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
     
     gg_list <- c(gg_list, list(gg_obj))
     
+  }
+  
+  if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
+    write.xlsx(lista_data,paste0(output_mapp_data,filnamn_data))
   }
   
   names(gg_list) <- c(objektnamn)

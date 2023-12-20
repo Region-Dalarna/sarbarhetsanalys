@@ -28,7 +28,6 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
   
   gg_list <- list()  # skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
   objektnamn<-c()
-  i=1 # Räknare som används för att lägga till objekt i listan
 
   source("G:/skript/hamta_data/hamta_bas_arbmarknstatus_manad.R")
   arbetsmarknadsstatus_df = hamta_bas_arbmarknstatus(region_vekt = region_vekt,
@@ -77,8 +76,8 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  output_mapp = output_mapp_figur,
                                  filnamn_diagram = "sysselsattningsgrad_senastear.png",
                                  skriv_till_diagramfil = spara_figur)
-    gg_list[[i]] <- gg_obj
-    i=i+1
+    
+    gg_list <- c(gg_list, list(gg_obj))
   }
   
   if(diag_arbetslosthet==TRUE){
@@ -108,8 +107,8 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  output_mapp = output_mapp_figur,
                                  filnamn_diagram = "arbetslöshet_senastear.png",
                                  skriv_till_diagramfil = spara_figur)
-    gg_list[[i]] <-gg_obj
-    i=i+1
+    
+    gg_list <- c(gg_list, list(gg_obj))
   }
   
   if(diag_arbetskraftsdeltagande == TRUE){
@@ -139,8 +138,8 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  output_mapp = output_mapp_figur,
                                  filnamn_diagram = "arbetskraftsdeltagande_senastear.png",
                                  skriv_till_diagramfil = spara_figur)
-    gg_list[[i]] <-gg_obj
-    i=i+1
+    
+    gg_list <- c(gg_list, list(gg_obj))
   }
   
   if(returnera_figur == TRUE){

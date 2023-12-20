@@ -1,12 +1,12 @@
 #test = diagram_andel_offentligt(spara_figur = FALSE, diag_totalt = FALSE)
 
-diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Kräver att man laddat 
+diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av kommuner
                                      alder_klartext = "*", # Ålder. Andra val: 16-19 år, 20-24 år, 25-34 år, 35-44 år, 45-54 år, 55-59 år, 60-64 år, 65+ år. Max 1 åt gången
-                                     output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                     output_mapp_data = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                     vald_farg = "rus_sex", # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
+                                     output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Vart hamnar figur om den skall sparas
+                                     output_mapp_data = NA, # Vart hamnar data om den skall sparas
+                                     filnamn_data = "andel_offentligt.xlsx",
+                                     vald_farg = diagramfarger("rus_sex"), # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
                                      spara_figur = TRUE, # Sparar figuren till output_mapp_figur
-                                     spara_data = FALSE, # Sparar den data som används i figuren till Excel.
                                      returnera_figur = TRUE, # Om man vill att figuren skall returneras från funktionen
                                      diag_totalt = TRUE, # Skriver ut diagram för kön totalt
                                      diag_kon = TRUE # Skriver ut diagram uppdelat på kön
@@ -25,7 +25,6 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
   
   gg_list <- list() # Skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
   list_data <- list() # Skapar en tom lista som används för att spara data 
-  i <- 1 # Räknare
   objektnamn <- c() # Används för att namnge
   
   
@@ -36,9 +35,9 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
   
   andel_df <- hamta_data_forv_sektor(region = region_vekt,
                                      alder_klartext = alder_klartext,
+                                     output_mapp =  output_mapp_data,
                                      arbetssektor_klartext = "*",
-                                     kon_klartext = c("män","kvinnor"), 
-                                     spara_data = FALSE,
+                                     kon_klartext = c("män","kvinnor"),
                                      returnera_data = TRUE,
                                      tid = "9999")
   
@@ -63,7 +62,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
          rename(sektor = `arbetsställets sektortillhörighet`) %>% 
           ungroup()
 
-    if(spara_data == TRUE){
+    if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Totalt" = andel_totalt_utskrift))
     }
       
@@ -80,7 +79,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
                                  skickad_x_grupp = "sektor",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
-                                 manual_color = diagramfarger(vald_farg),
+                                 manual_color = vald_farg,
                                  stodlinjer_avrunda_fem = TRUE,
                                  geom_position_stack = TRUE,
                                  legend_vand_ordning = TRUE,
@@ -93,8 +92,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
                                  filnamn_diagram = diagramfilnamn,
                                  skriv_till_diagramfil = spara_figur)
     
-    gg_list[[i]] <- gg_obj
-    i=i+1
+    gg_list <- c(gg_list, list(gg_obj))
    
   }
   
@@ -117,7 +115,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
           rename(sektor = `arbetsställets sektortillhörighet`) %>% 
             ungroup()
 
-    if(spara_data == TRUE){
+    if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Kön" = andel_kon_utskrift))
     }
     
@@ -147,13 +145,12 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
                                  filnamn_diagram = diagramfilnamn,
                                  skriv_till_diagramfil = spara_figur)
     
-    gg_list[[i]] <- gg_obj
-    i=i+1
+    gg_list <- c(gg_list, list(gg_obj))
     
   }
   
-  if(spara_data == TRUE){
-    write.xlsx(list_data,paste0(output_mapp_data,"andel_offentligt.xlsx"))
+  if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
+    write.xlsx(list_data,paste0(output_mapp_data,filnamn_data))
   }
   
   names(gg_list) <- c(objektnamn)
