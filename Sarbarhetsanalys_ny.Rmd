@@ -15,7 +15,6 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(cache =TRUE)
 # Paket som används
 if (!require("pacman")) install.packages("pacman")
 p_load(sf,

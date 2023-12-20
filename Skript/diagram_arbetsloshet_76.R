@@ -1,16 +1,15 @@
 
 #test = diagram_data_arbetsloshet_76(region_vekt = "20",spara_figur = FALSE,diag_kon = TRUE)
-diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"),
-                                         output_mapp_excel = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
+diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka regioner vill man ha. Jämförs (ej kommuner). Om man vill jämföra kön får bara 1 väljas
+                                         output_mapp_data = NA, # Om man vill spara data. Används primärt i Rmarkdown-rapporter.
                                          output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                         filnamn_excel = "arbetsloshet_76.xlsx",
-                                         vald_farg = "rus_sex",
-                                         filnamn_figur = "arbetsloshet_76.png",
-                                         spara_data = TRUE,
+                                         filnamn_data = "arbetsloshet_76.xlsx", # Filnamn på sparad data
+                                         vald_farg = diagramfarger("rus_sex"), # Val av diagramfärger
+                                         filnamn_figur = "arbetsloshet_76.png", # Filnamn
                                          spara_figur = TRUE, # Sparar figuren till output_mapp_figur
-                                         returnera_figur = TRUE,
-                                         diag_region = TRUE,
-                                         diag_kon = FALSE){
+                                         returnera_figur = TRUE, # Skall figuren returneras som ett ggplot-objekt
+                                         diag_region = TRUE, # Tidsserie för totalt (dvs. både kvinnor och män)
+                                         diag_kon = FALSE){ # Tidsserie där kön jämförs. Går bara om en region valts i region_vekt
   
   
   # =================================================================================================================
@@ -34,9 +33,8 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"),
   
   # Sourcar data för arbetslöshet
   df <-  hamta_data_arbetsloshet_76(region_vekt = region_vekt,
-                                                  output_mapp = output_mapp_excel,
-                                                  filnamn_excel = filnamn_excel,
-                                                  spara_data = spara_data,
+                                                  output_mapp = output_mapp_data,
+                                                  filnamn = filnamn_data,
                                                   returnera_data = TRUE) 
   
   if(diag_region == TRUE){
@@ -55,16 +53,16 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"),
                                 skickad_x_var = "år",
                                 skickad_y_var = "arbetsloshet",
                                 skickad_x_grupp = "region",
-                                manual_color = diagramfarger(vald_farg),
+                                manual_color = vald_farg,
                                 diagram_titel = diagramtitel,
                                 diagram_capt =  diagram_capt,
                                 manual_y_axis_title = "procent",
                                 x_axis_lutning = 45,
                                 visa_var_x_xlabel = 4,
                                 stodlinjer_avrunda_fem = TRUE,
-                                output_mapp = "output_mapp_figur",
-                                filnamn_diagram = "filnamn_figur",
-                                skriv_till_diagramfil = FALSE)
+                                output_mapp = output_mapp_figur,
+                                filnamn_diagram = filnamn_figur,
+                                skriv_till_diagramfil = spara_figur)
     
     gg_list[[i]] <-gg_obj
     i=i+1
@@ -88,9 +86,9 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"),
                                 x_axis_lutning = 45,
                                 visa_var_x_xlabel = 4,
                                 stodlinjer_avrunda_fem = TRUE,
-                                output_mapp = "output_mapp_figur",
-                                filnamn_diagram = "filnamn_figur",
-                                skriv_till_diagramfil = FALSE)
+                                output_mapp = output_mapp_figur,
+                                filnamn_diagram = filnamn_figur,
+                                skriv_till_diagramfil = spara_figur)
     
     gg_list[[i]] <- gg_obj
     i=i+1

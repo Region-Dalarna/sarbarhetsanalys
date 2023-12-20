@@ -1,8 +1,7 @@
 hamta_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Enbart för regioner och riket ("00")
-                                       output_mapp = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                       filnamn_excel = "arbetsloshet_76.xlsx",
+                                       output_mapp = NA,
+                                       filnamn = "arbetsloshet_76.xlsx",
                                        Kon_klartext = c("män","kvinnor"), # Alternativ är män och/eller kvinnor (totalt saknas)
-                                       spara_data = TRUE,
                                        returnera_data = TRUE # Om man vill att data skall returneras
                                        ){
   
@@ -89,12 +88,13 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Enbart för
   df_05_$arbetsloshet=(df_05_$arbetslösa/(df_05_$arbetslösa+df_05_$sysselsatta))*100
   
   #Slår ihop dataset och grupperar på regionkod och år
-  df_bef_slutgiltig <- rbind(df_76_04,df_05_)
+  df_bef_slutgiltig <- rbind(df_76_04,df_05_) %>% 
+    mutate(region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE))
 
   # Sparar till Excel
-  if (spara_data==TRUE){
+  if (!is.na(output_mapp) & !is.na(filnamn)){
     flik_lista=lst("Arbetslöshet" = df_bef_slutgiltig)
-    openxlsx::write.xlsx(flik_lista,paste0(output_mapp,filnamn_excel))
+    write.xlsx(flik_lista,paste0(output_mapp,filnamn))
   }
   
   if(returnera_data == TRUE) return(df_bef_slutgiltig)

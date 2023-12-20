@@ -18,12 +18,11 @@ Output_mapp_figur = here("Figurer","/")
 
 # Arbetslöshet 76
 source(here("Skript","diagram_arbetsloshet_76.R"), encoding="UTF-8")
-gg_arbetsloshet_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
-                                                   output_mapp_excel = Output_mapp_data,
-                                                   output_mapp_figur = Output_mapp_figur,
-                                                   vald_farg = "rus_sex",
-                                                   spara_data = TRUE,
-                                                   returnera_figur = TRUE)
+diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
+                             output_mapp_data = Output_mapp_data,
+                             output_mapp_figur = Output_mapp_figur,
+                             vald_farg = diagramfarger("rus_sex"),
+                             returnera_figur = FALSE)
 
 # Arbetslöshet och sysselsättningsgrad
 source(here("Skript","diagram_arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
