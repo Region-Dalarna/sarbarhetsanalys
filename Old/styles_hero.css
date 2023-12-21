@@ -1,0 +1,213 @@
+/* Allmänna regler*/
+
+html {
+
+  font-size: 16px;
+
+}
+
+body {
+  border-top: 5px solid #158daf;
+  margin: 0;
+  font-family:'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #fff; }
+  
+
+/* Header */
+  
+.hero-image{
+    position: relative;
+    margin-bottom: 2em;
+    /* liner gradient tints the image darker for readability*/
+    background-image: url(Nipfjallet.jpg); 
+    height: 400px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-size: cover;
+    background-color: #141c25f2;
+    background-position: center center;
+    /*display: flex;
+    justify-content: center;
+    align-items: center;*/
+}
+
+.top-text {
+    position: absolute;
+    bottom: 45px;
+    left: 50px;
+    color: #fff;
+    text-transform: uppercase;
+    /*background-color: rgba(0,0,0,.6);*/
+    font-size: 3.75em;
+    line-height: 1.2em;
+    text-shadow: rgba(34,34,34,.8) 3px 5px 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0.5em
+}
+
+.bottom_text {
+    position: absolute;
+    bottom: 40px;
+    left: 50px;
+    color: #fff;
+    text-transform: uppercase;
+    /*background-color: rgba(0,0,0,.6);*/
+    font-size: 1.75em;
+    line-height: 1.2em;
+    text-shadow: rgba(34,34,34,.8) 3px 5px 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.header-logo {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    max-width: 150px;
+    max-height: 50px;
+}
+
+.till_startsida{
+   position: absolute;
+   top: 30px;
+   right: 30px;
+   color:white;
+   font-size: 20px;
+   text-shadow: rgba(34,34,34,.8) 3px 5px 5px;
+   
+}
+
+.till_startsida:hover{
+  
+   color:red;
+   
+}
+
+@media (max-width: 600px){
+ .till_startsida{
+   display:none;
+ }
+ .top-text {
+    font-size: 2em;
+}
+   
+}  
+
+#header{
+  background-repeat: no-repeat;
+  height: 0px;
+  width: 100%;
+  top:0;
+  margin-top: 0;
+  z-index:1;
+}  
+
+
+/* Typografi och annat */ 
+p{
+  font-family: 'Montserrat';
+  font-size: 1rem;
+}
+
+h1,h2,h3{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-family: 'League Spartan'
+}
+
+h1 { /* Header 1 */
+  margin-top: 0rem;
+  font-weight: bold;
+  font-size: 2.4rem;
+  color: #000000;
+}
+
+h2 { /* Header 2 */
+  margin-top: 2rem;
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #000000;
+}
+h3 { /* Header 3 */
+  font-size: 1.4rem;
+  color: #000000;
+}
+
+ul {
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}
+
+li{
+  padding-bottom: 5px;
+  padding-left: 5px;
+}
+
+details{
+  background-color: #f1f1f1;
+  font-size: 0.9rem;
+  padding: 10px 10px;
+  border-radius: 3px 3px 3px 3px;
+  border: 0.1px dotted #000000;
+  margin-bottom: 2rem;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    font-size: 1em;
+    font-weight: 800;
+    /*background: #db3747;*/
+    background: #fff;;
+    color:black;
+    /*padding: 16px 20px 12px 20px;*/
+    padding: 5px 5px 5px 5px;
+    margin-bottom: 0px;
+    border-radius: 3px 3px 0 0;
+}
+
+#TOC::before{
+  content: "";
+  display: block;
+  height: 30px;
+  margin: 0;
+  background: #db3747;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/*.tocify-header {
+    font-size: 16px;
+    font-weight: 1000;
+}*/
+
+.tocify-header {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.tocify-subheader {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.tocify ul, .tocify li { /* Increases spacing between TOC headers*/
+    line-height: 25px !important;
+}
+
+.nav-pills>li>a:hover, .nav-pills>li>a:focus, .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
+     background-color: #db3747;
+     color: #fff
+     border-color: #000000;
+}
+     
+
+
+
