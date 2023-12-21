@@ -44,7 +44,7 @@ uppdatera_hemsida = FALSE
 #Nystartade <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
 #Konkurser <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
 #andel_forvarvsarbetande_bransch = read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_forvarvsarbetande.xlsx")
-#i=1
+i=1
 
 ```
 
@@ -55,7 +55,7 @@ Syftet med denna rapport, som tagits fram inom ramen för projektet K.R.O.K^[htt
 
 Initialt undersöks hur Dalarna har påverkats av kriser historiskt och därefter introduceras modellen som används för att studera sårbarhet i denna rapport. Modellen tillämpas först på Dalarna och därefter på var och en av Dalarnas kommuner.
 
-Sedan det tidiga 1990-talet har Sverige drabbats av fyra större kriser, som på olika sätt påverkat den svenska ekonomin. I `r paste0("figur ",i+1)` illustreras vilka effekter dessa kriser fick på arbetslösheten i Dalarna och Sverige. Under finans-och fastighetskrisen i början av 1990-talet (hädanefter 90-talskrisen), den djupaste ekonomiska krisen i Sverige i modern tid, ökade arbetslösheten markant i såväl Dalarna som Sverige. I början av 1990-talet, innan krisen, var arbetslösheten generellt väldigt låg, strax under 2 procent, men mångdubblades på bara ett par år i samband med 90-talskrisen. Arbetslösheten i Dalarna ökade mer än arbetslösheten i Sverige i samband med krisen, vlket potentiellt kan bero på att Dalarna under 1990-talet var ett län med en stor tillverkningsindustri. 
+Sedan det tidiga 1990-talet har Sverige drabbats av fyra större kriser, som på olika sätt påverkat den svenska ekonomin. Nedan illustreras vilka effekter dessa kriser fick på arbetslösheten i Dalarna och Sverige. Under finans-och fastighetskrisen i början av 1990-talet (hädanefter 90-talskrisen), den djupaste ekonomiska krisen i Sverige i modern tid, ökade arbetslösheten markant i såväl Dalarna som Sverige. I början av 1990-talet, innan krisen, var arbetslösheten generellt väldigt låg, strax under 2 procent, men mångdubblades på bara ett par år i samband med 90-talskrisen. Arbetslösheten i Dalarna ökade mer än arbetslösheten i Sverige i samband med krisen, vlket potentiellt kan bero på att Dalarna under 1990-talet var ett län med en stor tillverkningsindustri. 
 
 En annan kris som fick avsevärda konsekvenser för den svenska ekonomin var finanskrisen 2008 och 2009. Mätt i förändring av arbetslöshet var den dock klart mildare än 90-talskrisen. I Dalarna ökade arbetslösheten från ca 6 procent i början av krisen till ungefär 8 procent år 2010.
 
@@ -234,13 +234,11 @@ gg_branschbredd$branschbredd
 De fem största branschgrupperna inom det privata näringslivet i Dalarna visas i `r paste0("figur ",i+1)`. De är rankade efter branschens andel av näringslivets totala lönesumma. I figuren visas även information om branschgruppens representation utifrån parametrarna utbildningsnivå, andel kvinnor samt andel utrikes födda. I Dalarna är företagsservicefirmor, med närmare 14 procent av den totala lönesumman, jämte parti- och detaljhandel samt byggsektorn som står för cirka 13 procent vardera av näringslivets totala lönesumma, de största branschgrupperna. Parti- och detaljhandel är den enda branschgrupp som kan sägas ha en jämställd representation av kvinnor och män anställda, övriga stora branschgrupper har en majoritet män anställda. Störst andel högutbildade finns inom sektorn annan elektro- och teleproduktindustri, nästan hälften av dem som arbetar där är högutbildade, och det är också i denna sektor som störst andel är utrikesfödda, bland de fem största branscherna.
 <br>
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher.png"))
-i=i+1
+```{r, echo=FALSE, fig.dim(5,5)}
+gt_tabell$län
+#knitr::include_graphics(here("Diagram","storsta_branscher.png"))
 ```
-<p style="font-size:9pt; font-style:italic">
-    `r paste0("Figur ",i," : Största branscher")`
-</p>
+
 
 Vid sidan om beroende av enskilda branscher kan kommuner även vara mer eller mindre beroende av specifika företag. I linje med Tillväxtverket^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html] mäter vi kommuners beroende av de största företagen genom att beräkna antalet företag som krävs för att deras samlade lönesumma skall överstiga hälften av den totala lönesumman bland privata företag i respektive kommun. I Dalarna är variationen stor mellan kommunerna för detta mått: i Falun krävs det `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Falun") %>% .$cnum` företag för att komma upp i 50 procent av näringslivets totala lönesumma, medan de `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Ludvika") %>% .$cnum` största företagen i Ludvika står för mer än hälften av näringslivets lönesumma. En bidragande förklaring till detta är hur stort antalet invånare i kommunen är. De två största, Falun och Borlänge, har också lägst beroende. Samtidigt är Ludvika den tredje största kommunen i Dalarna (sett till befolkning) och högst beroende av ett enskilt företag, Hitachi, så en större befolkning räcker inte alltid som förklaring. Bland mindre kommuner utmärker sig Rättvik, där det krävs `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Rättvik") %>% .$cnum` företag för att komma upp i 50 procent av lönesumman, nästan lika många som i avsevärt mycket större Borlänge.
 
@@ -318,8 +316,8 @@ knitr::include_graphics(here("Diagram","storsta_branscher_Avesta.png"))
 
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
-storsta_arbetsgivare <- storsta_arbetsgivare %>% 
-  rename(antal_anstallda = `antal anställda`)
+# storsta_arbetsgivare <- storsta_arbetsgivare %>% 
+#   rename(antal_anstallda = `antal anställda`)
 ```
 
 
@@ -682,6 +680,7 @@ Den största privata arbetsgivaren i Smedjebacken finns inom branschgruppen stå
 <br>
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+
 knitr::include_graphics(here("Diagram","storsta_branscher_Smedjebacken.png"))
 
 ```
