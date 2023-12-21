@@ -148,12 +148,9 @@ gg_50proc_lonesumma <- diag_50proc_lonesumma(output_mapp = Output_mapp_figur,
                                             returnera_data = TRUE)
 
 # Tabell med de fem största branscherna i Dalarna - NMS, både län och kommun.
-# Inget gg-plot objekt skapas utan man får manuellt lägga till i så fall (en png-fil skapas som sedan läses in i markdown)
-# OBS! Funkar för tillfället enbart på regionytan
-# source(here("NMS_branscher_top5.R"), encoding = "utf-8", echo = FALSE)
-# diag_50proc_lonesumma(region_vekt=vald_region,
-#                       output_mapp =Output_mapp,
-#                       skapa_fil=skapa_fil,
-#                       diag_lan=TRUE,
-#                       diag_kommun=TRUE)
+# Går för tillfället inte att spara tabellerna, utan de returneras i en lista
+source(here("Skript","tabell_storsta_bransch_NMS.R"), encoding="UTF-8")
+gt_tabell = diag_50proc_lonesumma(region_vekt="20",
+                                  diag_lan=TRUE,
+                                  diag_kommun=TRUE)
 

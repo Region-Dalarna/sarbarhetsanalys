@@ -4,8 +4,8 @@
 pacman::p_load(openxlsx,here,tidyverse,gt,webshot2)
 
 # Skript som behövs
-source("G:/skript/func/func_SkapaDiagram.R", encoding = "utf-8", echo = FALSE)
-source("G:/skript/func/func_API.R", encoding = "utf-8", echo = FALSE)
+# source("G:/skript/func/func_SkapaDiagram.R", encoding = "utf-8", echo = FALSE)
+# source("G:/skript/func/func_API.R", encoding = "utf-8", echo = FALSE)
 
 #test_list=diag_50proc_lonesumma(skapa_fil=TRUE,output_mapp = "G:/skript/jon/",diag_kommun=FALSE,diag_kommun_ftg=FALSE)
 diag_50proc_lonesumma <- function(region_vekt="20",
@@ -79,7 +79,7 @@ diag_50proc_lonesumma <- function(region_vekt="20",
                           footnote = "Andel inom bransch",
                           locations = cells_column_labels(
                             columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)"))) %>% 
-                              gtsave(fil_lan)
+                              gtsave_extra(fil_lan)
   }
   
   # Motsvarande som ovan fast för alla kommuner i Dalarna
