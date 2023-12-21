@@ -168,6 +168,8 @@ stilsätter det i CSS*/
 }
 
 /*Rubriken*/
+
+/*Rubriken*/
 .top-text {
     position: absolute;
     bottom: 35px;
@@ -175,7 +177,7 @@ stilsätter det i CSS*/
     margin-left: 25%;
     width: 50%;
     color: #fff;
-    font-size: 3.75em;
+    font-size: 2.5em;
     text-align: center;
     line-height: 1.2em;
     text-shadow: rgba(34,34,34,.8) 3px 5px 5px;
@@ -200,6 +202,16 @@ stilsätter det i CSS*/
     right: 30px;
     max-width: 200px;
     max-height: 100px;
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 6px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  font-size: 1rem;
+  font-family: 'Montserrat';
+  font-style: italic;
 }
 
 /*.till_startsida{
@@ -234,7 +246,7 @@ stilsätter det i CSS*/
 @media (max-width: 970px){
  
  .top-text {
-    font-size: 2.5em;
+    font-size: 2em;
 }
 
 .toc-content.col-xs-12.col-sm-8.col-md-9{

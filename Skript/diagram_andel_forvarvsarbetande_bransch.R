@@ -47,7 +47,8 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
     group_by(år, månad_år, region, bransch) %>% 
         summarize("Antal" = sum(`sysselsatta efter arbetsställets belägenhet`)) %>% 
       mutate(andel = (Antal/sum(Antal))*100,
-             region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE))
+             region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE),
+             bransch = str_wrap(bransch,20))
   
   if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
     write.xlsx(df_sum,paste0(output_mapp_data,filnamn_data))
