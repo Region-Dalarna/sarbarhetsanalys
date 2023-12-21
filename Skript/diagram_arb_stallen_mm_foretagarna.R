@@ -2,7 +2,7 @@
 #test_list=diag_foretagarna(spara_figur=FALSE,region_vekt = "22")
 diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                              output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                             output_mapp_data = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", 
+                             output_mapp_data = NA, 
                              filnamn_data = "data_foretagarna_ut.xlsx",
                              returnera_figur = TRUE,
                              spara_figur = TRUE, # Skall figuren sparas
@@ -10,7 +10,8 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                              valda_farger_foretagssamma = diagramfarger("rus_sex")[1],
                              diag_arbetsstallen = TRUE, # Figur över arbetsstälen
                              diag_nyforetagsamma = TRUE, # Nyförtagssamma 
-                             diag_foretagsamma = TRUE){ # Skall data läggas i R-studios globala miljö
+                             diag_foretagsamma = TRUE,
+                             returnera_data = TRUE){ # Skall data läggas i R-studios globala miljö
   
   # ========================================== Allmän info ============================================
   
@@ -74,9 +75,9 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
     
     arbetsstallen_df_utskrift<-rbind(arbetsstallen_df_kommun,arbetsstallen_df_kommun_sum,arbetsstallen_df_riket)
     
-    # if(returnera_data == TRUE){
-    #   assign("Arbetsstallen", arbetsstallen_df_utskrift, envir = .GlobalEnv)
-    # }
+    if(returnera_data == TRUE){
+      assign("Arbetsstallen", arbetsstallen_df_utskrift, envir = .GlobalEnv)
+    }
     
     if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Arbetsstallen" = arbetsstallen_df_utskrift))
@@ -136,6 +137,10 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
       mutate("Kommun" = "Sverige")
     
     nyforetagsamma_df_utskrift<-rbind(nyforetagsamma_df_kommun,nyforetagsamma_df_kommun_sum,nyforetagsamma_df_riket)
+    
+    if(returnera_data == TRUE){
+      assign("Nyföretagssamma", nyforetagsamma_df_utskrift, envir = .GlobalEnv)
+    }
 
     if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Nyforetagsamma" = nyforetagsamma_df_utskrift))
@@ -181,6 +186,10 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
     # Filtrerar ut kommuner
     foretagsamma_df_kommun <- foretagsamma_df %>% 
       filter(Kommun %in% kommuner$region,Kategorier == "Andel företagsamma individer",year %in% max(year))
+    
+    if(returnera_data == TRUE){
+      assign("företagssamma", foretagsamma_df_kommun, envir = .GlobalEnv)
+    }
 
     if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Foretagsamma" = foretagsamma_df_kommun))

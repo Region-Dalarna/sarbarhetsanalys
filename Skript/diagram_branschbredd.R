@@ -30,7 +30,7 @@ diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,ta
   # Hämtar data
   source(here("Skript","hamta_data_branschbredd_kolada.R"), encoding="UTF-8")
   df <- hamta_data_branschbredd (region = region_vekt,
-                                 outputmapp = output_mapp_data,
+                                 output_mapp = output_mapp_data,
                                  filnamn = filnamn_data, 
                                  tid = 1900:2100, 
                                  returnera_data = TRUE)
@@ -59,7 +59,7 @@ diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,ta
                                manual_y_axis_title="procent",
                                diagram_titel = diagram_titel,
                                diagram_capt = diagram_capt,
-                               output_mapp = output_mapp,
+                               output_mapp = output_mapp_figur,
                                filnamn_diagram = diagramfil,
                                skriv_till_diagramfil = spara_figur)
     

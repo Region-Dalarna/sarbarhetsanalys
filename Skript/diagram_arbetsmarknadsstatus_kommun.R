@@ -12,7 +12,8 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                                valda_farger = diagramfarger("rus_tre_fokus"), # Ändra till kon om man vill ha de färgerna
                                                diag_arbetslosthet = TRUE, # True för figur för arbetsloshet
                                                diag_arbetskraftsdeltagande = TRUE, # "" arbetskraftsdeltagande
-                                               diag_sysselsattningsgrad = TRUE){ # "" sysselsättningsgrad
+                                               diag_sysselsattningsgrad = TRUE,
+                                               returnera_data = TRUE){ # "" sysselsättningsgrad
   
   ## =================================================================================================================
   # Diagram för arbetslöshet, sysselsättningsgrad och arbetskraftsdeltagande för senaste år. Går för tillfället inte att dela upp på kön
@@ -35,7 +36,7 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                                      alder_vekt_klartext = alder_klartext,
                                                      fodelseregion_klartext_vekt = "totalt",
                                                      cont_klartext_vekt = c("arbetslöshet","arbetskraftsdeltagande", "sysselsättningsgrad"),
-                                                     tid_vekt = "99")
+                                                     tid_vekt = "99") 
   
 
   # Län att fokusera på
@@ -43,11 +44,16 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
   # Tar bort län i länsnamn och gör om riket till Sverige
   arbetsmarknadsstatus_df$region = skapa_kortnamn_lan(arbetsmarknadsstatus_df$region,byt_ut_riket_mot_sverige = TRUE)
   
+  # Sparar data
   if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
     flik_lista=lst("Arbetsmarknadsstatus" = arbetsmarknadsstatus_df)
     write.xlsx(flik_lista,paste0(output_mapp_data,filnamn_data))
   }
   
+  # Returnerar data 
+  if(returnera_data == TRUE){
+    assign("arbetsmarknadsstatus", arbetsmarknadsstatus_df, envir = .GlobalEnv)
+  }
   
   if(diag_sysselsattningsgrad==TRUE){
     

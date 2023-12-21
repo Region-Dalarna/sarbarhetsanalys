@@ -8,6 +8,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
                                      vald_farg = diagramfarger("rus_sex"), # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
                                      spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                      returnera_figur = TRUE, # Om man vill att figuren skall returneras från funktionen
+                                     returnera_data = TRUE,
                                      diag_totalt = TRUE, # Skriver ut diagram för kön totalt
                                      diag_kon = TRUE # Skriver ut diagram uppdelat på kön
 ){
@@ -65,6 +66,10 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
     if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Totalt" = andel_totalt_utskrift))
     }
+    
+    if(returnera_data == TRUE){
+      assign("andel_offentligt", andel_totalt_utskrift, envir = .GlobalEnv)
+    }
       
     diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_totalt_utskrift$år))
     diagramfilnamn <- "andel_offentligt_totalt.png"
@@ -117,6 +122,10 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
 
     if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Kön" = andel_kon_utskrift))
+    }
+    
+    if(returnera_data == TRUE){
+      assign("andel_offentligt_kon", andel_kon_utskrift, envir = .GlobalEnv)
     }
     
     diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_kon_utskrift$år))

@@ -7,6 +7,7 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
                                          vald_farg = diagramfarger("rus_sex"), # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
                                          spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                          returnera_figur = TRUE, # Om man vill att figuren skall returneras från funktionen
+                                         returnera_data = TRUE,
                                          cont_cod = c("N00999","N00926") # "N00999" om man vill ha nystartade, "N00926" om man vill ha konkurser
 ){
   
@@ -54,8 +55,11 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
     Nystartade_utskrift <- rbind(ny_konk_list[["Nystartade"]] %>% filter(year%in%c(max(year),max(year-1))),Nystartade_medel)    
     
     if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
-      #assign("Nystartade", Nystartade_utskrift, envir = .GlobalEnv)
       lista_data = c(lista_data,lst("Nystartade" = Nystartade_utskrift))
+    }
+    
+    if(returnera_data == TRUE){
+      assign("Nystartade", Nystartade_utskrift, envir = .GlobalEnv)
     }
     
     diagram_capt <- "Källa: SCB (via Kolada/RKA)\nBearbetning: Samhällsanalys, Region Dalarna"
@@ -105,8 +109,11 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
     konkurser_utskrift <- rbind(ny_konk_list[["Konkurser"]] %>% filter(year%in%c(max(year),max(year-1))),konkurser_medel)
     
     if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
-      #assign("Konkurser", konkurser_utskrift, envir = .GlobalEnv)
       lista_data = c(lista_data,lst("Konkurser" = konkurser_utskrift))
+    }
+    
+    if(returnera_data == TRUE){
+      assign("Konkurser", konkurser_utskrift, envir = .GlobalEnv)
     }
     
     diagram_titel <- paste0("Antal konkurser per 1000 invånare (16-64 år)")

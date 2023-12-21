@@ -6,6 +6,7 @@ diagram_langtidsarb = function(region = hamtakommuner("20",tamedlan = TRUE,tamed
                                jmf_ar = TRUE, # Om true, jämförs långtidsarbetslöshet för första och sista år i vald tid
                                spara_figur = TRUE, # Vill man spara figur
                                returnera_figur = TRUE, # Skall figuren returneras som ett ggplot-objekt
+                               returnera_data = FALSE,
                                tid = 2011:2100){# Vilken tidsperiod vill vi fokusera på
   
   # =================================================================================================================
@@ -26,6 +27,10 @@ diagram_langtidsarb = function(region = hamtakommuner("20",tamedlan = TRUE,tamed
                                                    output_mapp = outputmapp_data,
                                                    tid = tid)
 
+  if(returnera_data == TRUE){
+    assign("langtidsarbetsloshet", langtidsarbetsloshet_df, envir = .GlobalEnv)
+  }
+  
   langtidsarbetsloshet_df$municipality = skapa_kortnamn_lan(hamtaregion_kod_namn(langtidsarbetsloshet_df$municipality)$region,byt_ut_riket_mot_sverige = TRUE)
 
   valt_lan = skapa_kortnamn_lan(hamtaregion_kod_namn(region)$region)

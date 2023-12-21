@@ -8,7 +8,8 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
                                   spara_figur = TRUE, # Om true sparas figuren till output_mapp
                                   diag_lan = TRUE, # Skapar ett diagram där län jämförs med riket
                                   diag_kommun = TRUE, # Motsvarande diagram där kommuner jämförs med länet
-                                  returnera_figur = FALSE){ 
+                                  returnera_figur = TRUE,
+                                  returnera_data = FALSE){ 
   
   # ========================================== Allmän info ============================================
   
@@ -49,8 +50,11 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
              region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE))
   
   if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
-    #assign("andel_forvarvsarbetande_bransch", df_sum, envir = .GlobalEnv)
     write.xlsx(df_sum,paste0(output_mapp_data,filnamn_data))
+  }
+  
+  if(returnera_data == TRUE){
+    assign("andel_forvarvsarbetande_bransch", df_sum, envir = .GlobalEnv)
   }
   
   if(diag_lan==TRUE){
@@ -119,6 +123,6 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
   }
 
   names(gg_list) <- c(objektnamn)
-  if(returnera_figur == FALSE) return(gg_list)
+  if(returnera_figur == TRUE) return(gg_list)
   
 }

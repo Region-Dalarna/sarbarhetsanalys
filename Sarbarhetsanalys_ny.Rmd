@@ -34,15 +34,15 @@ source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_Sk
 uppdatera_hemsida = FALSE
 
 # Läser in data
-arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
-arbetsmarknadsstatus <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus.xlsx")
-langtidsarbetsloshet <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/langtidsarbetsloshet.csv",encoding="UTF-8")
-andel_offentligt <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
-pendling <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling.xlsx")
-Arbetsstallen <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/data_foretagarna_ut.xlsx",sheet =1)
-Nystartade <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
-Konkurser <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
-andel_forvarvsarbetande_bransch = read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_forvarvsarbetande.xlsx")
+#arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
+#arbetsmarknadsstatus <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsmarknadsstatus.xlsx")
+#langtidsarbetsloshet <- read.csv("G:/skript/projekt/data/sarbarhetsanalys/langtidsarbetsloshet.csv",encoding="UTF-8")
+#andel_offentligt <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_offentligt.xlsx")
+#pendling <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/pendling.xlsx")
+#Arbetsstallen <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/data_foretagarna_ut.xlsx",sheet =1)
+#Nystartade <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/nystartade.xlsx")
+#Konkurser <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/konk.xlsx")
+#andel_forvarvsarbetande_bransch = read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/andel_forvarvsarbetande.xlsx")
 i=1
 
 ```
@@ -62,8 +62,8 @@ I början av 2020 drabbades Sverige av pandemin orsakad av Covid-19. Krisen ledd
 
 När denna rapport skrivs pågår ytterligare en kris kopplad till Rysslands invasion av Ukraina och dess effekter på bland annat tillgången till råvaror. Denna kris, som tog sin början i februari 2022, kommer sannolikt att få stora effekter på Sveriges ekonomi över en längre tid, även om den ännu inte syns i arbetslöshetsstatistiken för Dalarna i någon större utsträckning.
 
-```{r, include = TRUE}
-knitr::include_graphics(here("Figurer","arbetsloshet_76.png"))
+```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+gg_arb_76$arbetsloshet_region
 ```
 
 Sammanfattningsvis har detta avsnitt visat att Sverige med viss regelbundenhet drabbats av kriser av varierande omfattning. Det är därför viktigt att studera samhällets sårbarhet för denna typ av kriser.
@@ -88,19 +88,34 @@ En fungerande arbetsmarknad är viktig för en regions motståndskraft mot ekono
 
 En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför ålder (20-64 år) är sysselsatta, vilket mäts genom sysselsättningsgraden. Som sysselsatt räknas en person som under en viss vecka (referensveckan) utfört något arbete i minst en timme som anställd, egen företagare eller medhjälpare i företag tillhörande en familjemedlem. I Dalarna arbetar färre än 3 procent av de sysselsatta mindre än halvtid, och drygt 83 procent arbetar minst 35 timmar per vecka^[Överenskommen veckoarbetstid, regionala tabeller, AKU, SCB]. Om sysselsättningraden är låg är det ett tecken på att arbetslösheten är hög alternativt att många i arbetsför ålder (utöver studenter) står utanför arbetskraften, vilket ger ett sämre utgångsläge för att hantera en kris^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html]. Om personerna befinner sig i arbetslöshet kan de ses som en outnyttjad resurs för en region eller kommun (se `r paste0("figur ",i+2)`). Arbetslösa är personer som är villiga att ta ett arbete, men av olika skäl inte arbetar. Om denna outnyttjade resurs är stor, är det rimligt att sårbarheten vid varsel eller uppsägningar också är större^[https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf]. 
 
+
+```{r, include = FALSE}
+
+arbetsmarknadsstatus <- arbetsmarknadsstatus %>% 
+  mutate(år = as.character(år),
+         månad = as.character(månad),
+         år_månad = as.character(år_månad),
+         månad_år = as.character(månad_år))
+
+```
+
 Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet. Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent.
 
-```{r, include = TRUE}
+```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","sysselsattningsgrad_senastear.png"))
+gg_arbetsmarknadsstatus$sysselsattningsgrad_senastear
+
+#knitr::include_graphics(here("Figurer","sysselsattningsgrad_senastear.png"))
 
 ```
 
 I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde,0)` procent jämfört med ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Sverige") %>% .$varde,0)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent), medan `r last(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region)` har lägst arbetslöshet med ca `r last(round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0))` procent.
 
-```{r, include = TRUE}
+```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","arbetslöshet_senastear.png"))
+gg_arbetsmarknadsstatus$arbetslosthet_senastear
+
+#knitr::include_graphics(here("Figurer","arbetslöshet_senastear.png"))
 
 ```
 
@@ -111,9 +126,10 @@ Långtidsarbetslöshet mäts på lite olika sätt av olika myndigheter. Denna ra
 
 I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt. Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i `r langtidsarbetsloshet %>% filter(year == max(year),gender == "T") %>% filter(value == min(value)) %>% .$municipality`. Långtidsarbetslösheten ökade i alla Dalarnas kommuner, såväl som i Sverige, mellan `r min(langtidsarbetsloshet$year)` och `r max(langtidsarbetsloshet$year)`.
 
-```{r, include = TRUE}
+```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","langtidsarbetsloshet.png"))
+#knitr::include_graphics(here("Figurer","langtidsarbetsloshet.png"))
+gg_langtidsarbetsloshet$langtidsarbetsloshet
 
 ```
 
@@ -121,17 +137,19 @@ Verksamheter som finansieras genom offentliga medel, såsom kommuner och regione
 
 I Dalarna är `r andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$region` den kommun där störst andel arbetar inom offentlig verksamhet, ungefär `r round(andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$Andel_forv,0)` procent av de förvärvsarbetande. Motsvarande siffra i `r andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$region`, med lägst andel, är bara runt `r round(andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$Andel_forv,0)` procent. Även i Falun arbetar många inom offentlig verksamhet, vilket delvis kan förklaras av att Dalarnas största arbetsgivare, Falu lasarett med över 3 000 anställda, ligger där.
 
-```{r, include = FALSE}
+```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_offentligt_totalt.png"))
+#knitr::include_graphics(here("Figurer","andel_offentligt_totalt.png"))
+gg_andel_offentligt$andel_off_totalt
 
 ```
 
 För att fördjupa förståelsen för arbetsmarknaders funktionssätt bör lokala arbetsmarknadsregioner inkluderas i analysen, utöver kommuner som analysenhet. Lokala arbetsmarknadsregioner skapas utifrån pendlingsrelationer mellan kommuner. Om jobbskapandet i den egna kommunen är svagt, kan närhet till andra kommuners arbetsmarknader möjliggöra pendling och medföra en totalt sett starkare arbetsmarknad. I Dalarna varierar pendlingen avsevärt mellan olika kommuner, men är högst i mindre kommuner som angränsar till större kommuner. I såväl Gagnef som Säter pendlar mer än 50 procent av de sysselsatta till en annan kommun (främst till Borlänge). Även i Smedjebacken är utpendlingen hög, bland annat till grannkommunen Ludvika som har en stor arbetsgivare i Hitachi (tidigare ABB). Det omvända gäller för Malung-Sälens kommun, där avsevärt färre pendlar in och ut ur kommunen. 
 
-```{r, include = TRUE}
+```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","in_utpendling_procent_Dalarna2021.png"))
+gg_pendling$In_och_utpendling_procent
+#knitr::include_graphics(here("Figurer","in_utpendling_procent_Dalarna2021.png"))
 
 ```
 
@@ -144,7 +162,8 @@ En indikator är antalet privata arbetsställen (med minst 1 anställd), och i D
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
-knitr::include_graphics(here("Figurer","antal_arbetsstallen.png"))
+gg_arbetsstallen$arbetsställen
+#knitr::include_graphics(here("Figurer","antal_arbetsstallen.png"))
 
 ```
 
@@ -153,7 +172,8 @@ När det gäller nystartade företag har `r Nystartade %>% filter(substr(year,1,
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
-knitr::include_graphics(here("Figurer","nystartade.png"))
+gg_nyst_konk$nystartade
+#knitr::include_graphics(here("Figurer","nystartade.png"))
 
 ```
 
@@ -161,14 +181,15 @@ Antalet nystartade företag gör ju ingen större skillnad om många företag sa
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
-knitr::include_graphics(here("Figurer","konkurser.png"))
+gg_nyst_konk$konkurser
+#knitr::include_graphics(here("Figurer","konkurser.png"))
 
 ```
 
 Ett annat sätt att mäta företagande är genom att undersöka hur stor andel av en kommuns invånare som anses vara företagssamma, dvs. innehar F-skattesedel, är delägare i ett aktivt handelsbolag alternativt är VD eller styrelseordförande i ett aktivt aktiebolag. Bland Dalarnas kommuner är det återigen en stor variationen, där `r företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Kommun` hade högst andel företagssamma år `r unique(företagssamma$year)` (ca `r round(företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)` procent) och `r företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Kommun` lägst andel (ca `r round(företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)` procent).
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-gg_foretagssamma
+gg_foretagssamma$Andel_företagsamma
 ```
 
 Sammanfattningsvis sticker kommuner i framförallt norra Dalarna ut positivt vad gäller företagande. Såväl Malung-Sälen som Älvdalen har ett stort antal privata arbetsställen, många nystartade företag och en stor andel företagssamma invånare. Baksidan är att det i båda kommunerna också registreras ett relativt stort antal konkurser. Rättvik rankas högt vad gäller såväl privata arbetsställen, nystartade företag som andel företagsamma och har dessutom få konkurser. Ludvika har lägst antal privata arbetsställen och lägst andel företagssamma individer, men samtidigt färre konkurser än Malung-Sälen och Älvdalen. Positivt för Ludvika är även att antalet nystartade företag ökat stadigt mellan 2007 och 2021. En potentiell orsak till att Ludvika har färre nystartade företag än andra kommuner är dominansen av en enskild arbetsgivare. Behovet av att starta egna företag minskar om det finns arbetstillfällen i större företag^[https://tillvaxtverket.se/download/18.6855bfcf184896002ffc69/1668765916305/Kommuners%20s%C3%A5rbarhet%20vid%20f%C3%B6retagsnedl%C3%A4ggningar.pdf].
@@ -188,7 +209,7 @@ Ett annat sätt att mäta beroende av enskilda branscher är genom den så kalla
 <br>
 <br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-gg_branschbredd
+gg_branschbredd$branschbredd
 
 ```
 
@@ -207,7 +228,7 @@ Vid sidan om beroende av enskilda branscher kan kommuner även vara mer eller mi
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-gg_50proc_lonesumma
+gg_50proc_lonesumma$`50_proc_lonesumma`
 
 ```
 
@@ -244,7 +265,7 @@ Andelen av befolkningen (25-64 år) med minst 3 års eftergymnasial utbildning (
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-gg_utbniva
+gg_utbniva$andel_hogutbildade
 
 ```
 
@@ -264,8 +285,8 @@ Historiskt är Avesta i första hand känt för sin järn-och stålindustri, med
 <br>
 <br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-
-knitr::include_graphics(here("Figurer","andel_per_bransch_Avesta.png"))
+gg_andel_forv$andel_per_bransch_Avesta
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Avesta.png"))
 
 ```
 
@@ -283,8 +304,8 @@ i=i+1
 ```{r, echo=FALSE, include = FALSE}
 # Mindre justering av inläst data
 
-storsta_arbetsgivare <- storsta_arbetsgivare %>% 
-  rename(antal_anstallda = `antal anställda`)
+# storsta_arbetsgivare <- storsta_arbetsgivare %>% 
+#   rename(antal_anstallda = `antal anställda`)
 
 ```
 
@@ -307,7 +328,8 @@ Borlänge växte fram i mitten 1800-talet och var länge förknippat med industr
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Borlänge.png"))
+gg_andel_forv$andel_per_bransch_Borlänge
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Borlänge.png"))
 
 ```
 
@@ -341,7 +363,8 @@ Falun har en lång historia kopplad till framförallt gruvindustrin, men arvet e
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Falun.png"))
+gg_andel_forv$andel_per_bransch_Falun
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Falun.png"))
 
 ```
 
@@ -374,8 +397,8 @@ Gagnef tillhör Dalarnas minsta kommuner, med ungefär 10 500 invånare år 2022
 Den största branschen i Gagnef är `r tolower(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef") %>% filter(andel == max(andel)) %>% .$bransch)`, med ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande. Även utbildning och offentlig förvaltning står för en större andel av de förvärvsarbetande i Gagnef än vad genomsnittet för Dalarna är. Tillverknings- och utvinningsbranschen är också viktig för Gagnef, med ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent av de förvärvsarbetande.
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-
-knitr::include_graphics(here("Figurer","andel_per_bransch_Gagnef.png"))
+gg_andel_forv$andel_per_bransch_Gagnef
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Gagnef.png"))
 
 ```
 
@@ -410,8 +433,8 @@ Hedemoras befolkningsstorlek, drygt 15 400 invånare år 2022, är något under 
 Hedemora är Dalarnas äldsta stad och fick stadsrättigheter redan på 1400-talet. Idag är arbetsgivare inom `r tolower(andel_forvarvsarbetande_bransch %>% filter(region == "Hedemora") %>% filter(andel == max(andel)) %>% .$bransch)` de viktigaste i Hedemora kommun, då nästan var fjärde förvärvsarbetande arbetar inom denna sektor. Även företag inom tillverknings- och utvinningsbranschen är viktiga, bland annat ingår gruvindustrin i Garpenberg här.
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-
-knitr::include_graphics(here("Figurer","andel_per_bransch_Hedemora.png"))
+gg_andel_forv$andel_per_bransch_Hedemora
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Hedemora.png"))
 
 ```
 
@@ -446,8 +469,8 @@ Leksands kommun är Dalarnas sjätte största sett till befolkning och hade 2022
 Leksand har gamla anor med boplatser från stenåldern och idag är kommunen, vid sidan om sitt hockeylag, i första hand förknippat med företag inom handel, då framförallt Clas Ohlson i Insjön. Mer än var femte förvärvsarbetar inom handel, vilket är klart högre än genomsnittet i Dalarna.  
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-
-knitr::include_graphics(here("Figurer","andel_per_bransch_Leksand.png"))
+gg_andel_forv$andel_per_bransch_Leksand
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Leksand.png"))
 
 ```
 
@@ -483,7 +506,8 @@ Ludvika är ett traditionellt brukssamhälle med bruk som dateras till 1500-tale
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Ludvika.png"))
+gg_andel_forv$andel_per_bransch_Ludvika
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Ludvika.png"))
 
 ```
 
@@ -519,7 +543,8 @@ I Malung-Sälen står turismindustrin i Sälenfjällen för en stor andel av sys
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Malung-Sälen.png"))
+gg_andel_forv$`andel_per_bransch_Malung-Sälen`
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Malung-Sälen.png"))
 
 ```
 
@@ -555,7 +580,8 @@ Mora har ursprung från medeltiden och är idag kanske mest känt för Vasaloppe
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Mora.png"))
+gg_andel_forv$andel_per_bransch_Mora
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Mora.png"))
 
 ```
 
@@ -591,7 +617,8 @@ Av de som förvärvsarbetar i Orsa gör mer än var femte det inom vård och oms
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Orsa.png"))
+gg_andel_forv$andel_per_bransch_Orsa
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Orsa.png"))
 
 ```
 
@@ -624,8 +651,8 @@ Rättviks kommun hade en folkmängd på drygt 11 000 år 2022. Befolkningen mins
 Rättvik har länge varit en populär turistort, vilket märks genom att dubbelt så stor andel jobbar inom hotell- och restaurangbranschen jämfört med genomsnittet i Dalarna. Även bygg samt kultur, fritid och nöje är branscher inom vilka en klart större andel av de förvärvsarbetande i Rättvik är sysselsatta.
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-
-knitr::include_graphics(here("Figurer","andel_per_bransch_Rättvik.png"))
+gg_andel_forv$andel_per_bransch_Rättvik
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Rättvik.png"))
 
 ```
 
@@ -661,7 +688,8 @@ Som namnet antyder har Smedjebacken en lång historia kopplad till smedjor, men 
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Smedjebacken.png"))
+gg_andel_forv$andel_per_bransch_Smedjebacken
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Smedjebacken.png"))
 
 ```
 
@@ -697,7 +725,8 @@ Säter fick stadsprivilegier redan på 1600-talet och är bland annat känt för
  
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Säter.png"))
+gg_andel_forv$andel_per_bransch_Säter
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Säter.png"))
 
 ```
 
@@ -730,8 +759,8 @@ Vansbro är, med sina 6 800 invånare år 2022, Dalarnas minsta kommun. Befolkni
 Idag är Vansbro i första hand förknippat med ett antal större företag, såsom Lyko och Orkla, som står för en stor andel av de sysselsatta i kommunen. Detta återspeglas i figuren nedan, som visar att mer än 40 procent av Vansbros förvärvsarbetande arbetar inom tillverknings- och utvinningsbranschen samt handel.
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
-
-knitr::include_graphics(here("Figurer","andel_per_bransch_Vansbro.png"))
+gg_andel_forv$andel_per_bransch_Vansbro
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Vansbro.png"))
 
 ```
 
@@ -766,7 +795,8 @@ Sammanfattningsvis är Vansbro en kommun som uppvisar både sårbara och inte s�
 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
-knitr::include_graphics(here("Figurer","andel_per_bransch_Älvdalen.png"))
+gg_andel_forv$andel_per_bransch_Älvdalen
+#knitr::include_graphics(here("Figurer","andel_per_bransch_Älvdalen.png"))
 
 ```
 

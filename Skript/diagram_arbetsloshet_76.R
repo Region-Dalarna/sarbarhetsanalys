@@ -9,7 +9,8 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
                                          spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                          returnera_figur = TRUE, # Skall figuren returneras som ett ggplot-objekt
                                          diag_region = TRUE, # Tidsserie för totalt (dvs. både kvinnor och män)
-                                         diag_kon = FALSE){ # Tidsserie där kön jämförs. Går bara om en region valts i region_vekt
+                                         diag_kon = FALSE,
+                                         returnera_data = TRUE){ # Tidsserie där kön jämförs. Går bara om en region valts i region_vekt
   
   
   # =================================================================================================================
@@ -36,6 +37,10 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
                                                   output_mapp = output_mapp_data,
                                                   filnamn = filnamn_data,
                                                   returnera_data = TRUE) 
+  
+  if(returnera_data == TRUE){
+    assign("arbetsloshet_76", df, envir = .GlobalEnv)
+  }
   
   if(diag_region == TRUE){
     

@@ -17,83 +17,92 @@ Output_mapp_figur = here("Figurer","/")
 
 # Arbetslöshet 76
 source(here("Skript","diagram_arbetsloshet_76.R"), encoding="UTF-8")
-diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
-                             output_mapp_data = Output_mapp_data,
-                             output_mapp_figur = Output_mapp_figur,
-                             vald_farg = diagramfarger("rus_sex"),
-                             returnera_figur = FALSE)
+gg_arb_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
+                                          output_mapp_data = Output_mapp_data,
+                                          output_mapp_figur = Output_mapp_figur,
+                                          vald_farg = diagramfarger("rus_sex"),
+                                          returnera_figur = TRUE,
+                                          returnera_data = TRUE)
 
 # Arbetslöshet och sysselsättningsgrad
 source(here("Skript","diagram_arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
-diagram_arbetsmarknadsstatus_kommun(output_mapp_data = Output_mapp_data,
-                                    output_mapp_figur = Output_mapp_figur,
-                                    diag_arbetskraftsdeltagande = FALSE,
-                                    valda_farger = diagramfarger("rus_tre_fokus"),
-                                    spara_figur = TRUE,
-                                    returnera_figur = FALSE)
+gg_arbetsmarknadsstatus <- diagram_arbetsmarknadsstatus_kommun(output_mapp_data = Output_mapp_data,
+                                                               output_mapp_figur = Output_mapp_figur,
+                                                               diag_arbetskraftsdeltagande = FALSE,
+                                                               valda_farger = diagramfarger("rus_tre_fokus"),
+                                                               spara_figur = TRUE,
+                                                               returnera_figur = TRUE,
+                                                               returnera_data = TRUE)
 
 # Långtidsarbetslöshet
 source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")
-diagram_langtidsarb(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = FALSE),
-                    outputmapp_figur = Output_mapp_figur,
-                    outputmapp_data = Output_mapp_data,
-                    jmf_ar = TRUE,
-                    returnera_figur = FALSE,
-                    spara_figur = TRUE,
-                    vald_farg = diagramfarger("rus_sex"))
+gg_langtidsarbetsloshet <- diagram_langtidsarb(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = FALSE),
+                                                outputmapp_figur = Output_mapp_figur,
+                                                outputmapp_data = Output_mapp_data,
+                                                jmf_ar = TRUE,
+                                                returnera_figur = TRUE,
+                                                returnera_data = TRUE,
+                                                spara_figur = TRUE,
+                                                vald_farg = diagramfarger("rus_sex"))
 
 # Andel som jobbar i offentlig sektor
 source(here("Skript","diagram_andel_offentligt.R"), encoding="UTF-8")
-diagram_andel_offentligt(output_mapp_figur= Output_mapp_figur,
-                         output_mapp_data = Output_mapp_data,
-                         diag_totalt = TRUE,
-                         diag_kon = FALSE,
-                         vald_farg =diagramfarger("rus_sex"),
-                         spara_figur = FALSE)
+gg_andel_offentligt <- diagram_andel_offentligt(output_mapp_figur= Output_mapp_figur,
+                                               output_mapp_data = Output_mapp_data,
+                                               diag_totalt = TRUE,
+                                               diag_kon = FALSE,
+                                               vald_farg =diagramfarger("rus_sex"),
+                                               spara_figur = FALSE,
+                                               returnera_figur = TRUE,
+                                               returnera_data = TRUE)
 
 # Andel pendling i kommun  
 source("G:/skript/diagram/diag_pendlare_over_kommungrans.R")
-diag_pendling_over_kommungrans(output_mapp_figur = Output_mapp_figur,
-                               output_mapp_data = Output_mapp_data,
-                               skapa_fil = TRUE, 
-                               diagramfarg_vektor = diagramfarger("rus_sex"),
-                               enbart_in_ut = TRUE,
-                               diag_absoluta_tal = FALSE,           
-                               diag_procent = TRUE,
-                               returnera_figur = FALSE)
+gg_pendling <- diag_pendling_over_kommungrans(output_mapp_figur = Output_mapp_figur,
+                                             output_mapp_data = Output_mapp_data,
+                                             skapa_fil = TRUE, 
+                                             diagramfarg_vektor = diagramfarger("rus_sex"),
+                                             enbart_in_ut = TRUE,
+                                             diag_absoluta_tal = FALSE,           
+                                             diag_procent = TRUE,
+                                             returnera_figur = TRUE,
+                                             returnera_data = TRUE)
 
 # Antal arbetsställen 
 source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
-diag_foretagarna(output_mapp_figur = Output_mapp_figur,
-                 output_mapp_data = Output_mapp_data,
-                 spara_figur = TRUE,
-                 returnera_figur = TRUE,
-                 diag_arbetsstallen = TRUE,
-                 diag_nyforetagsamma = FALSE,
-                 diag_foretagsamma = FALSE)
+gg_arbetsstallen <- diag_foretagarna(output_mapp_figur = Output_mapp_figur,
+                                     output_mapp_data = Output_mapp_data,
+                                     spara_figur = TRUE,
+                                     returnera_figur = TRUE,
+                                     returnera_data = TRUE,
+                                     diag_arbetsstallen = TRUE,
+                                     diag_nyforetagsamma = FALSE,
+                                     diag_foretagsamma = FALSE)
 
 # Antal nystartade företag och antalet konkurser
 source(here("Skript","diagram_nyst_arbetslosa.R"), encoding="UTF-8")
-diagram_nystartade_konkurser(output_mapp_figur = Output_mapp_figur,
-                             output_mapp_data = Output_mapp_data,
-                             spara_figur = TRUE,
-                             returnera_figur = FALSE,
-                             vald_farg = diagramfarger("rus_sex"),
-                             cont_cod = c("N00999","N00926"))
+gg_nyst_konk <- diagram_nystartade_konkurser(output_mapp_figur = Output_mapp_figur,
+                                           output_mapp_data = Output_mapp_data,
+                                           spara_figur = TRUE,
+                                           returnera_figur = TRUE,
+                                           returnera_data = TRUE,
+                                           vald_farg = diagramfarger("rus_sex"),
+                                           cont_cod = c("N00999","N00926"))
 
 # Andel förvärvsarbetande i olika branscher (såväl län som kommun)
 source(here("Skript","diagram_andel_forvarvsarbetande_bransch.R"), encoding="UTF-8")
-diag_sysselsatta_andel(output_mapp_figur = Output_mapp_figur,
-                       output_mapp_data = Output_mapp_data,
-                       returnera_figur = FALSE,
-                       spara_figur = TRUE, 
-                       diag_lan = TRUE, 
-                       diag_kommun = TRUE)
+gg_andel_forv <- diag_sysselsatta_andel(output_mapp_figur = Output_mapp_figur,
+                                        output_mapp_data = Output_mapp_data,
+                                        returnera_figur = TRUE,
+                                        spara_figur = TRUE, 
+                                        diag_lan = TRUE, 
+                                        diag_kommun = TRUE,
+                                        returnera_data = TRUE)
 
 # Branschbredd
 source(here("Skript","diagram_branschbredd.R"), encoding="UTF-8")
-gg_branschbredd = diag_branschbredd(output_mapp = Output_mapp_figur,
-                                    valda_farger = "rus_sex",
+gg_branschbredd = diag_branschbredd(output_mapp_figur = Output_mapp_figur,
+                                    valda_farger = diagramfarger("rus_sex"),
                                     spara_figur = TRUE,
                                     returnera_data = TRUE)
 
@@ -116,7 +125,7 @@ gg_utbniva <- diag_utbniva(output_mapp = Output_mapp_figur,
 source("G:/skript/diagram/diag_storsta_arbetsgivare_kommun.R", encoding = "utf-8", echo = FALSE)
 gg_storsta_foretag <- diag_storsta_arbetsgivare_kommun(valda_kommuner = hamtakommuner("20",tamedlan=FALSE,tamedriket=FALSE),
                                                       skriv_fil = FALSE,
-                                                      output_mapp = Output_mapp,
+                                                      output_mapp = Output_mapp_figur,
                                                       returnera_data = TRUE)
 
 #####################
@@ -126,14 +135,11 @@ gg_storsta_foretag <- diag_storsta_arbetsgivare_kommun(valda_kommuner = hamtakom
 # Diverse från företagarna. Data uppdaterades senaste i mitten av november 2023
 source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
 gg_foretagssamma <- diag_foretagarna(region_vekt = "20",
-                                     output_mapp = Output_mapp_figur,
-                                     spara_figur = TRUE, 
-                                     valda_farger = "rus_tre_fokus",
-                                     valda_farger_foretagssamma = "rus_sex",
+                                     output_mapp_figur = Output_mapp_figur,
+                                     spara_figur = TRUE,
                                      diag_arbetsstallen = FALSE,
                                      diag_nyforetagsamma = FALSE,
-                                     diag_foretagsamma = TRUE,
-                                     returnera_data = TRUE)
+                                     diag_foretagsamma = TRUE)
 
 # Antal företag som utgör 50 procent av den totala lönesumman (NMS)
 source(here("Skript","diagram_50_proc_lonesumma_NMS.R"), encoding="UTF-8")

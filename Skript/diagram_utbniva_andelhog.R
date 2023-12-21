@@ -34,8 +34,7 @@ diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedr
   df <- hamta_data_utbniva (region = region_vekt,
                             alder = alder,
                             utbildningsniva_klartext = "*",
-                            tid = "9999", # "Om man enbart vill ha senaste år"9999" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med.
-                            spara_data = FALSE, 
+                            tid = "9999", # "Om man enbart vill ha senaste år"9999" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med. 
                             returnera_data = TRUE)
   
   df <- df %>% 
