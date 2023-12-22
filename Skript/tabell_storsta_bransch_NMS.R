@@ -1,8 +1,9 @@
 # Hur många företag krävs för att lönesumman i en kommun skall uppgå till 50 % (kumulativt)
-# R-skript som skapar data finns på MONA under P1079_Gem/Jon/Sårbarhetsanalys/Ftg_50procent_lonesumma_ny_variant
+# R-skript som skapar data finns på MONA under P1079_Gem/Jon/Sårbarhetsanalys/viktigaste_branscher_lan_Raps_ny_variant
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(openxlsx,here,tidyverse,gt,webshot2)
 
+source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
 #test_list=diag_50proc_lonesumma(skapa_fil=TRUE,output_mapp = "G:/skript/jon/")
 diag_50proc_lonesumma <- function(region_vekt="20",
                                   diag_lan=TRUE,
@@ -14,8 +15,8 @@ diag_50proc_lonesumma <- function(region_vekt="20",
   
   # ========================================== Läser in data ============================================
   # Läser in data från Excel (ursprung arbetsförmedlingen)
-  bransch_lan_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_ranking_branscher_lonesumma.xlsx",sheet=1)
-  bransch_kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_ranking_branscher_lonesumma.xlsx",sheet=2)
+  bransch_lan_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/22_dec_23_ranking_branscher_lonesumma.xlsx",sheet=1)
+  bransch_kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/22_dec_23_ranking_branscher_lonesumma.xlsx",sheet=2)
   #foretag_kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_ranking_branscher_lonesumma.xlsx",sheet=3)
   
   bransch_lan_df <- bransch_lan_df %>% 

@@ -47,8 +47,7 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
     group_by(år, månad_år, region, bransch) %>% 
         summarize("Antal" = sum(`sysselsatta efter arbetsställets belägenhet`)) %>% 
       mutate(andel = (Antal/sum(Antal))*100,
-             region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE),
-             bransch = str_wrap(bransch,20))
+             region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE))
   
   if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
     write.xlsx(df_sum,paste0(output_mapp_data,filnamn_data))
@@ -65,7 +64,8 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
     objektnamn <- c(objektnamn,"andel_per_bransch")
     
     gg_obj <- SkapaStapelDiagram(skickad_df = df_sum %>% 
-                                   filter(region%in%c("Sverige",vald_region),bransch != "Okänt"),
+                                   filter(region%in%c("Sverige",vald_region),bransch != "Okänt") %>% 
+                                    mutate(bransch = str_wrap(bransch,20)),
                                  skickad_x_var = "bransch", 
                                  skickad_y_var = "andel", 
                                  skickad_x_grupp = "region",
@@ -100,7 +100,8 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
       # För att ort respektive län skall skrivas i rätt ordning (Dalarna först) så skapas en faktorvariabel med mutate nedan
       gg_obj <- SkapaStapelDiagram(skickad_df = df_sum %>% 
                                      filter(region %in% c(vald_region,kommun_vektor$region[j])) %>% 
-                                     mutate(region = factor(region, levels = c(vald_region,kommun_vektor$region[j]))), 
+                                     mutate(region = factor(region, levels = c(vald_region,kommun_vektor$region[j])),
+                                            bransch = str_wrap(bransch,20)), 
                                    skickad_x_var = "bransch", 
                                    skickad_y_var = "andel", 
                                    skickad_x_grupp = "region",

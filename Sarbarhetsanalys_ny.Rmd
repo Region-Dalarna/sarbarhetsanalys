@@ -199,7 +199,6 @@ gg_nyst_konk$konkurser
 
 ```
 <br>
-<br>
 
 Ett annat sätt att mäta företagande är genom att undersöka hur stor andel av en kommuns invånare som anses vara företagssamma, dvs. innehar F-skattesedel, är delägare i ett aktivt handelsbolag alternativt är VD eller styrelseordförande i ett aktivt aktiebolag. Bland Dalarnas kommuner är det återigen en stor variationen, där `r företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Kommun` hade högst andel företagssamma år `r unique(företagssamma$year)` (ca `r round(företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)` procent) och `r företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Kommun` lägst andel (ca `r round(företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)` procent).
 
@@ -207,7 +206,6 @@ Ett annat sätt att mäta företagande är genom att undersöka hur stor andel a
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 gg_foretagssamma$Andel_företagsamma
 ```
-<br>
 <br>
 
 Sammanfattningsvis sticker kommuner i framförallt norra Dalarna ut positivt vad gäller företagande. Såväl Malung-Sälen som Älvdalen har ett stort antal privata arbetsställen, många nystartade företag och en stor andel företagssamma invånare. Baksidan är att det i båda kommunerna också registreras ett relativt stort antal konkurser. Rättvik rankas högt vad gäller såväl privata arbetsställen, nystartade företag som andel företagsamma och har dessutom få konkurser. Ludvika har näst lägst antal privata arbetsställen och lägst andel företagssamma individer, men samtidigt färre konkurser än Malung-Sälen och Älvdalen. Positivt för Ludvika är även att antalet nystartade företag har ökat över tid. En potentiell orsak till att Ludvika har färre nystartade företag än andra kommuner är dominansen av en enskild arbetsgivare. Behovet av att starta egna företag minskar om det finns arbetstillfällen i större företag^[https://tillvaxtverket.se/download/18.6855bfcf184896002ffc69/1668765916305/Kommuners%20s%C3%A5rbarhet%20vid%20f%C3%B6retagsnedl%C3%A4ggningar.pdf].
@@ -217,36 +215,41 @@ Vid sidan om en väl fungerande arbetsmarknad och goda förutsättningar för f�
 
 Traditionellt anses Dalarna vara ett så kallat tillverkande län, med många företag inom tillverkning och utvinning. Denna bild bekräftas delvis av figuren nedan, som visar hur stor andel av de förvärvsarbetande som arbetar i olika branscher i Dalarna och Sverige. I Dalarna arbetar drygt `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Dalarna",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent av de sysselsatta inom tillverkning och utvinning, att jämföra med strax under `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Sverige",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent i Sverige som helhet. Mer än var femte förvärvsarbetande i Dalarna arbetar dock inom vård och omsorg, vilket gör branschen till Dalarnas viktigaste vad gäller sysselsättning. Som jämförelse arbetar bara ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Sverige",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande i Sverige inom vård och omsorg.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch
 
 ```
+<br>
 
 Ett annat sätt att mäta beroende av enskilda branscher är genom den så kallade branschbredden, ett mått som jämför antalet branscher som finns representerade i exempelvis en kommun med det totala antalet branscher i Sverige. I Dalarna som helhet fanns företag inom ca `r round(branschbredd %>% filter(municipality =="Dalarnas län",year == max(year)) %>% .$Branschbredd,0)` procent av alla Sveriges branscher år `r max(branschbredd$year)`. Bland Dalarnas kommuner hade de med högst befolkning, Falun och Borlänge, också störst branschbredd, med drygt `r round(branschbredd %>% filter(municipality =="Falun",year == max(year)) %>% .$Branschbredd,0)` respektive `r round(branschbredd %>% filter(municipality =="Borlänge",year == max(year)) %>% .$Branschbredd,0)` procent av branscherna representerade `r max(branschbredd$year)`. Lägst branschbredd hade `r branschbredd %>% filter(year == max(year)) %>% filter(Branschbredd == min(Branschbredd)) %>% .$municipality`, med ca `r round(branschbredd %>% filter(year == max(year)) %>% filter(Branschbredd == min(Branschbredd)) %>% .$Branschbredd,0)` procent av branscherna representerade år 2021. 
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 gg_branschbredd$branschbredd
 
 ```
+<br>
 
 De fem största branschgrupperna inom det privata näringslivet i Dalarna visas i `r paste0("figur ",i+1)`. De är rankade efter branschens andel av näringslivets totala lönesumma. I figuren visas även information om branschgruppens representation utifrån parametrarna utbildningsnivå, andel kvinnor samt andel utrikes födda. I Dalarna är företagsservicefirmor, med närmare 14 procent av den totala lönesumman, jämte parti- och detaljhandel samt byggsektorn som står för cirka 13 procent vardera av näringslivets totala lönesumma, de största branschgrupperna. Parti- och detaljhandel är den enda branschgrupp som kan sägas ha en jämställd representation av kvinnor och män anställda, övriga stora branschgrupper har en majoritet män anställda. Störst andel högutbildade finns inom sektorn annan elektro- och teleproduktindustri, nästan hälften av dem som arbetar där är högutbildade, och det är också i denna sektor som störst andel är utrikesfödda, bland de fem största branscherna.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.dim(5,5)}
-gt_tabell$län
-#knitr::include_graphics(here("Diagram","storsta_branscher.png"))
+#gt_tabell$län
+knitr::include_graphics(here("Diagram","storsta_branscher.png"))
 ```
-
+<br>
 
 Vid sidan om beroende av enskilda branscher kan kommuner även vara mer eller mindre beroende av specifika företag. I linje med Tillväxtverket^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html] mäter vi kommuners beroende av de största företagen genom att beräkna antalet företag som krävs för att deras samlade lönesumma skall överstiga hälften av den totala lönesumman bland privata företag i respektive kommun. I Dalarna är variationen stor mellan kommunerna för detta mått: i Falun krävs det `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Falun") %>% .$cnum` företag för att komma upp i 50 procent av näringslivets totala lönesumma, medan de `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Ludvika") %>% .$cnum` största företagen i Ludvika står för mer än hälften av näringslivets lönesumma. En bidragande förklaring till detta är hur stort antalet invånare i kommunen är. De två största, Falun och Borlänge, har också lägst beroende. Samtidigt är Ludvika den tredje största kommunen i Dalarna (sett till befolkning) och högst beroende av ett enskilt företag, Hitachi, så en större befolkning räcker inte alltid som förklaring. Bland mindre kommuner utmärker sig Rättvik, där det krävs `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Rättvik") %>% .$cnum` företag för att komma upp i 50 procent av lönesumman, nästan lika många som i avsevärt mycket större Borlänge.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_50proc_lonesumma$`50_proc_lonesumma`
 
 ```
+<br>
 
 Sammantaget ger de olika variablerna inom detta avsnitt en blandad bild av läget i Dalarna. Det finns en tydlig koppling mellan storleken på en kommun och hur många branscher som finns representerade i kommunen, där störst beroende finns i små kommuner, framförallt i norra och västra Dalarna, däribland Orsa och Vansbro. Vad gäller beroende av enskilda företag (inom det privata näringslivet) sticker Ludvika ut, med sitt stora beroende av en enskild arbetsgivare. Minst beroende av såväl branscher som enskilda företag är Falu kommun.
 
@@ -259,19 +262,23 @@ Normalt arbetar människor när det befinner sig i det åldersspann som kallas a
 
 Dalarna är ett län med relativt hög medelålder. Av länets 15 kommuner har 14 högre medelålder än Sverige. Det är också tydligt att medelålder är nära kopplat till storleken på kommunens befolkning. I Falun och Borlänge är medelåldern ungefär som genomsnittet i Sverige, medan den i vissa mindre kommuner, då framförallt Rättvik, är avsevärt mycket högre. Den genomsnittlige rättvikaren är mer än 7 år äldre än den genomsnittlige svensken, vilket gjorde Rättvik till Sveriges 9:e äldsta kommun 2022. Bland Dalarnas övriga kommuner är medelåldern lägre, men ett tydlig mönster är att kommuner i norra och västra Dalarna har relativt gamla invånare jämfört med kommuner i sydöstra delarna av länet. Det finns även en koppling mellan andelen utrikes födda i en kommun och kommunens medelålder. Avesta, Borlänge och Ludvika, de tre kommuner i Dalarna med störst andel utrikes födda invånare, tillhör de kommuner som har lägst medelålder.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_medel_demo$medelalder
 
 ```
+<br>
 
 En äldre befolkning kan naturligtvis få ett flertal följder för en kommun på längre sikt genom äldres potentiella behov av vård och omsorg. Ett sätt att mäta detta är genom den så kallade demografiska försörjningskvoten. Den beräknas genom att relatera antalet personer i arbetsför ålder, de som är mellan 20 och 64 år, till unga (0-19 år) och äldre (>64år). Normalt är den kommunala kostnaden relativt låg för personer i arbetsför ålder, medan den är avsevärt högre för unga (kostnad för förskola och skola) och äldre (äldreomsorg mm). Det är därför intressant att relatera dessa grupper till personer i arbetsför ålder. I Dalarna är den demografiska försörjningskvoten högst i Rättvik, där grupperna unga och äldre sammantaget är större än gruppen i arbetsför ålder (en försörjningskvot som överstiger 100). Försörjningskvoten ökar dessutom i samtliga Dalarnas kommuner över tid, vilket är i linje med en allt äldre befolkning.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_medel_demo$demo_fors
 
 ```
+<br>
 
 En annan aspekt som kan tänkas påverka sårbarheten i en kommun är utbildningsnivån. Hypotesen är att högre utbildade personer har lättare att få jobb och därför kan omlokaliseras vid större uppsägningar^[https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf]. Att det sambandet inte är ett till ett kan dock observeras om man jämför arbetslöshet med utbildningsnivån i Dalarnas kommuner. Malung-Sälens kommun har, exempelvis, en av de lägsta andelarna högutbildade bland Dalarnas kommuner, men samtidigt också den näst lägsta arbetslösheten (se avsnitt 2.3).
 
@@ -279,32 +286,35 @@ Sambandet mellan ekonomisk tillväxt/arbetslöshet och utbildningsnivå har äve
 
 Andelen av befolkningen (25-64 år) med minst 3 års eftergymnasial utbildning (fortsättningsvis högre utbildning) var 2021 relativt låg i Dalarnas kommuner. Bland länets 15 kommuner var det bara Falun som hade en högre utbildningsnivå än Sverige som helhet. Detta beror sannolikt på att Falu lasarett, där många har högre utbildning, är en av stadens största arbetsgivare. Utbildningsnivån i övriga kommuner är avsevärt mycket lägre och i exempelvis Vansbro är andelen med högre utbildning mindre än hälften av andelen med högre utbildning i Falun och Sverige. Dalarna tillhör Sveriges lägst utbildade län, där drygt `r round(andel_hogutbildade %>% filter(region == "Dalarna", utbildningsnivå == "Eftergymnasial utbildning, 3 år eller mer") %>% .$andel,0)` procent av befolkningen har en högre utbildning, att jämföra med Sverige där ungefär `r round(andel_hogutbildade %>% filter(region == "Sverige", utbildningsnivå == "Eftergymnasial utbildning, 3 år eller mer") %>% .$andel,0)` procent av befolkningen (25-64 år) har en högre utbildning. Det är dock viktigt att notera att utbildningsnivån anpassar sig efter efterfrågan i kommunen eller regionen. Om Vansbros arbetsgivare efterfrågar arbetskraft med framförallt gymnasial bakgrund är det orimligt om kommunen har samma genomsnittliga utbildningsnivå som Falun. Matchningen mellan arbetsgivare och arbetstagare skulle helt enkelt bli för dålig. 
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_utbniva$andel_hogutbildade
 
 ```
+<br>
 
 ## Sammanfattning
 Syftet med den här rapporten har varit att illustrera hur väl Dalarnas kommuner skulle hantera en företags- eller branschkris som får stora effekter på samhällets, eller det enskilda företagets, ekonomi. Utgångspunkten har varit Tillväxtverkets rapport "Kommuners sårbarhet vid företagsnedläggningar", där kommuners sårbarhet och förutsättning till återhämtning efter stora nedläggningar eller andra kriser studeras.Vid sidan om en klassificering av kommuner som sårbara och icke sårbara, innehåller Tillväxtverkets rapport såväl tips för hur kommuner kan minska sin sårbarhet, som sårbarhetens utveckling över tid. Tillväxtverkets rapport bör därför läsas av alla kommuner. 
 
-Den här rapporten har kompletterat Tillväxtverkets genom att fokusera specifikt på Dalarna. Överlag påminner Dalarna relativt väl om Sverige som helhet på de flesta områden, arbetslösheten är visserligen lite lägre än Sveriges, medan samtidigt arbetar något fler inom offentlig sektor i Dalarna. De finns något fler arbetsställen per 1000 invånare i Dalarna, men samtidigt startas lite färre företag. Inom två områden sticker dock Dalarna ut en aning jämfört med Sverige. Dalarna har en av de lägsta andelarna högutbildade bland Sveriges län: bara Falun har högre utbildningsnivå än Sverige som helhet. Dessutom är många i Dalarna relativt gamla, då Borlänge har lägre medelålder än Sverige.
+Den här rapporten har kompletterat Tillväxtverkets genom att fokusera specifikt på Dalarna. Överlag påminner Dalarna relativt väl om Sverige som helhet på de flesta områden, arbetslösheten är visserligen lite lägre än Sveriges, samtidigt som något fler arbetar inom offentlig sektor i Dalarna. De finns något fler arbetsställen per 1000 invånare i Dalarna, men samtidigt startas lite färre företag. Inom två områden sticker dock Dalarna ut en aning jämfört med Sverige. Dalarna har en av de lägsta andelarna högutbildade bland Sveriges län: bara Falun har högre utbildningsnivå än Sverige som helhet. Dessutom är många i Dalarna relativt gamla, då bara Borlänge har lägre medelålder än Sverige.
 
 I fortsättningen av denna rapport görs djupdykningar i var och en av Dalarnas kommuner. Varje avsnitt avslutas med en kort diskussion om kommunens övergripande sårbarhet enligt den modell som har använts i denna rapport. 
 
 # Kommunfördjupningar {.tabset .tabset-fade .tabset-pills}
 
 ## Avesta {-}
-Avesta kommun är den fjärde största kommunen i Dalarna sett till folkmängd. Avestas befolkning minskade stadigt fram till millennieskiftet, men stabiliserades därefter och uppgick år 2022 till ca 23 000. Antalet utrikes födda i Avesta har ökat med ungefär lika många som antalet inrikes födda har minskat. Arbetslösheten i Avesta är bland de högre i Dalarna, cirka 6 procent. Att arbetslösheten är hög kan delvis förklaras med att Avesta har en relativt stor andel utrikes födda, drygt 17 procent av invånarna, vidare är relativt få i Avesta högt utbildade vilket kan försämra matchningen mot de arbeten som finns på orten. Befolkningen i Avesta tillhör samtidigt Dalarnas yngre med en genomsnittsålder på drygt 44 år, vilket kan tillskrivas andelen utrikes födda.
+Avesta kommun är den fjärde största kommunen i Dalarna sett till folkmängd. Avestas befolkning minskade stadigt fram till millennieskiftet, men stabiliserades därefter och uppgick år 2022 till ca 23 000. Antalet utrikes födda i Avesta har ökat med ungefär lika många som antalet inrikes födda har minskat. Arbetslösheten i Avesta är bland de högre i Dalarna, cirka `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Avesta") %>% .$varde,0)` procent. Att arbetslösheten är hög kan delvis förklaras med att Avesta har en relativt stor andel utrikes födda, drygt 17 procent av invånarna, vidare är relativt få i Avesta högt utbildade vilket kan försämra matchningen mot de arbeten som finns på orten. Befolkningen i Avesta tillhör samtidigt Dalarnas yngre med en genomsnittsålder på drygt 44 år, vilket kan tillskrivas andelen utrikes födda.
 
-Historiskt är Avesta i första hand känt för sin järn-och stålindustri, med anor från 1600-talet. Detta arv lever kvar än idag, då nästan var fjärde förvärvsarbetande i Avesta arbetar inom tillverkning och utvinning, att jämföra med ca `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Dalarna",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent i Dalarna. 
-<br>
+Historiskt är Avesta i första hand känt för sin järn-och stålindustri, med anor från 1600-talet. Detta arv lever kvar än idag, då ungefär var fjärde förvärvsarbetande i Avesta arbetar inom tillverkning och utvinning, att jämföra med ca `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Dalarna",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent i Dalarna. 
+
 <br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 gg_andel_forv$andel_per_bransch_Avesta
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Avesta.png"))
 
 ```
+<br>
 
 Stål- och metalltillverkning är den största branschgruppen i Avesta, baserat på företagens andel av lönesumman inom det privata näringslivet. Därefter följer byggindustrin storleksmässigt. Gemensamt för dessa branschgrupper är att relativt få av de sysselsatta är utrikes födda och därtill är det en tydlig övervikt av män. Bland övriga viktiga branschgrupper i Avesta finns pappersindustrin och parti- och detaljhandel, vars företag tillsammans står för ungefär 20 procent av näringslivets totala lönesumma. Även inom pappersindustrin är representationen av utrikes födda långt under andelen i befolkningen (runt 2 procent). Männen i Avesta arbetar som synes i hög grad i tillverknings- och byggbranscherna medan de kvinnor som arbetar i privat sektor (en stor andel kvinnor arbetar i offentlig sektor) i stor utsträckning arbetar i företag inom parti- och detaljhandelsbranschen.
 <br>
@@ -313,13 +323,6 @@ Stål- och metalltillverkning är den största branschgruppen i Avesta, baserat 
 knitr::include_graphics(here("Diagram","storsta_branscher_Avesta.png"))
 
 ```
-
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-
-# storsta_arbetsgivare <- storsta_arbetsgivare %>% 
-#   rename(antal_anstallda = `antal anställda`)
-```
-
 
 Den största arbetsgivaren i Avesta var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Avesta") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med strax över 2000 anställda. Bland privata arbetsgivare hade Outokumpu Stainless flest anställda med ca `r storsta_arbetsgivare %>% filter(Kommun == "Avesta",Arbetsgivare == "Outokumpu Stainless AB") %>% .$antal_anstallda`. Även Stora Enso och Region Dalarna är stora arbetsgivare i Avesta
 
