@@ -722,29 +722,34 @@ Smedjebackens kommun hade ca 11 000 invånare år 2022. Befolkningen minskade ga
 
 Som namnet antyder har Smedjebacken en lång historia kopplad till smedjor, men fungerade även länge som knutpunkt för land- och vattentransporter. Än idag är företag inom tillverkning och utvinning dominerande inom kommunen, ungefär var fjärde förvärvsarbetande arbetar inom sådana företag. Även arbetsgivare inom vård och omsorg är viktiga, med ca `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Smedjebacken",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande i kommunen.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch_Smedjebacken
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Smedjebacken.png"))
 
 ```
+<br>
 
 Den största privata arbetsgivaren i Smedjebacken finns inom branschgruppen stål- och metallverk. Branschens företag står också för nästan en fjärdedel av den totala lönesumman. Inom branschgruppen jobbar få utrikes födda och få kvinnor, och dessutom relativt få högutbildade. Även byggindustri och metallvaruindustri är viktiga branschgrupper sett till andel av lönesumman, och tillsammans med stål- och metallverk står dessa för ungefär halva lönesumman inom det privata näringslivet. Även företag inom branschgruppen företagsservicefirmor anställer relativt många men här återfinns en ganska stor andel kvinnor, högutbildade och utrikes födda.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 knitr::include_graphics(here("Diagram","storsta_branscher_Smedjebacken.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Smedjebacken var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare var Ovako störst, med bortåt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken",Arbetsgivare == "Ovako Bar AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Smedjebacken
 
 ```
+<br>
 
 Smedjebacken har Dalarnas näst lägsta antal privata arbetsställen per 1 000 invånare och dessutom relativt många konkurser, vilka även har ökat på senare år.
 
@@ -753,99 +758,112 @@ Branschbredden i Smedjebacken är den lägsta i Dalarna och minskade dessutom fr
 Sammanfattningsvis kan Smedjebacken sägas vara en kommun som uppvisar sårbarhet på flera områden. Visserligen är arbetslösheten bara runt genomsnittet för Dalarna och kommunen har en stor utpendling, men den pendlingen går i stor uträckning till närbelägna Ludvika som domineras av en enskild arbetsgivare. Beroendet av enskilda företag och branscher i Smedjebacken är dessutom högt och det finns relativt få arbetsställen. Naturligtvis finns samtidigt positiva sidor med att ha en stor och expanderande arbetsgivare (Hitachi) bara någon mil bort.
 
 ## Säter {-}
-Säter tillhör en grupp med fem kommuner i Dalarna som har en folkmängd på mellan 10 000 och 11 000 invånare. Befolkningen ökade avsevärt från slutet av 1960-talet till 1990, men minskade därefter. På senare år har Säters befolkning återigen börjat öka, vilket kan tillskrivas såväl en ökning bland inrikes som utrikes födda invånare. Arbetslösheten i Säter, drygt 3 procent, är klart lägre än genomsnittet i Dalarna, samtidigt som andelen högutbildade är något lägre än genomsnittet i Dalarna. Att arbetslösheten är låg kan delvis tillskrivas den relativt låga andelen utrikes födda i Säter, en grupp där arbetslösheten vanligtvis är högre än bland inrikes födda. Exempelvis har närbelägna Borlänge mer än dubbelt så stor andel utrikes födda och dessutom en mer än dubbelt så hög arbetslöshet. Medelåldern i Säter är relativt låg, ca 45 år, men samtidigt klart högre än i närbelägna Borlänge. Säter är, tillsammans med Gagnef, den kommun som har störst pendling i Dalarna, närmare 60 procent av dem som bor i Säter och förvärvsarbetar har sin arbetsplats på annan ort.
+Säter tillhör en grupp med fem kommuner i Dalarna som har en folkmängd på mellan 10 000 och 11 000 invånare. Befolkningen ökade avsevärt från slutet av 1960-talet till 1990, men minskade därefter. På senare år har Säters befolkning återigen börjat öka, vilket kan tillskrivas såväl en ökning bland inrikes som utrikes födda invånare. Arbetslösheten i Säter, `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Säter") %>% .$varde,1)` procent, är klart lägre än genomsnittet i Dalarna, samtidigt som andelen högutbildade är något lägre än genomsnittet i Dalarna. Att arbetslösheten är låg kan delvis tillskrivas den relativt låga andelen utrikes födda i Säter, en grupp där arbetslösheten vanligtvis är högre än bland inrikes födda. Exempelvis har närbelägna Borlänge mer än dubbelt så stor andel utrikes födda och dessutom klart högre arbetslöshet. Medelåldern i Säter är relativt låg, ca 45 år, men samtidigt klart högre än i närbelägna Borlänge. Säter är, tillsammans med Gagnef, den kommun som har störst pendling i Dalarna, närmare 60 procent av dem som bor i Säter och förvärvsarbetar har sin arbetsplats på annan ort.
 
 Säter fick stadsprivilegier redan på 1600-talet och är bland annat känt för Säters sjukhus, som under en period var Sveriges största mentalsjukshus. Idag arbetar en stor andel av de sysselsatta inom vård och omsorg, ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Säter",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande, vilket är den högsta andelen bland Dalarnas kommuner. 
- 
+
+<br> 
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch_Säter
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Säter.png"))
 
 ```
+<br>
 
 Baserat på andelen av lönesumman inom det privata näringslivet i Säter är byggindustrin den största branschgruppen, med drygt 20 procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor är sysselsatta inom byggbranschen. Även parti- och detaljhandeln samt företagsservicefirmor är viktiga branschgrupper. I dessa båda finns en klart större andel kvinnor, högutbildade och utrikes födda bland de sysselsatta.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Säter.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Säter var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Säter") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med strax under `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Säter") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Även Region Dalarna är en stor arbetsgivare, medan det inom det privata näringslivet bara finns ett företag med mer än 50 anställda (Gustafs Scandinavia).
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Säter
 
 ```
+<br>
 
-Antalet arbetsställen per 1 000 invånare i Säter är bland det lägsta i Dalarna, men samtidigt har antalet nystartade företag (per 1 000 invånare) ökat under en längre period och ligger idag över genomsnittet i Dalarna. Branschbredden i Säter är i linje med många andra kommuner av samma storlek, men antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman i det privata näringslivet (44) är avsevärt mycket större än många jämförbara kommuner. Säter kan därför sägas vara en kommun med relativt litet beroende. Samtidigt skall man vara medveten om att andelen som arbetar inom vård och omsorg i Säter (där många arbetsgivare tillhör det offentliga) är högst i Dalarna, vilket är ett annat typ av beroende.
+Antalet arbetsställen per 1 000 invånare i Säter är bland det lägsta i Dalarna, men samtidigt har antalet nystartade företag (per 1 000 invånare) ökat under en längre period och ligger idag över genomsnittet i Dalarna. Branschbredden i Säter är i linje med många andra kommuner av samma storlek, men antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman i det privata näringslivet (`r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Säter") %>% .$cnum`) är avsevärt mycket större än många jämförbara kommuner. Säter kan därför sägas vara en kommun med relativt litet beroende. Samtidigt skall man vara medveten om att andelen som arbetar inom vård och omsorg i Säter (där många arbetsgivare tillhör det offentliga) är högst i Dalarna, vilket är ett annat typ av beroende.
 
-Sammanfattningsvis är Säter en kommun med låg sårbarhet inom flera områden. Arbetslösheten är bland de lägre i Dalarna och det sker en stor pendling till framförallt närbelägna Borlänge. Dessutom är beroendet av enskilda företag och branscher, inom den privata sektorn, lågt. På minussidan finns en stor dominans av arbetsgivare inom vård och omsorg, vilket potentiellt kan vara en sårbarhet. Det är dock rimligt att tänka sig att företag inom offentliga verksamheter påverkas annorlunda än det privata näringslivet vid exempelvis en konkjunkturnedgång, samtidigt som behovet av tjänster kopplade till vård och omsorg sannolikt kommer att öka i framtiden. Noterbart är även att bygg är en klart dominerande bransch inom det privata näringslivet, vilket potentiellt skulle kunna bli ett problem vid en lågkonjunktur.
+Sammanfattningsvis är Säter en kommun med låg sårbarhet inom flera områden. Arbetslösheten är bland de lägre i Dalarna och det sker en stor pendling till framförallt närbelägna Borlänge. Dessutom är beroendet av enskilda företag och branscher, inom den privata sektorn, lågt. På minussidan finns en stor dominans av arbetsgivare inom vård och omsorg, vilket potentiellt kan vara en sårbarhet. Det är dock rimligt att tänka sig att företag inom offentliga verksamheter påverkas annorlunda än det privata näringslivet vid exempelvis en nedgång i konjunkturen, samtidigt som behovet av tjänster kopplade till vård och omsorg sannolikt kommer att öka i framtiden. Noterbart är även att bygg är en klart dominerande bransch inom det privata näringslivet, vilket potentiellt skulle kunna bli ett problem vid en lågkonjunktur.
 
 ## Vansbro {-}
-Vansbro är, med sina 6 800 invånare år 2022, Dalarnas minsta kommun. Befolkningen minskade stadigt fram till millennieskiftet, för att därefter stabiliseras. Detta kan i mångt och mycket tillskrivas en ökad andel av utrikes födda i befolkningen, men även den del av befolkningen som är födda i Sverige har minskat i långsammare takt på senare år. Vansbro har en av Dalarnas lägsta arbetslösheter, strax under 3 procent, samtidigt är det också den kommun som har lägst andel högutbildade, runt 12 procent. Att arbetslösheten är låg i Vansbro kan delvis tillskrivas den relativt låga andelen utrikes födda (under 10 procent), vilket är klart lägre än i många andra Dalakommuner. Pendlingen till och från kommunen tillhör länets lägsta, vilket kan ha att göra med kommunens geografiska läge i västra Dalarna.
+Vansbro är, med sina 6 800 invånare år 2022, Dalarnas minsta kommun. Befolkningen minskade stadigt fram till millennieskiftet, för att därefter stabiliseras. Detta kan i mångt och mycket tillskrivas en ökad andel av utrikes födda i befolkningen, men även den del av befolkningen som är födda i Sverige har minskat i långsammare takt på senare år. Vansbro har en av Dalarnas lägsta arbetslösheter, `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Vansbro") %>% .$varde,1)`, samtidigt är det också den kommun som har lägst andel högutbildade. Att arbetslösheten är låg i Vansbro kan delvis tillskrivas den relativt låga andelen utrikes födda (under 10 procent), vilket är klart lägre än i många andra Dalakommuner. Pendlingen till och från kommunen tillhör länets lägsta, vilket kan ha att göra med kommunens geografiska läge i västra Dalarna.
 
 Idag är Vansbro i första hand förknippat med ett antal större företag, såsom Lyko och Orkla, som står för en stor andel av de sysselsatta i kommunen. Detta återspeglas i figuren nedan, som visar att mer än 40 procent av Vansbros förvärvsarbetande arbetar inom tillverknings- och utvinningsbranschen samt handel.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 gg_andel_forv$andel_per_bransch_Vansbro
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Vansbro.png"))
 
 ```
-
+<br>
 
 De största privata arbetsgivarna i Vansbro finns inom branschgruppen parti- och detaljhandel, vars företag står för drygt 22 procent av den totala lönesumman. Inom branschgruppen jobbar många kvinnor (>50 procent) och, i jämförelse med genomsnittet i Vansbro, många högutbildade. Bland övriga stora branschgrupper återfinns byggindustri och livsmedelsindustri, som tillsammans står för ungefär 25 procent av den totala lönesumman. Den sistnämnda branschen har även den en majoritet kvinnor bland de anställda.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Vansbro.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Vansbro var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Vansbro") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Vansbro") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata arbetslivet jobbade flest, drygt 350 fördelat på två företag, på Lyko.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Vansbro
 
 ```
+<br>
 
-Vansbro är som sagt Dalarnas minsta kommun sett till befolkning och har följaktligen också en av de minsta branschbredderna i länet (ca 24 procent av branscherna är representerade). Även antalet företag som utgör 50 procent av den aggregerade lönesumman är bland de lägsta i Dalarna (13), vilket indikerar att Vansbro är en kommun med relativt högt beroende. Samtidigt är antalet arbetsställen per 1 000 invånare högre i Vansbro än genomsnittet i Dalarna, vilket är positivt.
+Vansbro är som sagt Dalarnas minsta kommun sett till befolkning och har följaktligen också en av de minsta branschbredderna i länet. Även antalet företag som utgör 50 procent av den aggregerade lönesumman är bland de lägsta i Dalarna (`r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Vansbro") %>% .$cnum`), vilket indikerar att Vansbro är en kommun med relativt högt beroende. Samtidigt är antalet arbetsställen per 1 000 invånare högre i Vansbro än genomsnittet i Dalarna, vilket är positivt.
 
 Sammanfattningsvis är Vansbro en kommun som uppvisar både sårbara och inte sårbara sidor. Arbetslösheten är låg, vilket indikerar en arbetsmarknad med god resiliens mot kriser. Samtidigt är Vansbro beroende av ett fåtal större företag inom ett par olika branscher, vilket är en riskfaktor. Dessutom är pendlingen relativt låg. Noterbart är dock att den största privata arbetsgivaren, Lyko, är ett familjeägt, och hittills expansivt, företag med en uttalad ambition att finnas i Vansbro.
 
 ## Älvdalen {-}
-Älvdalens kommun har länets tredje minsta folkmängd, med drygt 7 000 invånare år 2022. Precis som för många andra av Dalarnas mindre kommuner har befolkningen minskat under en längre period, en utveckling som har bromsat in på senare år. Detta kan i mångt och mycket tillskrivas en ökad invandring av utrikes födda. Arbetslösheten, drygt 3,5 procent, är under genomsnittet i Dalarna, men samtidigt har Älvdalen näst lägst andel högutbildade. Att arbetslösheten är låg i Älvdalen kan delvis tillskrivas den relativt låga andelen utrikes födda (under 10 procent), vilket är klart lägre än i många andra Dalakommuner. Precis som för många andra kommuner i norra och västra Dalarna är pendlingen låg, ungefär var femte boende i Älvdalen som förvärvsarbetar gör det i en annan kommun.
+Älvdalens kommun har länets tredje minsta folkmängd, med drygt 7 000 invånare år 2022. Precis som för många andra av Dalarnas mindre kommuner har befolkningen minskat under en längre period, en utveckling som har bromsat in på senare år. Detta kan i mångt och mycket tillskrivas en ökad invandring. Arbetslösheten, drygt `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Älvdalen") %>% .$varde,1)` procent, är under genomsnittet i Dalarna, men samtidigt har Älvdalen näst lägst andel högutbildade. Att arbetslösheten är låg i Älvdalen kan delvis tillskrivas den relativt låga andelen utrikes födda (under 10 procent), vilket är klart lägre än i många andra Dalakommuner. Precis som för många andra kommuner i norra och västra Dalarna är pendlingen låg, ungefär var femte boende i Älvdalen som förvärvsarbetar gör det i en annan kommun.
 
 Älvdalen är Dalarnas till ytan största kommun, mer än dubbelt så stor som Falun och Borlänge tillsammans. Kommunen är idag kanske mest känd för en omfattande turismindustri, som domineras av diverse aktörer i området kring Idre och Grövelsjön ("Kultur, fritid och nöje." i figuren nedan). Kopplad till den "boom" som skett inom turismindustrin på senare år, har även byggsektorn expanderat och står för ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Älvdalen",bransch == "Bygg") %>% .$andel,0)` procent av de förvärvsarbetande. I jämförelse med Dalarna sticker även företag inom jord- och skogsbruk ut, där dubbelt så stor andel arbetar jämfört med snittet i länet.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch_Älvdalen
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Älvdalen.png"))
 
 ```
-
+<br>
 
 Baserat på branschgruppens andel av lönesumman inom det privata näringslivet i Älvdalen är byggindustrin störst med ca 18 procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor är sysselsatta inom branschgruppen. Även företag inom renhållning, kultur, sport mm, som bland annat innefattar företag inom turism, har många anställda (>400) och en relativt stor andel av lönesumman (ca 10 procent). Inom den branschgruppen är avsevärt många fler kvinnor, högutbildade och utrikes födda. Bland övriga stora branschgrupper kan parti- och detaljhandel nämnas, vars företag har en bit över 300 anställda och står för 10 procent av den totala lönesumman.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Älvdalen.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Älvdalen var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Älvdalen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med närmare `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Älvdalen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata näringslivet hade Idre Fjäll flest anställda, med strax över `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Älvdalen",Arbetsgivare == "Stiftelsen Idre Fjäll") %>% .$antal_anstallda,100),big.mark =" ")`.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Älvdalen
 
 ```
+<br>
 
-Befolkningsmässigt är Älvdalen en liten kommun och har följaktligen en låg branschbredd (drygt 24 procent av branscherna finns representerade i kommunen). Dock är antalet företag som utgör 50 procent av den aggregerade lönesumman högre än i många jämförbara kommuner, vilket indikerar att Älvdalen inte är en kommun med överdrivet stort beroende. Älvdalen är dessutom den kommun i Dalarna där de startas flest nya företag per 1 000 invånare och kommunen har dessutom 3:e flest antal arbetsställen per 1 000 invånare. Baksidan är att Älvdalen samtidigt är den kommun som har flest antal konkurser per 1 000 invånare i Dalarna, ett antal som dessutom ökade avsevärt mellan 2013 och 2021.
+Befolkningsmässigt är Älvdalen en liten kommun och har följaktligen en låg branschbredd (ungefär en fjärdedel av branscherna finns representerade i kommunen). Dock är antalet företag som utgör 50 procent av den aggregerade lönesumman högre än i många jämförbara kommuner, vilket indikerar att Älvdalen inte är en kommun med överdrivet stort beroende. Älvdalen är dessutom den kommun i Dalarna där de startas flest nya företag per 1 000 invånare och kommunen har dessutom näst flest antal arbetsställen per 1 000 invånare. Baksidan är att Älvdalen samtidigt är den kommun som har flest antal konkurser per 1 000 invånare i Dalarna.
 
 Sammanfattningsvis är Älvdalen en kommun som uppvisar låg sårbarhet på flera områden. Arbetslösheten är relativt låg samtidigt som beroendet av enskilda företag eller branscher inte är överdrivet stort. Det startas dessutom många företag i Älvdalens kommun, men samtidigt går relativt många företag i konkurs.
 
