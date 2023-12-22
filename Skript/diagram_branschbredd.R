@@ -45,7 +45,8 @@ diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,ta
   diagramfil <- "branschbredd.png"
   
   gg_obj <- SkapaStapelDiagram(skickad_df = df %>% 
-                                 filter(year%in%c(min(year),max(year))) %>% 
+                                 filter(year%in%c(min(year),max(year)),
+                                        municipality != "Riket") %>% 
                                   mutate(municipality = skapa_kortnamn_lan(municipality)), 
                                skickad_x_var = "municipality", 
                                skickad_y_var = "Branschbredd", 

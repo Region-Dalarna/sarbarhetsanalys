@@ -317,12 +317,13 @@ gg_andel_forv$andel_per_bransch_Avesta
 <br>
 
 Stål- och metalltillverkning är den största branschgruppen i Avesta, baserat på företagens andel av lönesumman inom det privata näringslivet. Därefter följer byggindustrin storleksmässigt. Gemensamt för dessa branschgrupper är att relativt få av de sysselsatta är utrikes födda och därtill är det en tydlig övervikt av män. Bland övriga viktiga branschgrupper i Avesta finns pappersindustrin och parti- och detaljhandel, vars företag tillsammans står för ungefär 20 procent av näringslivets totala lönesumma. Även inom pappersindustrin är representationen av utrikes födda långt under andelen i befolkningen (runt 2 procent). Männen i Avesta arbetar som synes i hög grad i tillverknings- och byggbranscherna medan de kvinnor som arbetar i privat sektor (en stor andel kvinnor arbetar i offentlig sektor) i stor utsträckning arbetar i företag inom parti- och detaljhandelsbranschen.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Avesta.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Avesta var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Avesta") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med strax över 2000 anställda. Bland privata arbetsgivare hade Outokumpu Stainless flest anställda med ca `r storsta_arbetsgivare %>% filter(Kommun == "Avesta",Arbetsgivare == "Outokumpu Stainless AB") %>% .$antal_anstallda`. Även Stora Enso och Region Dalarna är stora arbetsgivare i Avesta
 
@@ -332,71 +333,81 @@ gg_storsta_foretag$Avesta
 
 ```
 
-När det kommer till företagandet ligger Avesta något under genomsnittet i Dalarna både vad gäller antalet arbetsställen och antalet nystartade företag (per 1000 invånare). Antalet företag som krävs för att komma upp i hälften av den totala lönesumman inom det privata näringslivet är dessutom relativt få (19 st), vilket indikerar ett ganska stort beroende. Det kan delvis förklaras med att Avesta har ett antal stora arbetsgivare inom framförallt tillverkningsindustrin. Positivt är att Avesta samtidigt har en relativt stor branschbredd, 5:e bäst i Dalarna med runt 40 procent av alla branscher representerade.
+När det kommer till företagandet ligger Avesta något under genomsnittet i Dalarna vad gäller antalet arbetsställen, men över genomsnittet när det kommer till antalet nystartade företag (per 1000 invånare). Antalet företag som krävs för att komma upp i hälften av den totala lönesumman inom det privata näringslivet är dessutom relativt få (`r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Avesta") %>% .$cnum` st), vilket indikerar ett ganska stort beroende. Det kan delvis förklaras med att Avesta har ett antal stora arbetsgivare inom framförallt tillverkningsindustrin. Positivt är att Avesta samtidigt har en relativt stor branschbredd, med runt `r round(branschbredd %>% filter(year == max(year),municipality == "Avesta") %>% .$Branschbredd,0)` procent av alla branscher representerade.
 
-Sammanfattningsvis är Avesta en kommun som uppvisar sårbarhet på ett par punkter. Arbetslösheten är relativt hög (och sysselsättningsgraden relativt låg), vilket indikerar att problem kan uppstå på arbetsmarknaden vid större nedläggningar och kriser. Företagandet i kommunen är något under genomsnittet i länet, men sticker inte ut överdrivet negativt. Samtidigt är beroendet av enskilda branscher och företag stort, då nästan var fjärde förvärvsarbetande arbetar inom tillverknings- och utvinningsbranschen.
+Sammanfattningsvis är Avesta en kommun som uppvisar sårbarhet på ett par punkter. Arbetslösheten är relativt hög (och sysselsättningsgraden relativt låg), vilket indikerar att problem kan uppstå på arbetsmarknaden vid större nedläggningar och kriser. Företagandet i kommunen är något under genomsnittet i länet, men sticker inte ut överdrivet negativt. Samtidigt är beroendet av enskilda branscher och företag stort, då omkring var fjärde förvärvsarbetande arbetar inom tillverknings- och utvinningsbranschen.
 
 ## Borlänge {-}
-Borlänge är Dalarnas näst folkrikaste kommun, och befolkningsantalet har ökat stadigt under en lång period. I slutet av 1960-talet var antalet invånare ca 43 000, vilket har ökat till drygt 52 000 år 2022. Under 2000-talet har befolkningsökningen utgjorts av personer födda utanför Sverige, medan antalet inrikes födda har minskat något. Sett till invånarnas ålder är Borlänge Dalarnas yngsta kommun med en medelålder på drygt 41 år. Arbetslösheten i Borlänge, som är närmare 7 procent, är däremot Dalarnas tredje högsta, medan andelen högutbildade är ungefär som länets genomsnitt. Att arbetslösheten är hög kan delvis förklaras med att Borlänge har Dalarnas näst största andel utrikes födda invånare, drygt 18 procent. Bland utrikes födda är arbetslösheten generellt högre än bland inrikes födda. Borlänge är samtidigt den kommun i Dalarna som har klart högst inpendling, nästan 40 procent av de som förvärvsarbetar i kommunen  bor inte i den.
+Borlänge är Dalarnas näst folkrikaste kommun, och befolkningsantalet har ökat stadigt under en lång period. I slutet av 1960-talet var antalet invånare ca 43 000, vilket har ökat till drygt 52 000 år 2022. Under 2000-talet har befolkningsökningen utgjorts av personer födda utanför Sverige, medan antalet inrikes födda har minskat något. Sett till invånarnas ålder är Borlänge Dalarnas yngsta kommun med en medelålder på drygt 41 år. Arbetslösheten i Borlänge, som är ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Borlänge") %>% .$varde,0)` procent, är bland Dalarnas högsta, medan andelen högutbildade är ungefär som länets genomsnitt. Att arbetslösheten är hög kan delvis förklaras med att Borlänge har Dalarnas näst största andel utrikes födda invånare, drygt 18 procent. Bland utrikes födda är arbetslösheten generellt högre än bland inrikes födda. Borlänge är samtidigt den kommun i Dalarna som har klart högst inpendling.
 
 Borlänge växte fram i mitten 1800-talet och var länge förknippat med industrisektorn, men idag är `r tolower(andel_forvarvsarbetande_bransch %>% filter(region == "Borlänge") %>% filter(andel == max(andel)) %>% .$bransch)` den största branschen. Jämfört med Dalarna som helhet hade Borlänge år 2020 en klart lägre andel som arbetade inom tillverknings- och utvinningsbranschen, medan en klart större andel arbetade inom handel. Detta kan tillskrivas stora handelsområden såsom Norra Backa och Kupolen. I Borlänge finns även huvudkontoret för Trafikverket, delar av Transportstyrelsen samt en del av Högskolan Dalarna, vilket gör att andelen som arbetar inom offentlig förvaltning är klart högre i Borlänge än i Dalarna.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch_Borlänge
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Borlänge.png"))
 
 ```
+<br>
 
 Den största branschgruppen i Borlänge är företagsservicefirmor, baserat på branschens andel av lönesumman genererad av det privata näringslivet. Dessa står för ungefär 20 procent av privata företags totala lönesumma. Utbildningsnivån bland de anställda inom företagsservicefirmor i Borlänge är generellt ganska hög (närmare 50 procent har eftergymnasial utbildning), den högsta andelen högutbildade i denna bransch i jämförelse med Dalarnas andra kommuner. Ungefär var tionde anställd i branschen är utrikes född. Andra viktiga branschgrupper som står för cirka 15 procent vardera av lönesumman är parti- och detaljhandeln, som är en bransch med en jämställd representation av kvinnor och män, och byggindustrin, som i motsats har den lägsta andelen kvinnor, endast 8 procent. Den högsta andelen utrikes födda bland de anställda, ungefär 20 procent, finns inom branschgruppen övriga landtransportföretag.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Borlänge.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Borlänge var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Borlänge") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade SSAB flest anställda med ca `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge",Arbetsgivare == "SSAB Emea AB") %>% .$antal_anstallda,100),big.mark =" ")`. Även Trafikverket är en viktig arbetsgivare med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge",Arbetsgivare == "Trafikverket") %>% .$antal_anstallda,100),big.mark =" ")` anställda på sitt huvudkontor i Borlänge.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Borlänge
 
 ```
+<br>
 
-Antal företag per 1 000 invånare i Borlänge är ungefär på samma nivå som genomsnittligt för Dalarna, men antalet nystartade företag är relativt få i kommunen. Borlänge är dessutom den kommun där näst minst antal personer per 1 000 invånare räknas som företagssamma. Positivt ur sårbarhetssynvinkel är dock att Borlänge är näst bäst i Dalarna vad gäller såväl branschbredd som antal företag som står för minst 50 procent av lönesumman, något som delvis kan tillskrivas kommunens storlek (Dalarnas största kommun näst efter Falun). Noterbart är dock att Borlänge har ett par stora företag inom det privata näringslivet, exempelvis SSAB, vilket ses som en potentiell riskfaktor enligt denna modell.
+Såväl antalet privata arbetsställen, som antalet nystartade företag (per 1000 invånare) i Borlänge är under genomsnittet för Dalarna. Borlänge är dessutom den kommun där näst minst antal personer per 1 000 invånare räknas som företagssamma. Positivt ur sårbarhetssynvinkel är dock att Borlänge är näst bäst i Dalarna vad gäller såväl branschbredd som antal företag som står för minst 50 procent av lönesumman, något som delvis kan tillskrivas kommunens storlek (Dalarnas största kommun näst efter Falun). Noterbart är dock att Borlänge har ett par stora företag inom det privata näringslivet, exempelvis SSAB, vilket ses som en potentiell riskfaktor enligt denna modell.
 
 Sammanfattningsvis är Borlänge en kommun som uppvisar både sårbara och inte sårbara sidor enligt den modell som används. Samtidigt som arbetslösheten är bland de högsta i Dalarna, vilket indikerar en arbetsmarknad som kan få problem vid större kriser och företagsnedläggningar, är Borlänge en folkrik kommun med låg medelålder, som inte är beroende av enskilda företag eller branscher i någon större utsträckning.
 
 ## Falun {-}
-Falun är Dalarnas största kommun med ungefär 60 000 invånare. Befolkningen, såväl inrikes som utrikes födda, har ökat stadigt under en längre period, exempelvis ökade befolkningen med runt 10 procent mellan millennieskiftet och 2022. Faluns befolkning har dessutom Dalarnas näst yngsta medelålder, på strax över 42 år. Arbetslösheten i Falun (ca 3,5 procent) är lägre än genomsnittet i Dalarna, men samtidigt klart högre än i exempelvis Gagnef. Falun har Dalarnas högst utbildade befolkning, där andelen högutbildade (ca en tredjedel av befolkningen) till och med är högre än genomsnittet i Sverige. En orsak till detta är Falu lasarett, Dalarnas största arbetsgivare, där många anställda har eftergymnasial utbildning. 
+Falun är Dalarnas största kommun med ungefär 60 000 invånare. Befolkningen, såväl inrikes som utrikes födda, har ökat stadigt under en längre period, exempelvis ökade befolkningen med runt 10 procent mellan millennieskiftet och 2022. Faluns befolkning har dessutom Dalarnas näst yngsta medelålder, på strax över 42 år. Arbetslösheten i Falun (ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Falun") %>% .$varde,0)` procent) är lägre än genomsnittet i Dalarna, men samtidigt klart högre än i exempelvis Gagnef. Falun har Dalarnas högst utbildade befolkning, där andelen högutbildade (ca en tredjedel av befolkningen) till och med är högre än genomsnittet i Sverige. En orsak till detta är Falu lasarett, Dalarnas största arbetsgivare, där många anställda har eftergymnasial utbildning. 
 
 Falun har en lång historia kopplad till framförallt gruvindustrin, men arvet efter detta lever idag framförallt kvar i världsarvet Falu Gruva. Idag arbetar den största andelen av kommunens invånare, mer än var fjärde, inom vård och omsorg, vilket återigen delvis kan tillskrivas Falu lasarett.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch_Falun
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Falun.png"))
 
 ```
+<br>
 
 Baserat på andelen av lönesumman genererad av privata företag är företagsservicefirmor den största branschgruppen i Falun, med ungefär 20 procent av den totala lönesumman. Anställda inom företagsservicefirmor är generellt högt utbildade (närmare 50 procent), medan drygt 13 procent är utrikes födda. Andra viktiga branschgrupper är parti- och detaljhandeln som har en jämn fördelning av kvinnor och män, men med lägre utbildningsnivå. Även byggindustrin är viktig för näringslivet i Falun. Företag inom dessa branschgrupper står tillsammans för strax över 20 procent av den totala lönesumman. I Falun är även privata företag inom hälso- och sjukvård viktiga. Inom denna branschgrupp är dessutom relativt många, ungefär var femte, utrikes född. Anmärkningsvärt är att den totala lönesumman inom hälso- och sjukvård, ca 7 procent av lönesumman inom det privata näringslivet, är låg i förhållande till antalet anställda i branschgruppen. Detta kan vara en indikation på att många inom hälso- och sjukvård arbetar deltid, vilket ger lägre lönesumma per anställd.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Falun.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Falun år `r unique(storsta_arbetsgivare$år)` var `r storsta_arbetsgivare %>% filter(Kommun == "Falun") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare`, som hade `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Falun") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Även Falu kommun är en stor arbetsgivare med nästan lika många anställda. Bland privata arbetsgivare var Libra assistans störst, med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Falun",Arbetsgivare == "Libra Assistans AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag
 
 ```
+<br>
 
-När det gäller företagande, ligger Falu kommun ungefär genomsnittligt för Dalarna för alla variabler som undersökts. Beroendet av enskilda branscher och företag i Falun är dessutom lågt, då kommunen har såväl Dalarnas största branschbredd som det största antalet företag (102 st) som krävs för att komma upp i 50 procent av lönesumman inom det privata näringslivet.
+När det gäller företagande har Falu kommun både relativt många nystartade företag och relativt få konkurser (per 1000 invånare), vilket är positivt. Beroendet av enskilda branscher och företag i Falun är dessutom lågt, då kommunen har såväl Dalarnas största branschbredd som det största antalet företag (`r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Falun") %>% .$cnum` st) som krävs för att komma upp i 50 procent av lönesumman inom det privata näringslivet.
 
 Sammanfattningsvis kan Falun sägas vara en kommun som uppvisar låg sårbarhet utifrån vår modell. Arbetsmarknaden fungerar relativt väl och utbildningsnivån är hög, vilket är tecken på låg sårbarhet. Dessutom är beroendet av enskilda företag och branscher inom det privata näringslivet lägst i Dalarna, vilket är positivt. Faluns sårbarhet är i stor utsträckning kopplad till Falu lasarett, med många anställda. Samtidigt känns det osannolikt att lasarettet skulle flytta eller göra stora neddragningar av personal inom överskådlig framtid, vilket medför att den sammanfattande bilden av Falun är låg sårbarhet.
 
@@ -427,11 +438,11 @@ gg_storsta_foretag$Gagnef
 
 ```
 
-Gagnef har relativt få arbetsställen per 1 000 invånare (3:e lägsta värdet i Dalarna), men däremot många nystartade företag. Antal nystartade företag (per 1 000 invånare) ökade dessutom kraftigt mellan 2015 och 2021, efter att dessförinnan varit mer eller mindre konstant sedan 2007. Dessutom är antalet konkurser (per 1 000 invånare) bland de lägsta i Dalarna, även om dessa ökade rejält mellan 2013 och 2021.
+Gagnef har relativt få arbetsställen per 1 000 invånare (3:e lägsta värdet i Dalarna) och dessutom få nystartade företag. Antal nystartade företag (per 1 000 invånare) minskade dessutom kraftigt mellan 2021 och 2022. Antalet konkurser (per 1 000 invånare) är dock något under genomsnittet i Dalarna.
 
-Gagnef är en liten kommun, vilket medför att en relativt liten andel av branscherna är representerade, ungefär var fjärde. Samtidigt krävs 21 företag för att lönesumman inom det privata skall uppgå till 50 procent, vilket är i linje med många andra mindre kommuner i Dalarna. Som nämnts tidigare är pendlingen från Gagnef till andra orter stor, vilket medför att kommunens arbetsmarknad sannolikt kan motstå chocker bättre än motsvarande kommuner med mindre pendling.
+Gagnef är en liten kommun, vilket medför att en relativt liten andel av branscherna är representerade, ungefär var fjärde. Samtidigt krävs `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Gagnef") %>% .$cnum` företag för att lönesumman inom det privata skall uppgå till 50 procent, vilket är i linje med många andra mindre kommuner i Dalarna. Som nämnts tidigare är pendlingen från Gagnef till andra orter stor, vilket medför att kommunens arbetsmarknad sannolikt kan motstå chocker bättre än motsvarande kommuner med mindre pendling.
 
-Sammanfattningsvis är Gagnef en kommun med låg sårbarhet på de flesta områden. Arbetslösheten är Dalarnas lägsta och närheten till flera stora kommuner gör att pendlingen är omfattande. Kommunen är inte beroende av någon enskild bransch i större utsträckning, men kommunens storlek gör att det ändå finns ett visst beroende av enskilda företag. Gagnef sticker dock inte ut jämfört med andra dalakommuner av liknande storlek på den punkten.
+Sammanfattningsvis är Gagnef en kommun med låg sårbarhet på de flesta områden. Arbetslösheten är bland Dalarnas lägsta och närheten till flera stora kommuner gör att pendlingen är omfattande. Kommunen är inte beroende av någon enskild bransch i större utsträckning, men kommunens storlek gör att det ändå finns ett visst beroende av enskilda företag. Gagnef sticker dock inte ut jämfört med andra dalakommuner av liknande storlek på den punkten.
 
 ## Hedemora {-}
 Hedemoras befolkningsstorlek, drygt 15 400 invånare år 2022, är något under genomsnittet bland Dalarnas kommuner. Befolkningen minskade stadigt under många år, men från 2010 och framåt har det skett en liten ökning. Denna ökning kan helt tillskrivas personer födda utanför Sverige, vars andel av Hedemoras befolkning har fördubblats sedan 2010. Hedemora har Dalarnas fjärde högsta arbetslöshet på strax under 6 procent och relativt låg andel med högutbildade. Att arbetslösheten är hög kan delvis tillskrivas den relativt stora andelen utrikes födda, Dalarnas fjärde största, då arbetslösheten är högre i gruppen utrikes födda i jämförelse med gruppen inrikes födda. Pendlingen till och från Hedemora, där ungefär var tredje pendlar till annan ort för att arbeta, är ungefär på samma nivå som genomsnittet för Dalarnas kommuner.
