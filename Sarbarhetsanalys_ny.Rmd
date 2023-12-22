@@ -416,27 +416,32 @@ Gagnef tillhör Dalarnas minsta kommuner, med ungefär 10 500 invånare år 2022
 
 Den största branschen i Gagnef är `r tolower(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef") %>% filter(andel == max(andel)) %>% .$bransch)`, med ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande. Även utbildning och offentlig förvaltning står för en större andel av de förvärvsarbetande i Gagnef än vad genomsnittet för Dalarna är. Tillverknings- och utvinningsbranschen är också viktig för Gagnef, med ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent av de förvärvsarbetande.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 gg_andel_forv$andel_per_bransch_Gagnef
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Gagnef.png"))
 
 ```
+<br>
 
 Baserat på andelen av lönesumman inom det privata näringslivet i Gagnef är byggindustrin den största branschgruppen med ungefär 15 procent av den totala lönesumman. Byggindustrin i Gagnef speglar byggindustrin generellt, i form av en mansdominerad bransch med en låg representation av utrikes födda. Andra viktiga branschgrupper är övrig tillverkningsindustri samt parti- och detaljhandel, vars företag står för närmare 25 procent av den totala lönesumman. Precis som var fallet med Falun, är även privata företag inom hälso- och sjukvård viktiga i Gagnef. Bland de anställda i denna branschgrupp är dessutom väldigt många, ungefär var tredje, utrikes född. I Sverige är en majoritet av dem som jobbar inom hälso- och sjukvård kvinnor, och det återspeglas  även i branschen i Gagnef, där 67 procent av de anställda är kvinnor.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Gagnef.png"))
 
 ```
+<br>
 
 I Gagnef är den klart största arbetsgivaren `r storsta_arbetsgivare %>% filter(Kommun == "Gagnef") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med drygt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Gagnef") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata näringslivet har Shamsen Omsorg och 3m flest anställda, med ungefär `r format(storsta_arbetsgivare %>% filter(Kommun == "Gagnef",Arbetsgivare == "Shamsen Omsorg AB") %>% .$antal_anstallda,big.mark =" ")` vardera.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Gagnef
 
 ```
+<br>
 
 Gagnef har relativt få arbetsställen per 1 000 invånare (3:e lägsta värdet i Dalarna) och dessutom få nystartade företag. Antal nystartade företag (per 1 000 invånare) minskade dessutom kraftigt mellan 2021 och 2022. Antalet konkurser (per 1 000 invånare) är dock något under genomsnittet i Dalarna.
 
@@ -445,133 +450,152 @@ Gagnef är en liten kommun, vilket medför att en relativt liten andel av bransc
 Sammanfattningsvis är Gagnef en kommun med låg sårbarhet på de flesta områden. Arbetslösheten är bland Dalarnas lägsta och närheten till flera stora kommuner gör att pendlingen är omfattande. Kommunen är inte beroende av någon enskild bransch i större utsträckning, men kommunens storlek gör att det ändå finns ett visst beroende av enskilda företag. Gagnef sticker dock inte ut jämfört med andra dalakommuner av liknande storlek på den punkten.
 
 ## Hedemora {-}
-Hedemoras befolkningsstorlek, drygt 15 400 invånare år 2022, är något under genomsnittet bland Dalarnas kommuner. Befolkningen minskade stadigt under många år, men från 2010 och framåt har det skett en liten ökning. Denna ökning kan helt tillskrivas personer födda utanför Sverige, vars andel av Hedemoras befolkning har fördubblats sedan 2010. Hedemora har Dalarnas fjärde högsta arbetslöshet på strax under 6 procent och relativt låg andel med högutbildade. Att arbetslösheten är hög kan delvis tillskrivas den relativt stora andelen utrikes födda, Dalarnas fjärde största, då arbetslösheten är högre i gruppen utrikes födda i jämförelse med gruppen inrikes födda. Pendlingen till och från Hedemora, där ungefär var tredje pendlar till annan ort för att arbeta, är ungefär på samma nivå som genomsnittet för Dalarnas kommuner.
+Hedemoras befolkningsstorlek, drygt 15 400 invånare år 2022, är något under genomsnittet bland Dalarnas kommuner. Befolkningen minskade stadigt under många år, men från 2010 och framåt har det skett en liten ökning. Denna ökning kan helt tillskrivas personer födda utanför Sverige, vars andel av Hedemoras befolkning har fördubblats sedan 2010. Hedemora har Dalarnas fjärde högsta arbetslöshet på ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Hedemora") %>% .$varde,0)` procent och relativt låg andel med högutbildade. Att arbetslösheten är hög kan delvis tillskrivas den relativt stora andelen utrikes födda, Dalarnas fjärde största, då arbetslösheten är högre i gruppen utrikes födda i jämförelse med gruppen inrikes födda. Pendlingen till och från Hedemora, där ungefär var tredje pendlar till annan ort för att arbeta, är ungefär på samma nivå som genomsnittet för Dalarnas kommuner.
 
 Hedemora är Dalarnas äldsta stad och fick stadsrättigheter redan på 1400-talet. Idag är arbetsgivare inom `r tolower(andel_forvarvsarbetande_bransch %>% filter(region == "Hedemora") %>% filter(andel == max(andel)) %>% .$bransch)` de viktigaste i Hedemora kommun, då nästan var fjärde förvärvsarbetande arbetar inom denna sektor. Även företag inom tillverknings- och utvinningsbranschen är viktiga, bland annat ingår gruvindustrin i Garpenberg här.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 gg_andel_forv$andel_per_bransch_Hedemora
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Hedemora.png"))
 
 ```
+<br>
 
 Baserat på andelen av lönesumman inom det privata näringslivet i Hedemora är gruvor och mineralutvinningsindustri den största branschgruppen, med ca 18 procent av den totala lönesumman. Det illustrerar att Hedemora är relativt beroende av gruvan i Garpenberg. Få utrikes födda och få kvinnor jobbar inom denna branschgrupp. Även byggindustrin och parti- och detaljhandeln är viktiga branschgrupper, och står för närmare en fjärdedel av den totala lönesumman. Den sistnämnda branschgruppen har en helt jämn könsfördelning, men relativt få utrikes födda (drygt var 10:e förvärvsarbetande).
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Hedemora.png"))
 
 ```
-
+<br>
 
 Den största arbetsgivaren i Hedemora var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Hedemora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Hedemora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade Boliden mineral flest anställda med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Hedemora",Arbetsgivare == "Boliden Mineral AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda. I övrigt finns ett antal arbetsgivare med mellan 100 och 300 anställda.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Hedemora
 
 ```
+<br>
 
-Såväl antal arbetsställen som antal nystartade företag (per 1000 invånare) i Hedemora ligger under genomsnittet i Dalarna. Positivt är att detsamma även gäller antalet konkurser, vilka dessutom har minskat sedan 2013.
+Antal nystartade företag (per 1000 invånare) i Hedemora ligger är i linje med genomsnittet i Dalarna. Negativt är att antalet konkurser (per 1000 invånare) har ökat avsevärt mellan 2021 och 2022 och tillhör Dalarnas högsta.
 
-Branschbredden i Hedemora är ungefär som genomsnittet i Dalarna och antalet företag vars aggregerade lönesummor utgör 50 procent av lönesumman i privata företag är i linje med många andra kommuner av samma storlek (20 st). Noterbart är dock att närbelägna Säter är klart mindre beroende av enskilda företag, då mer än dubbelt så många företag krävs för att uppnå 50 procent av lönesumman där.
+Branschbredden i Hedemora är ungefär som genomsnittet i länets kommuner och antalet företag vars aggregerade lönesummor utgör 50 procent av lönesumman i privata företag är i linje med många andra kommuner av samma storlek. Noterbart är dock att närbelägna Säter är klart mindre beroende av enskilda företag, då mer än dubbelt så många företag krävs för att uppnå 50 procent av lönesumman där.
 
 Sammanfattningsvis är Hedemora en kommun som uppvisar både sårbara och inte sårbara sidor. Arbetslösheten är en av Dalarnas högsta vilket är en indikation på en arbetsmarkand som skulle kunna få problem vid större kriser/nedläggningar. Hedemora har dock en pendling, ca var tredje som bor i kommunen och arbetar gör det på annan ort, som visserligen är lägre än de största pendlarkommunerna i Dalarna (Säter mfl.), men samtidigt klart högre än i vissa andra kommuner (exempelvis Ludvika och Avesta) vilket är en mildrande faktor vid en eventuell kris/företagsnedläggning. Intressant att notera är även att stora investeringar har gjorts i gruvan i Garpenberg på senare år, vilket, enligt Boliden, säkrar jobben för lång tid framöver.
 
 ## Leksand {-}
-Leksands kommun är Dalarnas sjätte största sett till befolkning och hade 2022 drygt 16 000 invånare. Fram till millennieskiftet ökade befolkningen stadigt, för att därefter stå still i ett decennium. På senare år har befolkningen börjat öka igen, vilket kan tillskrivas en allt större andel utrikes födda. Leksand har Dalarnas tredje lägsta arbetslöshet, med under 3 procent arbetslösa, och dessutom den näst högsta andelen högutbildade. Befolkningen i Leksand är samtidigt en av Dalarnas äldsta, med en medelålder på närmare 47 år.
+Leksands kommun är Dalarnas sjätte största sett till befolkning och hade 2022 drygt 16 000 invånare. Fram till millennieskiftet ökade befolkningen stadigt, för att därefter stå still i ett decennium. På senare år har befolkningen börjat öka igen, vilket kan tillskrivas en allt större andel utrikes födda. Leksand har Dalarnas lägsta arbetslöshet, med under `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Leksand") %>% .$varde,0)` procent arbetslösa, och dessutom den näst högsta andelen högutbildade. Befolkningen i Leksand är samtidigt en av Dalarnas äldsta.
 
 Leksand har gamla anor med boplatser från stenåldern och idag är kommunen, vid sidan om sitt hockeylag, i första hand förknippat med företag inom handel, då framförallt Clas Ohlson i Insjön. Mer än var femte förvärvsarbetar inom handel, vilket är klart högre än genomsnittet i Dalarna.  
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 gg_andel_forv$andel_per_bransch_Leksand
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Leksand.png"))
 
 ```
+<br>
 
 De största privata arbetsgivarna i Leksand finns inom branschgruppen parti- och detaljhandel, varav många jobbar på Clas Ohlsons huvudkontor i Insjön. Företag inom den branschgruppen står för drygt en tredjedel av den totala lönesumman inom det privata näringslivet i kommunen, vilket är en av de högsta andelarna för en branschgrupp i någon av Dalarnas kommuner. Branschgruppen parti- och detaljhandel kan sägas ha en jämställd representation av kvinnor och män, men relativt få utrikes födda. Bland övriga viktiga branschgrupper återfinns byggindustri, med ungefär 12 procent av den totala lönesumman och knappt 700 anställda. Anmärkningsvärt är att bara ca 3 procent av de sysselsatta i branschgruppen är utrikes födda. I Leksand är även hotell och restaurang en viktig branschgrupp, med många anställda (drygt 600) men relativt låg lönesumma. Detta indikerar en låg lönenivå, men även att många sannolikt jobbar deltid inom hotell och restaurang. Noterbart är även att många utrikes födda jobbar inom hotell- och restaurangbranschen, drygt 30 procent av de sysselsatta.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Leksand.png"))
 
 ```
+<br>
 
-Den största arbetsgivaren i Leksands var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Leksand") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Leksand") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare är Clas Ohlson, med säte i Insjön, klart störst med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Leksand",Arbetsgivare == "Clas Ohlson AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
+Den största arbetsgivaren i Leksand var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Leksand") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Leksand") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare är Clas Ohlson, med säte i Insjön, klart störst med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Leksand",Arbetsgivare == "Clas Ohlson AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Leksand
 
 ```
+<br>
 
 Såväl vad gäller antal nystartade företag, som personer som beskrivs som företagssamma, tillhör Leksand Dalarnas bättre kommuner. Samtidigt är dock konkurserna något högre än genomsnittet i länet.
 
-I Leksand finns ett par större privata arbetsgivare, vilket medför att bara 16 företag krävs för att lönesumman i privat sektor ska uppgå till 50 procent. Samtidigt har kommunen en något större branschbredd än vissa storleksmässigt jämförbara kommuner.
+I Leksand finns ett par större privata arbetsgivare, vilket medför att bara `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Leksand") %>% .$cnum` företag krävs för att lönesumman i privat sektor ska uppgå till 50 procent. Samtidigt har kommunen en något större branschbredd än vissa storleksmässigt jämförbara kommuner.
 
 Sammanfattningsvis kan Leksand beskrivas som en kommun som uppvisar både sårbara och inte sårbara sidor. Positivt är en väl fungerande arbetsmarknad med låg arbetslöshet och en befolkning som tillhör Dalarnas högst utbildade. Samtidigt finns i Leksand ett relativt stort beroende av arbetsgivare inom handel, då framförallt Clas Ohlson, vilket är en potentiell sårbarhet. Leksands befolkning tillhör även Dalarnas äldsta, vilket kan bli problematiskt på sikt.
 
 ## Ludvika {-}
-Ludvika kommun är Dalarnas tredje största sett till befolkning och hade år 2022 drygt 26 000 invånare. Befolkningen minskade stadigt fram till 2000-talet, för att därefter stabiliseras. Precis som för många av Dalarnas kommuner beror den stabilare folkmängden till stor del på inflyttning av människor födda utomlands, vilkas andel av Ludvikas befolkning har ökat från ca 8 procent vid millennieskiftet till mer än 18 procent idag. Ludvika har samtidigt en av Dalarnas lägsta medelåldrar på ca 44 år, men arbetslösheten på över 7 procent är länets högsta. Den höga arbetslösheten kan delvis förklaras av att Ludvika har Dalarnas högsta andel av utrikes födda invånare, bland vilka arbetslösheten generellt är högre än bland inrikes födda. Andelen högutbildade är i linje med Dalarnas genomsnitt och många av dessa är kopplade till kommunens största privata arbetsgivare, Hitachi, där nästan 50 procent är högutbildade.
+Ludvika kommun är Dalarnas tredje största sett till befolkning och hade år 2022 drygt 26 000 invånare. Befolkningen minskade stadigt fram till 2000-talet, för att därefter stabiliseras. Precis som för många av Dalarnas kommuner beror den stabilare folkmängden till stor del på inflyttning av människor födda utomlands, vilkas andel av Ludvikas befolkning har ökat från ca 8 procent vid millennieskiftet till mer än 18 procent idag. Ludvika har samtidigt en av Dalarnas lägsta medelåldrar på ca 44 år, men arbetslösheten på runt `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Ludvika") %>% .$varde,0)` procent är en av länets högsta. Den höga arbetslösheten kan delvis förklaras av att Ludvika har Dalarnas högsta andel av utrikes födda invånare, bland vilka arbetslösheten generellt är högre än bland inrikes födda. Andelen högutbildade är i linje med Dalarnas genomsnitt och många av dessa är kopplade till kommunens största privata arbetsgivare, Hitachi, där fler än 50 procent är högutbildade.
 
 Ludvika är ett traditionellt brukssamhälle med bruk som dateras till 1500-talet. Idag är tillverkning och utvinning den totalt dominerande branschen och anställer mer än var tredje av Ludvikas förvärvsarbetande. I övrigt är det ingen bransch som sticker ut nämnvärt jämfört med snittet i Dalarna, även om relativt få jobbar inom offentlig förvaltning.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch_Ludvika
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Ludvika.png"))
 
 ```
+<br>
 
 Bland arbetsgivare inom det privata näringslivet är branschgruppen annan elektro- och teleproduktion den överlägset största, såväl vad gäller sysselsatta som andel av den totala lönesumman (drygt 40 procent). Detta är helt förknippat med Hitachi, tidigare ABB, som är den klart största arbetsgivaren i kommunen. Inom branschgruppen arbetar många utrikes födda (drygt 20 procent) och högutbildade (52 procent). Även branschgruppen företagsservicefirmor är viktig med ca 12 procent av den totala lönesumman och en relativt stor andel av såväl kvinnor som högutbildade. Gissningsvis är flera av företagen inom den branschgruppen kopplade till Hitachi.  
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Ludvika.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Ludvika var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Ludvika") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Ludvika") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Nästan lika många anställda hade Ludvika kommun. Bland andra stora arbetsgivare finns Spendrups, med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Ludvika",Arbetsgivare == "Spendrups Bryggeriaktiebolag") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Ludvika
 
 ```
+<br>
 
-Ludvika har både lägst antal arbetsställen och lägst antal nystartade företag i Dalarna (per 1000 invånare), samtidigt som konkurserna ligger runt genomsnittet. Positivt är dock att antalet nystartade företag har ökat stadigt sedan slutet av 00-talet.
+Ludvika har såväl få antalet arbetsställen , som få antal nystartade företag (per 1000 invånare). Detta gäller även antalet konkurser (per 1000 invånare), som tillhör Dalarnas lägsta och har minskat kraftigt mellan 2021 och 2022.
 
-Av skäl som diskuterades tidiagare är Ludvika den kommun i Dalarna som är överlägset mest beroende av enskilda arbetsgivare. I Ludvika krävs tre företag för att uppnå en aggregerad lönesumma som överstiger 50 procent av de privata företagens totala lönesumma, klart mindre än övriga kommuner i Dalarna. Samtidigt gör kommunens storlek att relativt många branscher är representerade, vilket är positivt.
+Av skäl som diskuterades tidigare är Ludvika den kommun i Dalarna som är överlägset mest beroende av enskilda arbetsgivare. I Ludvika krävs `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Ludvika") %>% .$cnum` företag för att uppnå en aggregerad lönesumma som överstiger 50 procent av de privata företagens totala lönesumma, klart mindre än övriga kommuner i Dalarna. Samtidigt gör kommunens storlek att relativt många branscher är representerade, vilket är positivt.
 
-Sammanfattningsvis är Ludvika en kommun som uppvisar sårbarhet på ett par punkter. Arbetslösheten är Dalarnas högsta och pendlingen till andra kommuner är låg, vilket indikerar en sårbar arbetsmarknad. Vidare tillhör kommunen de sämre i Dalarna på några områden kopplade till företagande. Ludvika är dessutom beroende av en enskild arbetsgivare i stor utsträckning. På den positiva sidan finns dock den relativa närheten (ca 4 mil) till en av Dalarnas större kommuner (Borlänge). Vid en större kris/företagsnedläggning skulle pendlingen därför kunna öka, även om också Borlänge har hög arbetslöshet. Ludvika har dessutom en relativt hög utbildningsnivå. Viktigt att notera är naturligtvis också att en koppling till en stor och expansiv arbetsgivare som Hitachi har många positiva sidor. Företaget är framgångsrikt och expanderar, vilket skapar många arbetstillfällen i kommunen. Exempelvis fick företaget nyligen (april 2023) en stor exportorder, vilket enligt Hitachi skapar 2000 nya arbetstillfällen i Sverige, varav merparten hamnar i Ludvika.
+Sammanfattningsvis är Ludvika en kommun som uppvisar sårbarhet på ett par punkter. Arbetslösheten är bland Dalarnas högsta och pendlingen till andra kommuner är låg, vilket indikerar en sårbar arbetsmarknad. Ludvika är dessutom beroende av en enskild arbetsgivare i stor utsträckning. På den positiva sidan finns dock den relativa närheten (ca 4 mil) till en av Dalarnas större kommuner (Borlänge). Vid en större kris/företagsnedläggning skulle pendlingen därför kunna öka, även om också Borlänge har hög arbetslöshet. Ludvika har dessutom en relativt hög utbildningsnivå. Viktigt att notera är naturligtvis också att en koppling till en stor och expansiv arbetsgivare som Hitachi har många positiva sidor. Företaget är framgångsrikt och expanderar, vilket skapar många arbetstillfällen i kommunen. Exempelvis fick företaget nyligen (april 2023) en stor exportorder, vilket enligt Hitachi skapar 2000 nya arbetstillfällen i Sverige, varav merparten hamnar i Ludvika.
 
 ## Malung-Sälen {-}
-Malung-Sälen är Dalarnas fjärde minsta kommun sett till folkmängd och hade år 2022 strax över 10 000 invånare. Befolkningen har minskat stadigt under en längre period, trots att antalet utrikes födda har ökat de senaste decennierna. Värt att notera är dock att Malung-Sälens kommun har ett relativt stort antal säsongsarbetande (Sälenfjällen) och många fritidshus, varför befolkningen är klart större vintertid. Malung-Sälen har Dalarnas näst lägsta arbetslöshet, strax över 2 procent, samtidigt som andelen högutbildade i länet är bland de lägsta. Vidare är kopplingen mellan andelen utrikes födda och nivån av arbetslöshet inte lika tydlig i Malung-Sälens kommun som i många andra kommuner. Noterbart är även att kommunen har den lägsta andelen in- och utpendling bland Dalarnas kommuner, vilket delvis kan tillskrivas kommunens geografiska storlek.
+Malung-Sälen är Dalarnas fjärde minsta kommun sett till folkmängd och hade år 2022 strax över 10 000 invånare. Befolkningen har minskat stadigt under en längre period, trots att antalet utrikes födda har ökat de senaste decennierna. Värt att notera är dock att Malung-Sälens kommun har ett relativt stort antal säsongsarbetande (Sälenfjällen) och många fritidshus, varför befolkningen är klart större vintertid. Malung-Sälen har en av Dalarnas lägsta arbetslösheter, runt `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Malung-Sälen") %>% .$varde,0)` procent, samtidigt som andelen högutbildade i länet är bland de lägsta. Vidare är kopplingen mellan andelen utrikes födda och nivån av arbetslöshet inte lika tydlig i Malung-Sälens kommun som i många andra kommuner. Noterbart är även att kommunen har den lägsta andelen in- och utpendling bland Dalarnas kommuner, vilket delvis kan tillskrivas kommunens läge och geografiska storlek.
 
-I Malung-Sälen står turismindustrin i Sälenfjällen för en stor andel av sysselsättningen, men trots detta arbetar den största andelen av de förvärvsarbetande inom vård och omsorg. Detta kan delvis förklaras av att turism är en svår bransch att definiera. Exempelvis ryms sannolikt en stor del av Sälenfjällens anställda inom branschgruppen kultur/sport m.m. i figuren, som tillsammans med hotell- och restaurangbranschen räknas till turismindustrin.
+I Malung-Sälen står turismindustrin i Sälenfjällen för en stor andel av sysselsättningen, men trots detta arbetar den största andelen av de förvärvsarbetande inom vård och omsorg. Detta kan delvis förklaras av att turism är en svår bransch att definiera. Exempelvis ryms sannolikt en stor del av Sälenfjällens anställda inom branschgruppen "kultur, fritid och nöje" i figuren, som tillsammans med hotell- och restaurangbranschen räknas till turismindustrin.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$`andel_per_bransch_Malung-Sälen`
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Malung-Sälen.png"))
 
 ```
+<br>
 
 Baserat på andelen av lönesumman inom det privata näringslivet är renhållning, kultur, sport m.m. den största branschgruppen, med drygt 18 procent av den totala lönesumman. Att renhållning ingår i namnet på branschgruppen behöver man inte fästa någon större vikt vid, det handlar primärt om arbetsgivare inom turism. Branschgruppen utgörs av en jämställd representation av kvinnor och män, men har relativt få utrikes födda och få högutbildade. I övrigt är företag inom byggindustrin viktiga i Malung-Sälen, branschgruppen står för 15 procent av den totala lönesumman, vilket illustrerar effekterna av den "byggboom" som skett i Dalarnas fjällvärld på senare år som en expanderande turismindustrin bidragit till. Representationen bland de sysselsatta i byggindustrin i Malung-Sälen följer mönstret för Sverige med relativt få kvinnor, få utrikes födda, såväl som få med högre utbildning. Viktigt att notera när det gäller Malung-Sälens kommun är att anställda inom många olika branschgrupper kan vara kopplade till Sälenfjällens ekonomi. Om de som städar hotell och stugor inte arbetar för företaget som driver anläggningen, återfinns de sannolikt inom branschgruppen företagsservicefirmor. I Malung-Sälen är mer än 40 procent av de anställda inom den branschgruppen utrikes födda, vilket är en väldigt stor andel.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Malung-Sälen.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Malung-Sälen var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Skistar är den största privata arbetsgivaren med strax över `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen",Arbetsgivare == "Skistar AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.  
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$`Malung-Sälen`
 
 ```
+<br>
 
 Malung-Sälen är den kommun i Dalarna som har klart störst antal privata arbetsställen per 1000 invånare, vilket är en indikator på ett bra företagsklimat. Det startas dessutom många företag i Malung-Sälen, men samtidigt är antalet konkurser per 1000 invånare bland de högsta i länet.
 
@@ -580,32 +604,37 @@ I relation till sin befolkningsstorlek krävs relativt många företag i det pri
 Sammanfattningsvis är Malung-Sälen en kommun som uppvisar låg sårbarhet på flera områden. Arbetslösheten är låg och det både startas, och finns, många företag. Dessutom är beroendet av enskilda branscher och arbetsgivare relativt litet som det verkar. På minussidan finns en låg pendling (Dalarnas lägsta) och ett relativt stort beroende av säsongsarbetande. Dessutom finns viss osäkerhet kopplad till främst klimatförändringar och dess påverkan på snötillgång och annat, men även till konjunkturen då exempelvis skidturism är en relativt dyr fritidsaktivitet. Viktigt att poängtera är också att den modell för att utvärdera sårbarhet som används i denna analys inte tar hänsyn till kopplingar mellan branscher, exempelvis hur många olika branscher som är kopplade till ekonomin runt turismen i Malung-Sälen.
 
 ## Mora {-}
-Mora kommun är Dalarnas femte största sett till folkmängd och hade år 2022 drygt 20 600 invånare. Fram till 1990 ökade befolkningen avsevärt, men har därefter mer eller mindre stått still. Moras arbetslöshet, drygt 3 procent, är klart under genomsnittet i Dalarna och dessutom har kommunen den tredje största andelen högutbildade. Den låga arbetslösheten kan delvis förklaras med att Mora har en relativt sett lägre andel utrikes födda i befolkningen, än i många andra Dalakommuner. Arbetslösheten har visat sig vara genomgående högre bland utrikes födda än bland inrikes födda. Vidare är Mora en kommun som många pendlar till, ungefär var fjärde förvärvsarbetande bor inte i kommunen.
+Mora kommun är Dalarnas femte största sett till folkmängd och hade år 2022 drygt 20 600 invånare. Fram till 1990 ökade befolkningen avsevärt, men har därefter mer eller mindre stått still. Moras arbetslöshet, ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Mora") %>% .$varde,0)` procent, är klart under genomsnittet i Dalarna och dessutom har kommunen den tredje största andelen högutbildade. Den låga arbetslösheten kan delvis förklaras med att Mora har en relativt sett lägre andel utrikes födda i befolkningen, än i många andra Dalakommuner. Arbetslösheten har visat sig vara genomgående högre bland utrikes födda än bland inrikes födda. Vidare är Mora en kommun som många pendlar till, ungefär var fjärde förvärvsarbetande bor inte i kommunen.
 
-Mora har ursprung från medeltiden och är idag kanske mest känt för Vasaloppet och Anders Zorn. 2021 arbetade mer än var fjärde förvärvsarbetande inom vård och omsorg, vilket är en klart högre andel än genomsnittet i Dalarna. Detta beror till stor del på att ett av Dalarnas centralsjukhus, Mora lasarett, ligger i kommunen. I övrigt är andelen förvärvsarbetande per bransch ungefär i linje med snittet för Dalarna.
+Mora har ursprung från medeltiden och är idag kanske mest känt för Vasaloppet och Anders Zorn. Mer än var fjärde förvärvsarbetande arbetar inom vård och omsorg, vilket är en klart högre andel än genomsnittet i Dalarna. Detta beror till stor del på att ett av Dalarnas centralsjukhus, Mora lasarett, ligger i kommunen. I övrigt är andelen förvärvsarbetande per bransch ungefär i linje med snittet för Dalarna.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch_Mora
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Mora.png"))
 
 ```
+<br>
 
 De största privata arbetsgivarna i Mora finns inom branschgrupperna byggindustri, metallvaruindustri samt parti- och detaljhandel. Företagen inom dessa branscher står tillsammans för ungefär 40 procent av den totala lönesumman inom det privata näringslivet i kommunen. Av dessa har bara parti- och detaljhandeln en  jämn könsfördelning (inom spannet 40-60%), samtidigt är det branschen med lägst andel utrikes födda, endast 6 procent, vilket är ungefär hälften av andelen i de andra två branscherna. I övrigt ligger det ena av Dalarnas två centralsjukhus i Mora, vilket medför att även privata arbetsgivare inom hälso- och sjukvård har många anställda i kommunen. Inom denna branschgrupp är drygt tre av fyra kvinnor, men lönesumman relativt liten i förhållande till antalet anställda, vilket kan indikera att många arbetar deltid inom hälso- och sjukvård.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Mora.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Mora var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Mora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Mora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Många i Mora jobbar även för Region Dalarna, medan FM Mattsson är den största privata arbetsgivaren med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Mora",Arbetsgivare == "Fm Mattsson Mora Group AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Mora
 
 ```
+<br>
 
 Precis som många andra kommuner i norra Dalarna har Mora ett stort antal arbetsställen i förhållande till sin befolkning, vilket är en indikation på ett väl fungerande företagande i kommunen.
 
@@ -614,72 +643,82 @@ Mora har dessutom en relativt stor branschbredd (3:e bästa i Dalarna) och ranka
 Sammanfattningsvis uppvisar Mora låg sårbarhet på de flesta områden i den modell vi använder. Arbetslösheten är låg och utbildningsnivån hög, samtidigt som beroendet av enskilda branscher och företag inom det privata näringslivet är lågt. Den riskfaktor som kan skönjas, precis som var fallet med Falun, är det relativt stora beroendet av företag inom vård och omsorg, i mångt och mycket kopplat till Mora lasarett.
 
 ## Orsa {-}
-Orsa kommun, med ca 7 000 invånare, var Dalarnas näst minsta kommun år 2022. Folkmängden har varit relativt konstant under en lång tid och på senare år har en nedgång i antalet invånare som är födda i Sverige kompenserats av en ökad invandring. Arbetslösheten i Orsa, drygt 4,5 procent, är ungefär som genomsnittet i Dalarna,  men andelen högutbildade är klart lägre än genomsnittet. I jämförelse med andra kommuner i norra Dalarna har dock Orsa en klart högre arbetslöshet, vilket bara delvis kan tillskrivas en något högre andel utrikes födda invånare. Exempelvis är andelen utrikes födda invånare i Orsa och Malung-Sälen på ungefär samma nivå (ca 12 procent), men samtidigt är arbetslösheten i Malung-Sälen ungefär 2 procentenheter lägre än i Orsa. Pendlingen från Orsa till andra kommuner är hög och nästan varannan som bor i Orsa och förvärvsarbetar gör så i en annan kommun, vilket är positivt för arbetsmarknadens resiliens mot kriser. Medelåldern i Orsa, strax över 46 år, är förhållandevis hög.
+Orsa kommun, med ca 7 000 invånare, var Dalarnas näst minsta kommun år 2022. Folkmängden har varit relativt konstant under en lång tid och på senare år har en nedgång i antalet invånare som är födda i Sverige kompenserats av en ökad invandring. Arbetslösheten i Orsa, `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Orsa") %>% .$varde,1)` procent, är något under genomsnittet i Dalarna,  men andelen högutbildade är klart lägre än genomsnittet. I jämförelse med vissa andra kommuner i norra Dalarna har dock Orsa en klart högre arbetslöshet, vilket bara delvis kan tillskrivas en något högre andel utrikes födda invånare. Exempelvis är andelen utrikes födda invånare i Orsa och Malung-Sälen på ungefär samma nivå (ca 12 procent), men samtidigt är arbetslösheten i Malung-Sälen klart lägre än i Orsa. Pendlingen från Orsa till andra kommuner är hög och nästan varannan som bor i Orsa och förvärvsarbetar gör så i en annan kommun, vilket är positivt för arbetsmarknadens resiliens mot kriser. Medelåldern i Orsa, strax över 46 år, är förhållandevis hög.
 
 Av de som förvärvsarbetar i Orsa gör mer än var femte det inom vård och omsorg, vilket är en större andel än genomsnittet för Dalarna. I jämförelse med Dalarna sticker även byggindustrin ut, med runt `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Orsa",bransch == "Bygg") %>% .$andel,0)` procent av de förvärvsarbetande, även jord- och skogsbruk (`r round(andel_forvarvsarbetande_bransch %>% filter(region == "Orsa",bransch == "Jord- och skogsbruk") %>% .$andel,0)` procent) och kultur m.m. (ca `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Orsa",bransch == "Kultur, fritid och nöje") %>% .$andel,0)` procent) står för en stor andel av de sysselsatta. Den sistnämnda branschen innefattar sannolikt många personer som arbetar inom turism (Orsa-Grönklitt).
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 
 gg_andel_forv$andel_per_bransch_Orsa
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Orsa.png"))
 
 ```
+<br>
 
 Inom det privata näringslivet utgör företag inom byggindustrin den klart största andelen, och står för drygt en fjärdedel av den totala lönesumman. Anmärkningsvärt är att bara ungefär 1 procent av de drygt 400 anställda är utrikes födda. Bland övriga större branscher återfinns bland annat renhållning, kultur och sport m.m., vilken innefattar företag i turismindustrin, och då framförallt Orsa-Grönklitt. Dessutom finns en stor arbetsgivare inom övriga landtransportföretag, som har relativt många utrikes födda bland de anställda, men få kvinnor. Noterbart är dock att siffrorna i tabellen nedan är från 2020 och det har sedan dess skett förändringar kopplat till bolag inom branschgruppen övriga landtransportföretag.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Orsa.png"))
 
 ```
+<br>
 
 Den största arbetsgivaren i Orsa var  `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Orsa") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Orsa") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade Transdev, som under 2021 köpte Siljans buss, flest anställda med drygt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Orsa",Arbetsgivare == "Transdev Nord AB") %>% .$antal_anstallda,100),big.mark =" ")`.
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Orsa
 
 ```
+<br>
 
-Orsa är som sagt en av Dalarnas minsta kommuner sett till folkmängd och har följaktligen en låg branschbredd (lägst i Dalarna). Kommunen tillhör även de kommuner i Dalarna där det krävs minst antal företag för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman (inom det privata näringslivet). Samtidigt startas relativt få nya företag i Orsa, något som dock har förbättrats de senaste 6-7 åren.
+Orsa är som sagt en av Dalarnas minsta kommuner sett till folkmängd och har följaktligen en relativt låg branschbredd. Samtidigt är antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman (inom det privata näringslivet) högre än ett par befolkningsmässigt större kommuner i Dalarna. Vidare startas det relativt få nya företag i Orsa och antalet konkurser har ökat stadigt på senare år.
 
-Sammanfattningsvis kan Orsa sägas vara en kommun som uppvisar både sårbara och inte sårbara sidor. Arbetslösheten är ungefär som genomsnittet i Dalarna, men en stor utpendling minskar arbetsmarknadens sårbarhet. Samtidigt har kommunen Dalarnas lägsta branschbredd och är förhållandevis beroende av enskilda företag. Inom det privata näringslivet är byggindustrin en viktig sektor, vilket skulle kunna skapa problem i dagens ekonomi, med höga räntor och en potentiell lågkonjunktur på horisonten.
+Sammanfattningsvis kan Orsa sägas vara en kommun som uppvisar både sårbara och inte sårbara sidor. Arbetslösheten är under genomsnittet i Dalarna och en stor utpendling minskar arbetsmarknadens sårbarhet. Inom det privata näringslivet är byggindustrin en viktig sektor, vilket skulle kunna skapa problem i dagens ekonomi, med höga räntor och lågkonjunktur.
 
 ## Rättvik {-}
-Rättviks kommun hade en folkmängd på drygt 11 000 år 2022. Befolkningen minskade fram till 1990-talet men har därefter varit relativt konstant och på senare år till och med ökat något. Detta kan, precis som i de flesta kommuner i Dalarna, tillskrivas en ökad invandring, även om andelen utrikes födda är lägre i Rättvik än i många andra Dalakommuner. Rättvik är samtidigt Sveriges åttonde äldsta kommun, med en medelålder på 49 år, vilket är klart högst i Dalarna. Arbetslösheten i Rättvik (ca 3 procent) är lägre än genomsnittet i Dalarna, men det är även andelen högutbildade. Ungefär 35 procent av de boende i Rättvik pendlar till en annan kommun för att arbeta, samtidigt som få (runt 20 procent) av de förvärvsarbetande i Rättvik bor i en annan kommun.
+Rättviks kommun hade en folkmängd på drygt 11 000 år 2022. Befolkningen minskade fram till 1990-talet men har därefter varit relativt konstant och på senare år till och med ökat något. Detta kan, precis som i de flesta kommuner i Dalarna, tillskrivas en ökad invandring, även om andelen utrikes födda är lägre i Rättvik än i många andra Dalakommuner. Rättvik är samtidigt Sveriges nionde äldsta kommun, med en medelålder på 49 år, vilket är klart högst i Dalarna. Arbetslösheten i Rättvik (ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Rättvik") %>% .$varde,1)` procent) är lägre än genomsnittet i Dalarna, men det är även andelen högutbildade. Ungefär var tredje av de boende i Rättvik som arbetar gör det i en annan kommun, samtidigt som få (runt 20 procent) av de förvärvsarbetande i Rättvik bor i en annan kommun.
 
 Rättvik har länge varit en populär turistort, vilket märks genom att dubbelt så stor andel jobbar inom hotell- och restaurangbranschen jämfört med genomsnittet i Dalarna. Även bygg samt kultur, fritid och nöje är branscher inom vilka en klart större andel av de förvärvsarbetande i Rättvik är sysselsatta.
 
+<br>
 ```{r, echo=FALSE, fig.width=10, fig.align='Left'}
 gg_andel_forv$andel_per_bransch_Rättvik
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Rättvik.png"))
 
 ```
+<br>
 
 Baserat på branschgruppens andel av lönesumman inom det privata näringslivet i Rättvik är byggindustrin störst, med ca 20 procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor finns bland de sysselsatta inom branschgruppen. Även parti- och detaljhandel samt hotell och restaurang är viktiga branschgrupper, med tillsammans strax över 20 procent av den totala lönesumman. Den sistnämnda branschgruppen har en övervikt av kvinnor bland de sysselsatta, samt relativt många utrikes födda.
-<br>
+
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 knitr::include_graphics(here("Diagram","storsta_branscher_Rättvik.png"))
 
 ```
+<br>
 
 Den klart största arbetsgivaren i Rättvik var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Rättvik") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Rättvik") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland övriga arbetsgivare är de flesta avsevärt mindre. 
 
+<br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
 
 gg_storsta_foretag$Rättvik
 
 ```
+<br>
 
-Rättvik tillhör Dalarnas bästa kommuner både vad gäller antalet privata arbetsställen och antalet nystartade företag (per 1000 invånare). Till skillnad från många andra kommuner med många nystartade företag är konkurserna i Rättvik dessutom förhållandevis få.
+Rättvik tillhör Dalarnas bästa kommuner vad gäller antalet privata arbetsställen per 1000 invånare och har dessutom relativt få konkurser.
 
-När det kommer till antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman är Rättvik tredje bäst i Dalarna. Trots att Borlänge har mer än 4 gånger så stor befolkning som Rättvik, krävs ungefär lika många företag för att uppnå 50 procent av lönesumman. Rättvik har således ett väldigt litet beroende av enskilda företag. Samtidigt bör man notera att företag inom byggbranschen står för ungefär 20 procent av lönesumman inom det privata näringslivet, varför Rättvik är relativt beroende av den branschen.
+När det kommer till antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman är Rättvik tredje bäst i Dalarna. Trots att Borlänge har mer än 4 gånger så stor befolkning som Rättvik, krävs bara något färre antal företag för att uppnå 50 procent av lönesumman. Rättvik har således ett väldigt litet beroende av enskilda företag. Samtidigt bör man notera att företag inom byggbranschen står för ungefär 20 procent av lönesumman inom det privata näringslivet, varför Rättvik är relativt beroende av den branschen.
 
-Sammanfattningsvis kan Rättvik sägas vara en kommun som uppvisar låg sårbarhet på de flesta områdena enligt vår modell, då arbetslösheten är låg och relativt många pendlar till andra kommuner. Dessutom är Rättvik en av Dalarnas bästa kommuner när det kommer till företagande (enligt vår modell) och har dessutom ett lågt beroende. Bland orosmolnen finns Dalarnas äldsta befolkning och ett visst beroende av företag inom branschgruppen byggindustri.
+Sammanfattningsvis kan Rättvik sägas vara en kommun som uppvisar låg sårbarhet på de flesta områdena enligt vår modell, då arbetslösheten är låg och relativt många pendlar till andra kommuner. Dessutom har Rättvik ett lågt beroende av enskilda företag. Bland orosmolnen finns Dalarnas äldsta befolkning och ett visst beroende av företag inom branschgruppen byggindustri.
 
 ## Smedjebacken {-}
-Smedjebackens kommun hade ca 11 000 invånare år 2022. Befolkningen minskade ganska kraftigt mellan 1980 och 2000, men har därefter stabiliserats och till och med ökat något. Detta kan till viss del tillskrivas en ökad invandring, men även den inrikes födda befolkningen har ökat något det senaste decenniet. Arbetslösheten i Smedjebacken, strax över 4 procent, är något lägre än genomsnittet i Dalarna, vilket även gäller utbildningsnivån. Smedjebacken är Dalarnas fjärde äldsta kommun, med en medelålder på mellan 46 och 47 år. Detta är exempelvis klart högre än närbelägna Ludvika. Smedjebacken är även en av Dalarnas största pendlarkommuner. Ungefär hälften av dem som bor i kommunen och förvärvsarbetar har sin arbetsplats i en annan kommun, Ludvika i stor utsträckning.  
+Smedjebackens kommun hade ca 11 000 invånare år 2022. Befolkningen minskade ganska kraftigt mellan 1980 och 2000, men har därefter stabiliserats och till och med ökat något. Detta kan till viss del tillskrivas en ökad invandring, men även den inrikes födda befolkningen har ökat något det senaste decenniet. Arbetslösheten i Smedjebacken, `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Smedjebacken") %>% .$varde,1)` procent, är något lägre än genomsnittet i Dalarna, vilket även gäller utbildningsnivån. Smedjebacken är Dalarnas fjärde äldsta kommun, med en medelålder på mellan 46 och 47 år. Detta är exempelvis klart högre än närbelägna Ludvika. Smedjebacken är även en av Dalarnas största pendlarkommuner. Ungefär hälften av dem som bor i kommunen och förvärvsarbetar har sin arbetsplats i en annan kommun, Ludvika i stor utsträckning.  
 
 Som namnet antyder har Smedjebacken en lång historia kopplad till smedjor, men fungerade även länge som knutpunkt för land- och vattentransporter. Än idag är företag inom tillverkning och utvinning dominerande inom kommunen, ungefär var fjärde förvärvsarbetande arbetar inom sådana företag. Även arbetsgivare inom vård och omsorg är viktiga, med ca `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Smedjebacken",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande i kommunen.
 
@@ -707,9 +746,9 @@ gg_storsta_foretag$Smedjebacken
 
 ```
 
-Smedjebacken har Dalarnas näst lägsta antal privata arbetsställen per 1 000 invånare, men samtidigt har antalet nystartade företag ökat avsevärt mellan 2015 och 2020.
+Smedjebacken har Dalarnas näst lägsta antal privata arbetsställen per 1 000 invånare och dessutom relativt många konkurser, vilka även har ökat på senare år.
 
-Branschbredden i Smedjebacken (ca 24 procent) tillhör de lägsta i Dalarna och minskade dessutom från 2015 till 2020. Även antalet företag som utgör 50 procent av den aggregerade lönesumman är bland de lägsta i Dalarna (12), vilket indikerar att Smedjebacken är en kommun med relativt högt beroende. Visserligen är pendlingen hög, men denna pendling går i stor utsträckning till närbelägna Ludvika med en väldigt dominerande arbetsgivare.
+Branschbredden i Smedjebacken är den lägsta i Dalarna och minskade dessutom från 2015 till 2021. Även antalet företag som utgör 50 procent av den aggregerade lönesumman är bland de lägsta i Dalarna (`r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Smedjebacken") %>% .$cnum`), vilket indikerar att Smedjebacken är en kommun med relativt högt beroende. Visserligen är pendlingen hög, men denna pendling går i stor utsträckning till närbelägna Ludvika med en väldigt dominerande arbetsgivare.
 
 Sammanfattningsvis kan Smedjebacken sägas vara en kommun som uppvisar sårbarhet på flera områden. Visserligen är arbetslösheten bara runt genomsnittet för Dalarna och kommunen har en stor utpendling, men den pendlingen går i stor uträckning till närbelägna Ludvika som domineras av en enskild arbetsgivare. Beroendet av enskilda företag och branscher i Smedjebacken är dessutom högt och det finns relativt få arbetsställen. Naturligtvis finns samtidigt positiva sidor med att ha en stor och expanderande arbetsgivare (Hitachi) bara någon mil bort.
 
