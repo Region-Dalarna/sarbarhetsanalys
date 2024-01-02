@@ -170,10 +170,10 @@ stilsätter det i CSS*/
 /*Rubriken*/
 
 /*Rubriken*/
-.top-text {
+/*.top-text {
     position: absolute;
     bottom: 35px;
-    /*left: 150px;*/
+    left: 150px;
     margin-left: 25%;
     width: 50%;
     color: #fff;
@@ -185,6 +185,37 @@ stilsätter det i CSS*/
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.bottom-text{
+  font-size: 1.5em;
+}*/
+
+.rubrik {
+  position: absolute;
+  letter-spacing: 0.065em;
+  line-height: 0.5em;
+  bottom: 35px;
+  margin-left: 25%;
+  width: 50%;
+  font-size: 2.5em;
+  text-align: center;
+  text-shadow: rgba(34,34,34,.8) 3px 5px 5px;
+  background-color: rgba(84,161,189,.8);
+  /*padding-left: 10px;
+  padding-right: 10px;*/
+  padding: 10px;
+  padding-top: 15px;
+  color: #ffffff;
+  font-weight: bold;
+  left:auto;
+  bottom: 15px
+}
+
+.underrubrik{
+  /*background-color: rgba(84,161,189,.8);*/
+  font-size: 0.5em;
+}
+
 
 /* Logga vänster*/
 .header-logo {
@@ -247,6 +278,15 @@ blockquote {
  
  .top-text {
     font-size: 2em;
+}
+
+.rubrik {
+  font-size: 1.5em;
+}
+
+.underrubrik{
+  /*background-color: rgba(84,161,189,.8);*/
+  font-size: 0.5em;
 }
 
 .toc-content.col-xs-12.col-sm-8.col-md-9{
