@@ -1,13 +1,14 @@
 # Hur många företag krävs för att lönesumman i en kommun skall uppgå till 50 % (kumulativt)
 # R-skript som skapar data finns på MONA under P1079_Gem/Jon/Sårbarhetsanalys/viktigaste_branscher_lan_Raps_ny_variant
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(openxlsx,here,tidyverse,gt,webshot2,flextable)
+pacman::p_load(openxlsx,here,tidyverse,gt,webshot2)
 
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
 #test_list=diag_50proc_lonesumma(skapa_fil=TRUE,output_mapp = "G:/skript/jon/")
 diag_50proc_lonesumma <- function(region_vekt="20",
                                   diag_lan=TRUE,
-                                  diag_kommun=TRUE){
+                                  diag_kommun=TRUE,
+                                  returnera_data = FALSE){
   
   # ========================================== Inställningar ============================================
   # filnamn <- "storsta_branscher.png"
@@ -37,6 +38,14 @@ diag_50proc_lonesumma <- function(region_vekt="20",
     mutate(andel_bakgrund=ifelse((andel_bakgrund*antal_syss/100)<5,"*",andel_bakgrund),
            andel_kon=ifelse((andel_kon*antal_syss/100)<5,"*",andel_kon),
            andel_utbildning=ifelse((andel_utbildning*antal_syss/100)<5,"*",andel_utbildning))
+  
+  if(returnera_data == TRUE){
+    assign("bransch_lan", bransch_lan_df, envir = .GlobalEnv)
+  }
+  
+  if(returnera_data == TRUE){
+    assign("bransch_kommun", bransch_kommun_df, envir = .GlobalEnv)
+  }
   
   gg_list <- lst()
   objektnamn = c()
