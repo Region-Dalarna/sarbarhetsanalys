@@ -423,7 +423,7 @@ gg_andel_forv$andel_per_bransch_Gagnef
 ```
 <br>
 
-Baserat på andelen av lönesumman inom det privata näringslivet i Gagnef är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Gagnef") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största branschgruppen med `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma)` procent av den totala lönesumman. Byggindustrin i Gagnef speglar byggindustrin generellt, i form av en mansdominerad bransch med en låg representation av utrikes födda. Andra viktiga branschgrupper är övrig tillverkningsindustri samt parti- och detaljhandel, vars företag står för närmare 25 procent av den totala lönesumman. Precis som var fallet med Falun, är även privata företag inom hälso- och sjukvård viktiga i Gagnef. Bland de anställda i denna branschgrupp är dessutom väldigt många, `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef", AstSNI_raps == "Hälso- o sjukvård omsorg") %>% .$andel_bakgrund` procent, utrikes födda. I Sverige är en majoritet av dem som jobbar inom hälso- och sjukvård kvinnor, och det återspeglas  även i branschen i Gagnef, där `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef", AstSNI_raps == "Hälso- o sjukvård omsorg") %>% .$andel_kon` procent av de anställda är kvinnor.
+Baserat på andelen av lönesumman inom det privata näringslivet i Gagnef är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Gagnef") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största branschgruppen med `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Byggindustrin i Gagnef speglar byggindustrin generellt, i form av en mansdominerad bransch med en låg representation av utrikes födda. Andra viktiga branschgrupper är övrig tillverkningsindustri samt parti- och detaljhandel, vars företag står för närmare 25 procent av den totala lönesumman. Precis som var fallet med Falun, är även privata företag inom hälso- och sjukvård viktiga i Gagnef. Bland de anställda i denna branschgrupp är dessutom väldigt många, `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef", AstSNI_raps == "Hälso- o sjukvård omsorg") %>% .$andel_bakgrund` procent, utrikes födda. I Sverige är en majoritet av dem som jobbar inom hälso- och sjukvård kvinnor, och det återspeglas  även i branschen i Gagnef, där `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef", AstSNI_raps == "Hälso- o sjukvård omsorg") %>% .$andel_kon` procent av de anställda är kvinnor.
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -541,7 +541,7 @@ gg_andel_forv$andel_per_bransch_Ludvika
 ```
 <br>
 
-Bland arbetsgivare inom det privata näringslivet är branschgruppen annan `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den överlägset största, såväl vad gäller sysselsatta som andel av den totala lönesumman (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent). Detta är helt förknippat med Hitachi, tidigare ABB, som är den klart största arbetsgivaren i kommunen. Inom branschgruppen arbetar många utrikes födda (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_bakgrund` procent) och högutbildade (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_utbildning` procent). Även branschgruppen företagsservicefirmor är viktig med `r bransch_kommun %>% filter(AstKommun_namn == "Ludvika",AstSNI_raps == "Företagsservicefirmor") %>% .$andel_lonesumma` procent av den totala lönesumman och en relativt stor andel av såväl kvinnor som högutbildade. Gissningsvis är flera av företagen inom den branschgruppen kopplade till Hitachi.  
+Bland arbetsgivare inom det privata näringslivet är branschgruppen `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den överlägset största, såväl vad gäller sysselsatta som andel av den totala lönesumman (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent). Detta är helt förknippat med Hitachi, tidigare ABB, som är den klart största arbetsgivaren i kommunen. Inom branschgruppen arbetar många utrikes födda (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_bakgrund` procent) och högutbildade (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_utbildning` procent). Även branschgruppen företagsservicefirmor är viktig med `r bransch_kommun %>% filter(AstKommun_namn == "Ludvika",AstSNI_raps == "Företagsservicefirmor") %>% .$andel_lonesumma` procent av den totala lönesumman och en relativt stor andel av såväl kvinnor som högutbildade. Gissningsvis är flera av företagen inom den branschgruppen kopplade till Hitachi.  
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -580,7 +580,7 @@ gg_andel_forv$`andel_per_bransch_Malung-Sälen`
 ```
 <br>
 
-Baserat på andelen av lönesumman inom det privata näringslivet är renhållning, kultur, sport m.m. den största branschgruppen, med drygt 18 procent av den totala lönesumman. Att renhållning ingår i namnet på branschgruppen behöver man inte fästa någon större vikt vid, det handlar primärt om arbetsgivare inom turism. Branschgruppen utgörs av en jämställd representation av kvinnor och män, men har relativt få utrikes födda och få högutbildade. I övrigt är företag inom byggindustrin viktiga i Malung-Sälen, branschgruppen står för 15 procent av den totala lönesumman, vilket illustrerar effekterna av den "byggboom" som skett i Dalarnas fjällvärld på senare år som en expanderande turismindustrin bidragit till. Representationen bland de sysselsatta i byggindustrin i Malung-Sälen följer mönstret för Sverige med relativt få kvinnor, få utrikes födda, såväl som få med högre utbildning. Viktigt att notera när det gäller Malung-Sälens kommun är att anställda inom många olika branschgrupper kan vara kopplade till Sälenfjällens ekonomi. Om de som städar hotell och stugor inte arbetar för företaget som driver anläggningen, återfinns de sannolikt inom branschgruppen företagsservicefirmor. I Malung-Sälen är mer än 40 procent av de anställda inom den branschgruppen utrikes födda, vilket är en väldigt stor andel.
+Baserat på andelen av lönesumman inom det privata näringslivet är renhållning, kultur, sport m.m. den största branschgruppen, med drygt `r bransch_kommun %>% filter(AstKommun_namn == "Malung-Sälen",AstSNI_raps == "Renhållning kultur sport m.m.") %>% .$andel_lonesumma` procent av den totala lönesumman. Att renhållning ingår i namnet på branschgruppen behöver man inte fästa någon större vikt vid, det handlar primärt om arbetsgivare inom turism. Branschgruppen utgörs av en jämställd representation av kvinnor och män, men har relativt få utrikes födda och få högutbildade. I övrigt är företag inom `r bransch_kommun %>% filter(AstKommun_namn == "Malung-Sälen",AstSNI_raps == "Byggindustri") %>% .$andel_lonesumma` viktiga i Malung-Sälen, branschgruppen står för  procent av den totala lönesumman, vilket illustrerar effekterna av den "byggboom" som skett i Dalarnas fjällvärld på senare år som en expanderande turismindustrin bidragit till. Representationen bland de sysselsatta i byggindustrin i Malung-Sälen följer mönstret för Sverige med relativt få kvinnor, få utrikes födda, såväl som få med högre utbildning. Viktigt att notera när det gäller Malung-Sälens kommun är att anställda inom många olika branschgrupper kan vara kopplade till Sälenfjällens ekonomi. Om de som städar hotell och stugor inte arbetar för företaget som driver anläggningen, återfinns de sannolikt inom branschgruppen företagsservicefirmor. I Malung-Sälen är mer än `r bransch_kommun %>% filter(AstKommun_namn == "Malung-Sälen",AstSNI_raps == "Företagsservicefirmor") %>% .$andel_bakgrund` procent av de anställda inom den branschgruppen utrikes födda, vilket är en väldigt stor andel.
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -588,7 +588,6 @@ gt_tabell$`storsta_branscher_Malung-Sälen`
 #knitr::include_graphics(here("Diagram","storsta_branscher_Malung-Sälen.png"))
 
 ```
-<br>
 
 Den största arbetsgivaren i Malung-Sälen var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Skistar är den största privata arbetsgivaren med strax över `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen",Arbetsgivare == "Skistar AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.  
 
@@ -620,7 +619,7 @@ gg_andel_forv$andel_per_bransch_Mora
 ```
 <br>
 
-De största privata arbetsgivarna i Mora finns inom branschgrupperna byggindustri, metallvaruindustri samt parti- och detaljhandel. Företagen inom dessa branscher står tillsammans för ungefär 40 procent av den totala lönesumman inom det privata näringslivet i kommunen. Av dessa har bara parti- och detaljhandeln en  jämn könsfördelning (inom spannet 40-60%), samtidigt är det branschen med lägst andel utrikes födda, endast 6 procent, vilket är ungefär hälften av andelen i de andra två branscherna. I övrigt ligger det ena av Dalarnas två centralsjukhus i Mora, vilket medför att även privata arbetsgivare inom hälso- och sjukvård har många anställda i kommunen. Inom denna branschgrupp är drygt tre av fyra kvinnor, men lönesumman relativt liten i förhållande till antalet anställda, vilket kan indikera att många arbetar deltid inom hälso- och sjukvård.
+Bland arbetsgivare inom det privata näringslivet är branschgruppen `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Mora") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den överlägset största, såväl vad gäller sysselsatta som andel av den totala lönesumman (`r bransch_kommun %>% filter(AstKommun_namn == "Mora") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent). Även företag inom metallvaruindustri, parti- och detaljhandel samt företagsservicefirmor är viktiga arbetsgivare, med närmare 40 procent av den totala lönesumman tillsammans. Av dessa branschgrupper har parti och detaljhandel en jämnställd könsfördelning, medan många inom företagsservicefirmor (`r bransch_kommun %>% filter(AstKommun_namn == "Mora",AstSNI_raps == "Företagsservicefirmor") %>% .$andel_utbildning` procent) har eftergymnasial utbildning.
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -628,7 +627,6 @@ gt_tabell$storsta_branscher_Mora
 #knitr::include_graphics(here("Diagram","storsta_branscher_Mora.png"))
 
 ```
-<br>
 
 Den största arbetsgivaren i Mora var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Mora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Mora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Många i Mora jobbar även för Region Dalarna, medan FM Mattsson är den största privata arbetsgivaren med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Mora",Arbetsgivare == "Fm Mattsson Mora Group AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
@@ -660,7 +658,7 @@ gg_andel_forv$andel_per_bransch_Orsa
 ```
 <br>
 
-Inom det privata näringslivet utgör företag inom byggindustrin den klart största andelen, och står för drygt en fjärdedel av den totala lönesumman. Anmärkningsvärt är att bara ungefär 1 procent av de drygt 400 anställda är utrikes födda. Bland övriga större branscher återfinns bland annat renhållning, kultur och sport m.m., vilken innefattar företag i turismindustrin, och då framförallt Orsa-Grönklitt. Dessutom finns en stor arbetsgivare inom övriga landtransportföretag, som har relativt många utrikes födda bland de anställda, men få kvinnor. Noterbart är dock att siffrorna i tabellen nedan är från 2020 och det har sedan dess skett förändringar kopplat till bolag inom branschgruppen övriga landtransportföretag.
+Inom det privata näringslivet utgör företag inom `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Orsa") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den klart största andelen, och står för `r bransch_kommun %>% filter(AstKommun_namn == "Orsa") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Anmärkningsvärt är att bara `r bransch_kommun %>% filter(AstKommun_namn == "Orsa") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_bakgrund`  procent av de ca `r plyr::round_any(bransch_kommun %>% filter(AstKommun_namn == "Orsa") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$antal_syss,10)` anställda är utrikes födda. Bland övriga större branscher återfinns bland annat renhållning, kultur och sport m.m., vilken innefattar företag i turismindustrin, och då framförallt Orsa-Grönklitt. 
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -668,7 +666,6 @@ gt_tabell$storsta_branscher_Orsa
 #knitr::include_graphics(here("Diagram","storsta_branscher_Orsa.png"))
 
 ```
-<br>
 
 Den största arbetsgivaren i Orsa var  `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Orsa") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Orsa") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade Transdev, som under 2021 köpte Siljans buss, flest anställda med drygt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Orsa",Arbetsgivare == "Transdev Nord AB") %>% .$antal_anstallda,100),big.mark =" ")`.
 
@@ -697,7 +694,7 @@ gg_andel_forv$andel_per_bransch_Rättvik
 ```
 <br>
 
-Baserat på branschgruppens andel av lönesumman inom det privata näringslivet i Rättvik är byggindustrin störst, med ca 20 procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor finns bland de sysselsatta inom branschgruppen. Även parti- och detaljhandel samt hotell och restaurang är viktiga branschgrupper, med tillsammans strax över 20 procent av den totala lönesumman. Den sistnämnda branschgruppen har en övervikt av kvinnor bland de sysselsatta, samt relativt många utrikes födda.
+Baserat på branschgruppens andel av lönesumman inom det privata näringslivet i Rättvik är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Rättvik") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` störst, med ca `r bransch_kommun %>% filter(AstKommun_namn == "Rättvik") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor finns bland de sysselsatta inom branschgruppen. Även parti- och detaljhandel samt hotell och restaurang är viktiga branschgrupper, med tillsammans strax över 20 procent av den totala lönesumman. Den sistnämnda branschgruppen har en övervikt av kvinnor bland de sysselsatta, samt relativt många utrikes födda.
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -706,7 +703,6 @@ gt_tabell$storsta_branscher_Rättvik
 #knitr::include_graphics(here("Diagram","storsta_branscher_Rättvik.png"))
 
 ```
-<br>
 
 Den klart största arbetsgivaren i Rättvik var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Rättvik") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Rättvik") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland övriga arbetsgivare är de flesta avsevärt mindre. 
 
@@ -738,7 +734,7 @@ gg_andel_forv$andel_per_bransch_Smedjebacken
 ```
 <br>
 
-Den största privata arbetsgivaren i Smedjebacken finns inom branschgruppen stål- och metallverk. Branschens företag står också för nästan en fjärdedel av den totala lönesumman. Inom branschgruppen jobbar få utrikes födda och få kvinnor, och dessutom relativt få högutbildade. Även byggindustri och metallvaruindustri är viktiga branschgrupper sett till andel av lönesumman, och tillsammans med stål- och metallverk står dessa för ungefär halva lönesumman inom det privata näringslivet. Även företag inom branschgruppen företagsservicefirmor anställer relativt många men här återfinns en ganska stor andel kvinnor, högutbildade och utrikes födda.
+Den största privata arbetsgivaren i Smedjebacken finns inom branschgruppen `r tolower(sub(" o "," och ",bransch_kommun %>% filter(AstKommun_namn == "Smedjebacken") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps))` . Branschens företag står för `r bransch_kommun %>% filter(AstKommun_namn == "Smedjebacken") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Inom branschgruppen jobbar få utrikes födda och få kvinnor, och dessutom relativt få högutbildade. Även byggindustri och metallvaruindustri är viktiga branschgrupper sett till andel av lönesumman, och tillsammans med stål- och metallverk står dessa för ungefär halva lönesumman inom det privata näringslivet. Även företag inom branschgruppen företagsservicefirmor anställer relativt många men här återfinns en ganska stor andel kvinnor, högutbildade och utrikes födda.
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -777,7 +773,7 @@ gg_andel_forv$andel_per_bransch_Säter
 ```
 <br>
 
-Baserat på andelen av lönesumman inom det privata näringslivet i Säter är byggindustrin den största branschgruppen, med drygt 20 procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor är sysselsatta inom byggbranschen. Även parti- och detaljhandeln samt företagsservicefirmor är viktiga branschgrupper. I dessa båda finns en klart större andel kvinnor, högutbildade och utrikes födda bland de sysselsatta.
+Baserat på andelen av lönesumman inom det privata näringslivet i Säter är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Säter") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största branschgruppen, med `r bransch_kommun %>% filter(AstKommun_namn == "Säter") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor är sysselsatta inom byggbranschen. Även parti- och detaljhandeln samt företagsservicefirmor är viktiga branschgrupper. I dessa båda finns en klart större andel kvinnor, högutbildade och utrikes födda bland de sysselsatta.
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -813,7 +809,7 @@ gg_andel_forv$andel_per_bransch_Vansbro
 ```
 <br>
 
-De största privata arbetsgivarna i Vansbro finns inom branschgruppen parti- och detaljhandel, vars företag står för drygt 22 procent av den totala lönesumman. Inom branschgruppen jobbar många kvinnor (>50 procent) och, i jämförelse med genomsnittet i Vansbro, många högutbildade. Bland övriga stora branschgrupper återfinns byggindustri och livsmedelsindustri, som tillsammans står för ungefär 25 procent av den totala lönesumman. Den sistnämnda branschen har även den en majoritet kvinnor bland de anställda.
+De största privata arbetsgivarna i Vansbro finns inom branschgruppen parti- och detaljhandel, vars företag står för drygt `r bransch_kommun %>% filter(AstKommun_namn == "Vansbro",AstSNI_raps == "Parti- o detaljhandel rep av hushållsartiklar") %>% .$andel_lonesumma` procent av den totala lönesumman. Inom branschgruppen jobbar många kvinnor (>50 procent) och, i jämförelse med genomsnittet i Vansbro, många högutbildade. Bland övriga stora branschgrupper återfinns byggindustri och livsmedelsindustri, som tillsammans står för nästan 25 procent av den totala lönesumman. Den sistnämnda branschen har även den en majoritet kvinnor bland de anställda.
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
@@ -850,7 +846,7 @@ gg_andel_forv$andel_per_bransch_Älvdalen
 ```
 <br>
 
-Baserat på branschgruppens andel av lönesumman inom det privata näringslivet i Älvdalen är byggindustrin störst med ca 18 procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor är sysselsatta inom branschgruppen. Även företag inom renhållning, kultur, sport mm, som bland annat innefattar företag inom turism, har många anställda (>400) och en relativt stor andel av lönesumman (ca 10 procent). Inom den branschgruppen är avsevärt många fler kvinnor, högutbildade och utrikes födda. Bland övriga stora branschgrupper kan parti- och detaljhandel nämnas, vars företag har en bit över 300 anställda och står för 10 procent av den totala lönesumman.
+Baserat på branschgruppens andel av lönesumman inom det privata näringslivet i Älvdalen är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Älvdalen") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största branschgruppen, med `r bransch_kommun %>% filter(AstKommun_namn == "Älvdalen") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor är sysselsatta inom branschgruppen. Även företag inom renhållning, kultur, sport mm, som bland annat innefattar företag inom turism, har många anställda (`r bransch_kommun %>% filter(AstKommun_namn == "Älvdalen",AstSNI_raps == "Renhållning kultur sport m.m.") %>% .$antal_syss`) och en relativt stor andel av lönesumman (ca `r bransch_kommun %>% filter(AstKommun_namn == "Älvdalen",AstSNI_raps == "Renhållning kultur sport m.m.") %>% .$andel_lonesumma` procent). Inom den branschgruppen är avsevärt många fler kvinnor, högutbildade och utrikes födda. Bland övriga stora branschgrupper kan parti- och detaljhandel nämnas, vars företag har ca `r plyr::round_any(bransch_kommun %>% filter(AstKommun_namn == "Älvdalen",AstSNI_raps == "Parti- o detaljhandel rep av hushållsartiklar") %>% .$antal_syss,10)` anställda och står för `r bransch_kommun %>% filter(AstKommun_namn == "Älvdalen",AstSNI_raps == "Parti- o detaljhandel rep av hushållsartiklar") %>% .$andel_lonesumma` procent av den totala lönesumman.
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
