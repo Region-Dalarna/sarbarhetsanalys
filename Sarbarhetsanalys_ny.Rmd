@@ -236,10 +236,9 @@ De fem största branschgrupperna inom det privata näringslivet i Dalarna visas 
 
 <br>
 ```{r, echo=FALSE, fig.dim(5,5)}
-#gt_tabell$län
-knitr::include_graphics(here("Diagram","storsta_branscher.png"))
+gt_tabell$län
+#knitr::include_graphics(here("Diagram","storsta_branscher.png"))
 ```
-<br>
 
 Vid sidan om beroende av enskilda branscher kan kommuner även vara mer eller mindre beroende av specifika företag. I linje med Tillväxtverket^[https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html] mäter vi kommuners beroende av de största företagen genom att beräkna antalet företag som krävs för att deras samlade lönesumma skall överstiga hälften av den totala lönesumman bland privata företag i respektive kommun. I Dalarna är variationen stor mellan kommunerna för detta mått: i Falun krävs det `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Falun") %>% .$cnum` företag för att komma upp i 50 procent av näringslivets totala lönesumma, medan de `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Ludvika") %>% .$cnum` största företagen i Ludvika står för mer än hälften av näringslivets lönesumma. En bidragande förklaring till detta är hur stort antalet invånare i kommunen är. De två största, Falun och Borlänge, har också lägst beroende. Samtidigt är Ludvika den tredje största kommunen i Dalarna (sett till befolkning) och högst beroende av ett enskilt företag, Hitachi, så en större befolkning räcker inte alltid som förklaring. Bland mindre kommuner utmärker sig Rättvik, där det krävs `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Rättvik") %>% .$cnum` företag för att komma upp i 50 procent av lönesumman, nästan lika många som i avsevärt mycket större Borlänge.
 
@@ -320,7 +319,8 @@ Stål- och metalltillverkning är den största branschgruppen i Avesta, baserat 
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Avesta.png"))
+gt_tabell$storsta_branscher_Avesta
+#knitr::include_graphics(here("Diagram","storsta_branscher_Avesta.png"))
 
 ```
 <br>
@@ -355,7 +355,9 @@ Den största branschgruppen i Borlänge är företagsservicefirmor, baserat på 
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Borlänge.png"))
+
+gt_tabell$storsta_branscher_Borlänge
+#knitr::include_graphics(here("Diagram","storsta_branscher_Borlänge.png"))
 
 ```
 <br>
@@ -392,7 +394,8 @@ Baserat på andelen av lönesumman genererad av privata företag är företagsse
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Falun.png"))
+gt_tabell$storsta_branscher_Falun
+#knitr::include_graphics(here("Diagram","storsta_branscher_Falun.png"))
 
 ```
 <br>
@@ -428,7 +431,9 @@ Baserat på andelen av lönesumman inom det privata näringslivet i Gagnef är b
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Gagnef.png"))
+
+gt_tabell$storsta_branscher_Gagnef
+#knitr::include_graphics(here("Diagram","storsta_branscher_Gagnef.png"))
 
 ```
 <br>
@@ -466,7 +471,9 @@ Baserat på andelen av lönesumman inom det privata näringslivet i Hedemora är
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Hedemora.png"))
+
+gt_tabell$storsta_branscher_Hedemora
+#knitr::include_graphics(here("Diagram","storsta_branscher_Hedemora.png"))
 
 ```
 <br>
@@ -504,7 +511,8 @@ De största privata arbetsgivarna i Leksand finns inom branschgruppen parti- och
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Leksand.png"))
+gt_tabell$storsta_branscher_Leksand
+#knitr::include_graphics(here("Diagram","storsta_branscher_Leksand.png"))
 
 ```
 <br>
@@ -543,7 +551,8 @@ Bland arbetsgivare inom det privata näringslivet är branschgruppen annan elekt
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Ludvika.png"))
+gt_tabell$storsta_branscher_Ludvika
+#knitr::include_graphics(here("Diagram","storsta_branscher_Ludvika.png"))
 
 ```
 <br>
@@ -582,7 +591,8 @@ Baserat på andelen av lönesumman inom det privata näringslivet är renhållni
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Malung-Sälen.png"))
+gt_tabell$`storsta_branscher_Malung-Sälen`
+#knitr::include_graphics(here("Diagram","storsta_branscher_Malung-Sälen.png"))
 
 ```
 <br>
@@ -621,7 +631,8 @@ De största privata arbetsgivarna i Mora finns inom branschgrupperna byggindustr
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Mora.png"))
+gt_tabell$storsta_branscher_Mora
+#knitr::include_graphics(here("Diagram","storsta_branscher_Mora.png"))
 
 ```
 <br>
@@ -660,7 +671,8 @@ Inom det privata näringslivet utgör företag inom byggindustrin den klart stö
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Orsa.png"))
+gt_tabell$storsta_branscher_Orsa
+#knitr::include_graphics(here("Diagram","storsta_branscher_Orsa.png"))
 
 ```
 <br>
@@ -696,7 +708,9 @@ Baserat på branschgruppens andel av lönesumman inom det privata näringslivet 
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Rättvik.png"))
+
+gt_tabell$storsta_branscher_Rättvik
+#knitr::include_graphics(here("Diagram","storsta_branscher_Rättvik.png"))
 
 ```
 <br>
@@ -735,11 +749,10 @@ Den största privata arbetsgivaren i Smedjebacken finns inom branschgruppen stå
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-
-knitr::include_graphics(here("Diagram","storsta_branscher_Smedjebacken.png"))
+gt_tabell$storsta_branscher_Smedjebacken
+#knitr::include_graphics(here("Diagram","storsta_branscher_Smedjebacken.png"))
 
 ```
-<br>
 
 Den största arbetsgivaren i Smedjebacken var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare var Ovako störst, med bortåt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken",Arbetsgivare == "Ovako Bar AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
@@ -775,10 +788,10 @@ Baserat på andelen av lönesumman inom det privata näringslivet i Säter är b
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Säter.png"))
+gt_tabell$storsta_branscher_Säter
+#knitr::include_graphics(here("Diagram","storsta_branscher_Säter.png"))
 
 ```
-<br>
 
 Den största arbetsgivaren i Säter var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Säter") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med strax under `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Säter") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Även Region Dalarna är en stor arbetsgivare, medan det inom det privata näringslivet bara finns ett företag med mer än 50 anställda (Gustafs Scandinavia).
 
@@ -811,10 +824,10 @@ De största privata arbetsgivarna i Vansbro finns inom branschgruppen parti- och
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Vansbro.png"))
+gt_tabell$storsta_branscher_Vansbro
+#knitr::include_graphics(here("Diagram","storsta_branscher_Vansbro.png"))
 
 ```
-<br>
 
 Den största arbetsgivaren i Vansbro var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Vansbro") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Vansbro") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata arbetslivet jobbade flest, drygt 350 fördelat på två företag, på Lyko.
 
@@ -848,10 +861,11 @@ Baserat på branschgruppens andel av lönesumman inom det privata näringslivet 
 
 <br>
 ```{r, echo=FALSE, fig.width=8, fig.align='Left'}
-knitr::include_graphics(here("Diagram","storsta_branscher_Älvdalen.png"))
+
+gt_tabell$storsta_branscher_Älvdalen
+#knitr::include_graphics(here("Diagram","storsta_branscher_Älvdalen.png"))
 
 ```
-<br>
 
 Den största arbetsgivaren i Älvdalen var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Älvdalen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med närmare `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Älvdalen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata näringslivet hade Idre Fjäll flest anställda, med strax över `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Älvdalen",Arbetsgivare == "Stiftelsen Idre Fjäll") %>% .$antal_anstallda,100),big.mark =" ")`.
 

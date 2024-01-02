@@ -1,7 +1,7 @@
 # Hur många företag krävs för att lönesumman i en kommun skall uppgå till 50 % (kumulativt)
 # R-skript som skapar data finns på MONA under P1079_Gem/Jon/Sårbarhetsanalys/viktigaste_branscher_lan_Raps_ny_variant
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(openxlsx,here,tidyverse,gt,webshot2)
+pacman::p_load(openxlsx,here,tidyverse,gt,webshot2,flextable)
 
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
 #test_list=diag_50proc_lonesumma(skapa_fil=TRUE,output_mapp = "G:/skript/jon/")
@@ -60,7 +60,8 @@ diag_50proc_lonesumma <- function(region_vekt="20",
       cols_align(align=c("center"),columns = (2:5)) %>% 
       tab_options(heading.padding=20,
                   heading.background.color = diagramfarger("rus_sex")[5],
-                  table.border.bottom.color = "transparent") %>% 
+                  table.border.bottom.color = "transparent",
+                  table.font.size = px(10L)) %>% 
       tab_style(locations = cells_column_labels(columns = everything()),
                 style     = list(
                   #Give a thick border below
@@ -76,8 +77,8 @@ diag_50proc_lonesumma <- function(region_vekt="20",
       tab_footnote(
         footnote = "Andel inom bransch",
         locations = cells_column_labels(
-          columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)"))) %>% 
-        gtsave(fil_lan)
+          columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)")))
+        #gtsave(fil_lan)
     gg_list <- c(gg_list, list(tabell))
     
   }
@@ -109,7 +110,8 @@ diag_50proc_lonesumma <- function(region_vekt="20",
         cols_align(align=c("center"),columns = (2:5)) %>% 
         tab_options(heading.padding=20,
                     heading.background.color = diagramfarger("rus_sex")[5],
-                    table.border.bottom.color = "transparent") %>% 
+                    table.border.bottom.color = "transparent",
+                    table.font.size = px(10L)) %>% 
         tab_style(locations = cells_column_labels(columns = everything()),
                   style     = list(
                     #Give a thick border below
@@ -125,8 +127,8 @@ diag_50proc_lonesumma <- function(region_vekt="20",
         tab_footnote(
           footnote = "Andel inom bransch",
           locations = cells_column_labels(
-            columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)"))) %>% 
-          gtsave(fil_kommun)
+            columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)")))  
+          #gtsave(fil_kommun)
       gg_list <- c(gg_list, list(tabell))
       i=i+1
     }
