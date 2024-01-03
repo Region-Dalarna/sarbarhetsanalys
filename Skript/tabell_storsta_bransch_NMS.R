@@ -86,7 +86,11 @@ diag_50proc_lonesumma <- function(region_vekt="20",
       tab_footnote(
         footnote = "Andel inom bransch",
         locations = cells_column_labels(
-          columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)")))
+          columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)")))%>% 
+      tab_footnote(
+        footnote = "Med högutbildade menas eftergymnasialt utbildade i denna tabell.",
+        locations = cells_column_labels(
+          columns = c("Högutbildade (%)")))
         #gtsave(fil_lan)
     gg_list <- c(gg_list, list(tabell))
     
@@ -136,7 +140,11 @@ diag_50proc_lonesumma <- function(region_vekt="20",
         tab_footnote(
           footnote = "Andel inom bransch",
           locations = cells_column_labels(
-            columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)")))  
+            columns = c("Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)"))) %>% 
+        tab_footnote(
+          footnote = "Med högutbildade menas eftergymnasialt utbildade i denna tabell.",
+          locations = cells_column_labels(
+            columns = c("Högutbildade (%)")))
           #gtsave(fil_kommun)
       gg_list <- c(gg_list, list(tabell))
       i=i+1

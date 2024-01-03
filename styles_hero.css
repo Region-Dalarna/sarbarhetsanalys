@@ -295,14 +295,19 @@ blockquote {
    
 }
 
-@media(max-width: 700px){
+@media (max-width: 700px){
   .header-logo{
   display:none;
 }
 
  .header-logo_right {
    display:none;
-  
+}
+.rubrik{
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
 }
 
 
