@@ -65,9 +65,22 @@ h3 { /* Header 3 */
   padding-right: 300px;
 }
 
+.footnotes.footnotes-end-of-document ul{
+  display:block;
+}
+
 /*Punktlistor*/
 
 ul {
+  font-size: 12px;
+}
+
+li{
+  font-size: 12px;
+}
+
+
+/*ul {
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
@@ -77,7 +90,7 @@ ul {
 li{
   padding-bottom: 5px;
   padding-left: 5px;
-}
+}*/
 
 /*Ytan som rymmer "Mer info om statistiken*/
 details{
@@ -292,7 +305,7 @@ blockquote {
 .toc-content.col-xs-12.col-sm-8.col-md-9{
   padding-right: 20px;
 }
-   
+
 }
 
 @media (max-width: 700px){
@@ -308,6 +321,7 @@ blockquote {
   margin-left: 20%;
   margin-right: 20%;
 }
+
 }
 
 
