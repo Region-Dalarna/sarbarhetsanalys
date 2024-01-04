@@ -99,7 +99,7 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
       
       # För att ort respektive län skall skrivas i rätt ordning (Dalarna först) så skapas en faktorvariabel med mutate nedan
       gg_obj <- SkapaStapelDiagram(skickad_df = df_sum %>% 
-                                     filter(region %in% c(vald_region,kommun_vektor$region[j]),,bransch != "Okänt") %>% 
+                                     filter(region %in% c(vald_region,kommun_vektor$region[j]),bransch != "Okänt") %>% 
                                      mutate(region = factor(region, levels = c(vald_region,kommun_vektor$region[j])),
                                             bransch = str_wrap(bransch,20)), 
                                    skickad_x_var = "bransch", 
