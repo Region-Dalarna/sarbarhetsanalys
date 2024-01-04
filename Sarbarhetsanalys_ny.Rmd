@@ -49,6 +49,12 @@ i=1
 ```
 
 # Introduktion {-}
+
+<p style = "font-size:12px">
+<i>Rapporten är skapad av Samhällsanalys, Region Dalarna<br>
+Senast uppdaterad: `r Sys.Date()`</i>
+</p>
+
 Sverige och Dalarna har under en längre period befunnit sig i vad som kan beskrivas som en högkonjunktur. Mellan 2010 och 2021 växte Dalarnas ekonomi, mätt i löpande priser, med närmare 40 procent per invånare. Samhället tenderar dock från tid till annan att drabbas av kriser av olika omfattning, vilket blivit extra påtagligt i och med Rysslands invasion av Ukraina. I slutet av 2022 påpekade finansminister Elisabeth Svantesson att Sverige går in i en lågkonjunktur 2023, vilken bedöms hålla i sig till 2025 [(Regeringskansliet, 2022)](https://www.regeringen.se/pressmeddelanden/2022/12/svantesson-utdragen-lagkonjunktur-star-for-dorren/){target="_blank"}. 
 
 Syftet med denna rapport, som tagits fram inom ramen för projektet [K.R.O.K](https://www.regiondalarna.se/regionalutveckling/vart-uppdrag/projektverksamhet/k.r.o.k/){target="_blank"}, är att studera Dalarnas motståndskraft mot kriser av olika slag, såväl regionalt som kommunalt. Med motståndskraft menas i den här rapporten hur arbetsmarknadens funktionalitet och företagsklimatet i kommunen kan bära ekonomiska kriser i större företag eller branscher. Rapporten tar sin utgångspunkt i en analys som Tillväxtverket gör regelbundet, där Sveriges kommuners sårbarhet rankas baserat på hur de förväntas stå emot större företagsnedläggningar [(Tillväxtverket, 2022)](https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html){target="_blank"}.
@@ -87,7 +93,7 @@ Det är viktigt att vara medveten om att det inte finns någon föreslagen "godk
 ## Arbetsmarknad
 En fungerande arbetsmarknad är viktig för en regions motståndskraft mot ekonomiska kriser. Effekterna av att exempelvis ett stort företag läggs ner blir mindre om de uppsagda har lätt att hitta nytt arbete. De indikatorer som mäts för att skatta arbetsmarknadens funktionalitet är sysselsättning, arbetslöshet, långtidsarbetslöshet, arbetspendling till andra kommuner samt andelen anställda i offentlig sektor.
 
-En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför ålder (20-64 år) är sysselsatta, vilket mäts genom sysselsättningsgraden. Som sysselsatt räknas en person som under en viss vecka (referensveckan) utfört något arbete i minst en timme som anställd, egen företagare eller medhjälpare i företag tillhörande en familjemedlem. I Dalarna arbetar färre än 3 procent av de sysselsatta mindre än halvtid, och drygt 83 procent arbetar minst 35 timmar per vecka^[Överenskommen veckoarbetstid, regionala tabeller, AKU, SCB]. Om sysselsättningraden är låg är det ett tecken på att arbetslösheten är hög alternativt att många i arbetsför ålder (utöver studenter) står utanför arbetskraften, vilket ger ett sämre utgångsläge för att hantera en kris [(Tillväxtverket, 2022)](https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html){target="_blank"}. Om personerna befinner sig i arbetslöshet kan de ses som en outnyttjad resurs för en region eller kommun. Arbetslösa är personer som är villiga att ta ett arbete, men av olika skäl inte arbetar. Om denna outnyttjade resurs är stor, är det rimligt att sårbarheten vid varsel eller uppsägningar också är större [(Region Halland, 2020)](https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf){target="_blank"}. 
+En indikator på en arbetsmarknad som fungerar är att många av de i arbetsför ålder (20-64 år) är sysselsatta, vilket mäts genom sysselsättningsgraden. Som sysselsatt räknas en person som under en viss vecka (referensveckan) utfört något arbete i minst en timme som anställd, egen företagare eller medhjälpare i företag tillhörande en familjemedlem. I Dalarna arbetar färre än 3 procent av de sysselsatta mindre än halvtid, och drygt 83 procent arbetar minst 35 timmar per vecka [(Statistikdatabasen, SCB)](https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0401__AM0401N/NAKUOkMedArbtidLAr/table/tableViewLayout1/){target="_blank"}. Om sysselsättningraden är låg är det ett tecken på att arbetslösheten är hög alternativt att många i arbetsför ålder (utöver studenter) står utanför arbetskraften, vilket ger ett sämre utgångsläge för att hantera en kris [(Tillväxtverket, 2022)](https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html){target="_blank"}. Om personerna befinner sig i arbetslöshet kan de ses som en outnyttjad resurs för en region eller kommun. Arbetslösa är personer som är villiga att ta ett arbete, men av olika skäl inte arbetar. Om denna outnyttjade resurs är stor, är det rimligt att sårbarheten vid varsel eller uppsägningar också är större [(Region Halland, 2020)](https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf){target="_blank"}. 
 
 ```{r, include = FALSE}
 
@@ -102,26 +108,24 @@ arbetsmarknadsstatus <- arbetsmarknadsstatus %>%
 Sysselsättningsgraden i Dalarna varierar mellan kommunerna, men är generellt högre än i Sverige som helhet. Högst sysselsättningsgrad i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där ca `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent av befolkningen i arbetsför ålder arbetar. Lägst sysselsättningsgrad hade `r arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region`, där motsvarande siffra var ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_arbetsmarknadsstatus$sysselsattningsgrad_senastear
 
 #knitr::include_graphics(here("Figurer","sysselsattningsgrad_senastear.png"))
 
 ```
-<br>
 
 I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde,1)` procent jämfört med ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Sverige") %>% .$varde,1)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,1)` procent), medan `r last(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region)` har lägst arbetslöshet med ca `r last(round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,1))` procent.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_arbetsmarknadsstatus$arbetslosthet_senastear
 
 #knitr::include_graphics(here("Figurer","arbetslöshet_senastear.png"))
 
 ```
-<br>
 
 För att förstå arbetslösheten bättre är det relevant att beakta hur lång tid som människor har stått utan arbete. De som har varit arbetslösa länge har i regel svårare att komma i arbete. Ett kompletterande mått för att fånga arbetsmarknadens funktionalitet är långtidsarbetslöshet. En förklaring till att det finns långtidsarbetslöshet är strukturella problem på arbetsmarknaden. Det kan exempelvis handla om att de arbetslösa inte har de kompetenser som krävs för de lediga platserna eller att de arbeten som finns kräver långpendling eller flytt [(Arbetsförmedlingen, 2022)](https://arbetsformedlingen.se/download/18.e4c7c0717f2869663d1681b/1656493289843/perspektiv-pa-langtidsarbetslosheten-2022-en-deskriptiv-analys.pdf){target="_blank"}. 
 
@@ -130,37 +134,34 @@ Långtidsarbetslöshet mäts på lite olika sätt av olika myndigheter. Denna ra
 I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt. Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i `r langtidsarbetsloshet %>% filter(year == max(year),gender == "T") %>% filter(value == min(value)) %>% .$municipality`. Långtidsarbetslösheten ökade i alla Dalarnas kommuner, såväl som i Sverige, mellan `r min(langtidsarbetsloshet$year)` och `r max(langtidsarbetsloshet$year)`.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 #knitr::include_graphics(here("Figurer","langtidsarbetsloshet.png"))
 gg_langtidsarbetsloshet$langtidsarbetsloshet
 
 ```
-<br>
 
-Verksamheter som finansieras genom offentliga medel, såsom kommuner och regioner, kan påverkas annorlunda än privata företag i sämre tider. Exempelvis bör det finnas ett grundläggande behov av vissa offentliga tjänster som torde vara åtminstone konstant. En lågkonjunktur som drabbar näringslivet ger ofta ett snabbt utslag genom en högre arbetslöshet i privat sektor^[https://www.nationalekonomi.se/sites/default/files/legacy/29-1-pl.pdf], medan offentlig sektor kan fungera som vanligt ett par år i början av en kris. När skatteintäkterna minskar kan det kräva neddragningar även för offentliga verksamheter, alternativt kan politiker genom offentlig sektor bidra till att stimulera efterfrågan i ekonomin. Hypotesen är således att kommuner med en stadig andel offentlig verksamhet både har en arbetsmarknad som är mer varierad och kan stå emot en kris bättre på grund av att offentlig sektor har verktyg att stimulera efterfrågan med.
+Verksamheter som finansieras genom offentliga medel, såsom kommuner och regioner, kan påverkas annorlunda än privata företag i sämre tider. Exempelvis bör det finnas ett grundläggande behov av vissa offentliga tjänster som torde vara åtminstone konstant. En lågkonjunktur som drabbar näringslivet ger ofta ett snabbt utslag genom en högre arbetslöshet i privat sektor , medan offentlig sektor kan fungera som vanligt ett par år i början av en kris [(Lundborg, 2001)](https://www.nationalekonomi.se/sites/default/files/legacy/29-1-pl.pdf){target="_blank"}. När skatteintäkterna minskar kan det kräva neddragningar även för offentliga verksamheter, alternativt kan politiker genom offentlig sektor bidra till att stimulera efterfrågan i ekonomin. Hypotesen är således att kommuner med en stadig andel offentlig verksamhet både har en arbetsmarknad som är mer varierad och kan stå emot en kris bättre på grund av att offentlig sektor har verktyg att stimulera efterfrågan med.
 
 I Dalarna är `r andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$region` den kommun där störst andel arbetar inom offentlig verksamhet, ungefär `r round(andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == max(Andel_forv)) %>% .$Andel_forv,0)` procent av de förvärvsarbetande. Motsvarande siffra i `r andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$region`, med lägst andel, är bara runt `r round(andel_offentligt %>% filter(!(regionkod %in%c("00","20")),sektor == "Offentlig sektor") %>% filter(Andel_forv == min(Andel_forv)) %>% .$Andel_forv,0)` procent. Även i Falun arbetar många inom offentlig verksamhet, vilket delvis kan förklaras av att Dalarnas största arbetsgivare, Falu lasarett med över 3 000 anställda, ligger där.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 #knitr::include_graphics(here("Figurer","andel_offentligt_totalt.png"))
 gg_andel_offentligt$andel_off_totalt
 
 ```
-<br>
 
 För att fördjupa förståelsen för arbetsmarknaders funktionssätt bör lokala arbetsmarknadsregioner inkluderas i analysen, utöver kommuner som analysenhet. Lokala arbetsmarknadsregioner skapas utifrån pendlingsrelationer mellan kommuner. Om jobbskapandet i den egna kommunen är svagt, kan närhet till andra kommuners arbetsmarknader möjliggöra pendling och medföra en totalt sett starkare arbetsmarknad. I Dalarna varierar pendlingen avsevärt mellan olika kommuner, men är högst i mindre kommuner som angränsar till större kommuner. I såväl Gagnef som Säter pendlar mer än 50 procent av de sysselsatta till en annan kommun (främst till Borlänge). Även i Smedjebacken är utpendlingen hög, bland annat till grannkommunen Ludvika som har en stor arbetsgivare i Hitachi (tidigare ABB). Det omvända gäller för Malung-Sälens kommun, där avsevärt färre pendlar in och ut ur kommunen. 
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_pendling$In_och_utpendling_procent
 #knitr::include_graphics(here("Figurer","in_utpendling_procent_Dalarna2021.png"))
 
 ```
-<br>
 
 Sammanfattningsvis är sårbarheten låg i Gagnef och Säter kopplad till arbetsmarknaden, med både hög sysselsättningsgrad, hög andel offentlig verksamhet och stor utpendling, medan det omvända gäller för Ludvika, där sysselsättningsgraden och utpendlingen är låg, samt få arbetar inom offentlig verksamhet.
 
@@ -176,7 +177,6 @@ gg_arbetsstallen$arbetsställen
 #knitr::include_graphics(here("Figurer","antal_arbetsstallen.png"))
 
 ```
-<br>
 
 När det gäller nystartade företag har `r Nystartade %>% filter(substr(year,1,1) != "m") %>% filter(year == max(year)) %>% filter(nystartade_ftg == max(nystartade_ftg)) %>% .$municipality` kommun flest, med ungefär `r round(Nystartade %>% filter(substr(year,1,1) != "m") %>% filter(year == max(year)) %>% filter(nystartade_ftg == max(nystartade_ftg)) %>% .$nystartade_ftg,0)` nystartade företag per 1000 invånare `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)`. Även Malung-Sälen och Falun hade fler nystartade företag (per 1000 invånare) än Sverige `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)`. Glädjande är att antalet nystartade företag har ökat i en majoritet av Dalarnas kommuner om år `r max(Nystartade %>% filter(substr(year,1,1) != "m") %>% .$year)` jämförs med medelvärdet 2015-2020.
 
@@ -187,7 +187,6 @@ gg_nyst_konk$nystartade
 #knitr::include_graphics(here("Figurer","nystartade.png"))
 
 ```
-<br>
 
 Antalet nystartade företag gör ju ingen större skillnad om många företag samtidigt går i konkurs. Generellt tenderar kommuner med många nystartade företag (Malung-Sälen, Älvdalen) också har relativt många konkurser (per invånare). Undantaget är Rättviks kommun, som både har många nystartade företag och få konkurser. Värt att notera är dock att många kommuner är relativt små (runt 10 000 invånare), vilket medför att ett par extra konkurser per år ger stora effekter i figuren nedan. Detta kan vara en av orsakerna till att antalet konkurser per 1000 invånare kan variera kraftigt från år till år.
 
@@ -198,15 +197,13 @@ gg_nyst_konk$konkurser
 #knitr::include_graphics(here("Figurer","konkurser.png"))
 
 ```
-<br>
 
 Ett annat sätt att mäta företagande är genom att undersöka hur stor andel av en kommuns invånare som anses vara företagssamma, dvs. innehar F-skattesedel, är delägare i ett aktivt handelsbolag alternativt är VD eller styrelseordförande i ett aktivt aktiebolag. Bland Dalarnas kommuner är det återigen en stor variationen, där `r företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Kommun` hade högst andel företagssamma år `r unique(företagssamma$year)` (ca `r round(företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)` procent) och `r företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Kommun` lägst andel (ca `r round(företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)` procent).
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_foretagssamma$Andel_företagsamma
 ```
-<br>
 
 Sammanfattningsvis sticker kommuner i framförallt norra Dalarna ut positivt vad gäller företagande. Såväl Malung-Sälen som Älvdalen har ett stort antal privata arbetsställen, många nystartade företag och en stor andel företagssamma invånare. Baksidan är att det i båda kommunerna också registreras ett relativt stort antal konkurser. Rättvik rankas högt vad gäller såväl privata arbetsställen, nystartade företag som andel företagsamma och har dessutom få konkurser. Ludvika har näst lägst antal privata arbetsställen och lägst andel företagssamma individer, men samtidigt färre konkurser än Malung-Sälen och Älvdalen. Positivt för Ludvika är även att antalet nystartade företag har ökat över tid. En potentiell orsak till att Ludvika har färre nystartade företag än andra kommuner är dominansen av en enskild arbetsgivare. Behovet av att starta egna företag minskar om det finns arbetstillfällen i större företag [(Tillväxtverket, 2022)](https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html){target="_blank"}.
 
@@ -216,21 +213,19 @@ Vid sidan om en väl fungerande arbetsmarknad och goda förutsättningar för f�
 Traditionellt anses Dalarna vara ett så kallat tillverkande län, med många företag inom tillverkning och utvinning. Denna bild bekräftas delvis av figuren nedan, som visar hur stor andel av de förvärvsarbetande som arbetar i olika branscher i Dalarna och Sverige. I Dalarna arbetar drygt `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Dalarna",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent av de sysselsatta inom tillverkning och utvinning, att jämföra med strax under `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Sverige",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent i Sverige som helhet. Mer än var femte förvärvsarbetande i Dalarna arbetar dock inom vård och omsorg, vilket gör branschen till Dalarnas viktigaste vad gäller sysselsättning. Som jämförelse arbetar bara ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Sverige",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande i Sverige inom vård och omsorg.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch
 
 ```
-<br>
 
 Ett annat sätt att mäta beroende av enskilda branscher är genom den så kallade branschbredden, ett mått som jämför antalet branscher som finns representerade i exempelvis en kommun med det totala antalet branscher i Sverige. I Dalarna som helhet fanns företag inom ca `r round(branschbredd %>% filter(municipality =="Dalarnas län",year == max(year)) %>% .$Branschbredd,0)` procent av alla Sveriges branscher år `r max(branschbredd$year)`. Bland Dalarnas kommuner hade de med högst befolkning, Falun och Borlänge, också störst branschbredd, med drygt `r round(branschbredd %>% filter(municipality =="Falun",year == max(year)) %>% .$Branschbredd,0)` respektive `r round(branschbredd %>% filter(municipality =="Borlänge",year == max(year)) %>% .$Branschbredd,0)` procent av branscherna representerade `r max(branschbredd$year)`. Lägst branschbredd hade `r branschbredd %>% filter(year == max(year)) %>% filter(Branschbredd == min(Branschbredd)) %>% .$municipality`, med ca `r round(branschbredd %>% filter(year == max(year)) %>% filter(Branschbredd == min(Branschbredd)) %>% .$Branschbredd,0)` procent av branscherna representerade år 2021. 
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_branschbredd$branschbredd
 
 ```
-<br>
 
 De fem största branschgrupperna inom det privata näringslivet i Dalarna visas nedan. De är rankade efter branschens andel av näringslivets totala lönesumma. I figuren visas även information om branschgruppens representation utifrån parametrarna utbildningsnivå, andel kvinnor samt andel utrikes födda. I Dalarna är `r tolower(bransch_lan %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)`, med närmare `r bransch_lan %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman, jämte parti- och detaljhandel samt byggsektorn som står för cirka 13 procent vardera av näringslivets totala lönesumma, de största branschgrupperna. Parti- och detaljhandel är den enda branschgrupp som kan sägas ha en jämställd representation av kvinnor och män anställda, övriga stora branschgrupper har en majoritet män anställda. Störst andel högutbildade finns inom sektorn annan elektro- och teleproduktindustri, ungefär hälften av dem som arbetar där har en eftergymnasial utbildning, och det är också i denna sektor som störst andel är utrikesfödda, bland de fem största branscherna.
 
@@ -243,12 +238,11 @@ gt_tabell$län
 Vid sidan om beroende av enskilda branscher kan kommuner även vara mer eller mindre beroende av specifika företag. I linje med [Tillväxtverket (2022)](https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html){target="_blank"} mäter vi kommuners beroende av de största företagen genom att beräkna antalet företag som krävs för att deras samlade lönesumma skall överstiga hälften av den totala lönesumman bland privata företag i respektive kommun. I Dalarna är variationen stor mellan kommunerna för detta mått: i Falun krävs det `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Falun") %>% .$cnum` företag för att komma upp i 50 procent av näringslivets totala lönesumma, medan de `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Ludvika") %>% .$cnum` största företagen i Ludvika står för mer än hälften av näringslivets lönesumma. En bidragande förklaring till detta är hur stort antalet invånare i kommunen är. De två största, Falun och Borlänge, har också lägst beroende. Samtidigt är Ludvika den tredje största kommunen i Dalarna (sett till befolkning) och högst beroende av ett enskilt företag, Hitachi, så en större befolkning räcker inte alltid som förklaring. Bland mindre kommuner utmärker sig Rättvik, där det krävs `r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Rättvik") %>% .$cnum` företag för att komma upp i 50 procent av lönesumman, nästan lika många som i avsevärt mycket större Borlänge.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_50proc_lonesumma$`50_proc_lonesumma`
 
 ```
-<br>
 
 Sammantaget ger de olika variablerna inom detta avsnitt en blandad bild av läget i Dalarna. Det finns en tydlig koppling mellan storleken på en kommun och hur många branscher som finns representerade i kommunen, där störst beroende finns i små kommuner, framförallt i norra och västra Dalarna, däribland Orsa och Vansbro. Vad gäller beroende av enskilda företag (inom det privata näringslivet) sticker Ludvika ut, med sitt stora beroende av en enskild arbetsgivare. Minst beroende av såväl branscher som enskilda företag är Falu kommun.
 
@@ -262,36 +256,33 @@ Normalt arbetar människor när det befinner sig i det åldersspann som kallas a
 Dalarna är ett län med relativt hög medelålder. Av länets 15 kommuner har 14 högre medelålder än Sverige. Det är också tydligt att medelålder är nära kopplat till storleken på kommunens befolkning. I Falun och Borlänge är medelåldern ungefär som genomsnittet i Sverige, medan den i vissa mindre kommuner, då framförallt Rättvik, är avsevärt mycket högre. Den genomsnittlige rättvikaren är mer än 7 år äldre än den genomsnittlige svensken, vilket gjorde Rättvik till Sveriges 9:e äldsta kommun 2022. Bland Dalarnas övriga kommuner är medelåldern lägre, men ett tydlig mönster är att kommuner i norra och västra Dalarna har relativt gamla invånare jämfört med kommuner i sydöstra delarna av länet. Det finns även en koppling mellan andelen utrikes födda i en kommun och kommunens medelålder. Avesta, Borlänge och Ludvika, de tre kommuner i Dalarna med störst andel utrikes födda invånare, tillhör de kommuner som har lägst medelålder.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_medel_demo$medelalder
 
 ```
-<br>
 
 En äldre befolkning kan naturligtvis få ett flertal följder för en kommun på längre sikt genom äldres potentiella behov av vård och omsorg. Ett sätt att mäta detta är genom den så kallade demografiska försörjningskvoten. Den beräknas genom att relatera antalet personer i arbetsför ålder, de som är mellan 20 och 64 år, till unga (0-19 år) och äldre (>64år). Normalt är den kommunala kostnaden relativt låg för personer i arbetsför ålder, medan den är avsevärt högre för unga (kostnad för förskola och skola) och äldre (äldreomsorg mm). Det är därför intressant att relatera dessa grupper till personer i arbetsför ålder. I Dalarna är den demografiska försörjningskvoten högst i Rättvik, där grupperna unga och äldre sammantaget är större än gruppen i arbetsför ålder (en försörjningskvot som överstiger 100). Försörjningskvoten ökar dessutom i samtliga Dalarnas kommuner över tid, vilket är i linje med en allt äldre befolkning.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_medel_demo$demo_fors
 
 ```
-<br>
 
-En annan aspekt som kan tänkas påverka sårbarheten i en kommun är utbildningsnivån. Hypotesen är att högre utbildade personer har lättare att få jobb och därför kan omlokaliseras vid större uppsägningar[(Region Halland, 2020)](https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf){target="_blank"}. Att det sambandet inte är ett till ett kan dock observeras om man jämför arbetslöshet med utbildningsnivån i Dalarnas kommuner. Malung-Sälens kommun har, exempelvis, en av de lägsta andelarna högutbildade bland Dalarnas kommuner, men samtidigt också den näst lägsta arbetslösheten.
+En annan aspekt som kan tänkas påverka sårbarheten i en kommun är utbildningsnivån. Hypotesen är att högre utbildade personer har lättare att få jobb och därför kan omlokaliseras vid större uppsägningar [(Region Halland, 2020)](https://www.regionhalland.se/app/uploads/2020/06/S%C3%A5rbarhetsanalys-av-n%C3%A4ringslivet-i-Halland_Region-Halland_april-2020.pdf){target="_blank"}. Att det sambandet inte är ett till ett kan dock observeras om man jämför arbetslöshet med utbildningsnivån i Dalarnas kommuner. Malung-Sälens kommun har, exempelvis, en av de lägsta andelarna högutbildade bland Dalarnas kommuner, men samtidigt också den näst lägsta arbetslösheten.
 
-Sambandet mellan ekonomisk tillväxt/arbetslöshet och utbildningsnivå har även studerats inom akademin. [Björklund och Lindahl (2006)](https://www.regeringen.se/rapporter/2005/10/ess-20051/){target="_blank"} sammanställde resultaten från ett stort antal tidigare studier. De kom bland annat fram till att det verkar finnas en kausal (orsak-verkan) koppling mellan utbildningsnivå och dödlighet och att det därför även är rimligt att tänka sig att utbildningsnivån är kopplad till hälsa. Kopplingen mellan utbildning och ekonomisk tillväxt, förändring BNP i detta fall, är däremot mer oklar enligt Björklund och Lindahl. [Heller-Sahlgren och Jordahl ( 2021)](https://www.ifn.se/publikationer/working-papers/2021/1408/){target="_blank"} undersökte sambandet mellan resultaten på PISA undersökningen, vilken mäter hur väl ett lands utbildningssystem fungerar, och ekonomisk tillväxt och fann att länder med bättre PISA-resultat hade högre ekonomisk tillväxt. Enligt författarna är utbildningen därför viktig för en regions ekonomiska utveckling. [Agasisti och Bertoletti (2017)](https://www.sciencedirect.com/science/article/abs/pii/S0038012119306809){target="_blank"} undersökte ett stort antal europeiska regioner och fann att ett större antal universitet i en region medförde att den ekonomiska tillväxten i regionen blev högre. De visade även, precis som Heller-Sahlgren och Jordahl, att kvaliteten på utbildningen är viktig för den ekonomiska utvecklingen.
+Sambandet mellan ekonomisk tillväxt/arbetslöshet och utbildningsnivå har även studerats inom akademin. [Björklund och Lindahl (2006)](https://www.regeringen.se/rapporter/2005/10/ess-20051/){target="_blank"} sammanställde resultaten från ett stort antal tidigare studier. De kom bland annat fram till att det verkar finnas en kausal (orsak-verkan) koppling mellan utbildningsnivå och dödlighet och att det därför även är rimligt att tänka sig att utbildningsnivån är kopplad till hälsa. Kopplingen mellan utbildning och ekonomisk tillväxt, förändring BNP i detta fall, är däremot mer oklar enligt Björklund och Lindahl. [Heller-Sahlgren och Jordahl (2021)](https://www.ifn.se/publikationer/working-papers/2021/1408/){target="_blank"} undersökte sambandet mellan resultaten på PISA undersökningen, vilken mäter hur väl ett lands utbildningssystem fungerar, och ekonomisk tillväxt och fann att länder med bättre PISA-resultat hade högre ekonomisk tillväxt. Enligt författarna är utbildningen därför viktig för en regions ekonomiska utveckling. [Agasisti och Bertoletti (2017)](https://www.sciencedirect.com/science/article/abs/pii/S0038012119306809){target="_blank"} undersökte ett stort antal europeiska regioner och fann att ett större antal universitet i en region medförde att den ekonomiska tillväxten i regionen blev högre. De visade även, precis som Heller-Sahlgren och Jordahl, att kvaliteten på utbildningen är viktig för den ekonomiska utvecklingen.
 
 Andelen av befolkningen (25-64 år) med minst 3 års eftergymnasial utbildning (fortsättningsvis högre utbildning) var `r max(andel_hogutbildade$år)` relativt låg i Dalarnas kommuner. Bland länets 15 kommuner var det bara Falun som hade en högre utbildningsnivå än Sverige som helhet. Detta beror sannolikt på att Falu lasarett, där många har högre utbildning, är en av stadens största arbetsgivare. Utbildningsnivån i övriga kommuner är avsevärt mycket lägre och i exempelvis Vansbro är andelen med högre utbildning mindre än hälften av andelen med högre utbildning i Falun och Sverige. Dalarna tillhör Sveriges lägst utbildade län, där drygt `r round(andel_hogutbildade %>% filter(region == "Dalarna", utbildningsnivå == "Eftergymnasial utbildning, 3 år eller mer") %>% .$andel,0)` procent av befolkningen har en högre utbildning, att jämföra med Sverige där ungefär `r round(andel_hogutbildade %>% filter(region == "Sverige", utbildningsnivå == "Eftergymnasial utbildning, 3 år eller mer") %>% .$andel,0)` procent av befolkningen (25-64 år) har en högre utbildning. Det är dock viktigt att notera att utbildningsnivån anpassar sig efter efterfrågan i kommunen eller regionen. Om Vansbros arbetsgivare efterfrågar arbetskraft med framförallt gymnasial bakgrund är det orimligt om kommunen har samma genomsnittliga utbildningsnivå som Falun. Matchningen mellan arbetsgivare och arbetstagare skulle helt enkelt bli för dålig. 
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_utbniva$andel_hogutbildade
 
 ```
-<br>
 
 ## Sammanfattning
 Syftet med den här rapporten har varit att illustrera hur väl Dalarnas kommuner skulle hantera en företags- eller branschkris som får stora effekter på samhällets, eller det enskilda företagets, ekonomi. Utgångspunkten har varit Tillväxtverkets rapport "Kommuners sårbarhet vid företagsnedläggningar", där kommuners sårbarhet och förutsättning till återhämtning efter stora nedläggningar eller andra kriser studeras. Vid sidan om en klassificering av kommuner som sårbara och icke sårbara, innehåller Tillväxtverkets rapport såväl tips för hur kommuner kan minska sin sårbarhet, som sårbarhetens utveckling över tid. Tillväxtverkets rapport bör därför läsas av alla kommuner. 
@@ -308,12 +299,11 @@ Avesta kommun är den fjärde största kommunen i Dalarna sett till folkmängd. 
 Historiskt är Avesta i första hand känt för sin järn-och stålindustri, med anor från 1600-talet. Detta arv lever kvar än idag, då ungefär var fjärde förvärvsarbetande i Avesta arbetar inom tillverkning och utvinning, att jämföra med ca `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Dalarna",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent i Dalarna. 
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_andel_forv$andel_per_bransch_Avesta
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Avesta.png"))
 
 ```
-<br>
 
 Stål- och metalltillverkning är den största branschgruppen i Avesta, baserat på företagens andel av lönesumman inom det privata näringslivet. Därefter följer byggindustrin storleksmässigt. Gemensamt för dessa branschgrupper är att relativt få av de sysselsatta är utrikes födda och därtill är det en tydlig övervikt av män. Bland övriga viktiga branschgrupper i Avesta finns pappersindustrin och parti- och detaljhandel, vars företag tillsammans står för över 20 procent av näringslivets totala lönesumma. Även inom pappersindustrin är representationen av utrikes födda långt under andelen i befolkningen. Männen i Avesta arbetar som synes i hög grad i tillverknings- och byggbranscherna medan de kvinnor som arbetar i privat sektor (en stor andel kvinnor arbetar i offentlig sektor) i stor utsträckning arbetar i företag inom parti- och detaljhandelsbranschen.
 
@@ -327,7 +317,7 @@ gt_tabell$storsta_branscher_Avesta
 Den största arbetsgivaren i Avesta var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Avesta") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med strax över 2000 anställda. Bland privata arbetsgivare hade Outokumpu Stainless flest anställda med ca `r storsta_arbetsgivare %>% filter(Kommun == "Avesta",Arbetsgivare == "Outokumpu Stainless AB") %>% .$antal_anstallda`. Även Stora Enso och Region Dalarna är stora arbetsgivare i Avesta
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Avesta
 
@@ -343,13 +333,12 @@ Borlänge är Dalarnas näst folkrikaste kommun, och befolkningsantalet har öka
 Borlänge växte fram i mitten 1800-talet och var länge förknippat med industrisektorn, men idag är `r tolower(andel_forvarvsarbetande_bransch %>% filter(region == "Borlänge") %>% filter(andel == max(andel)) %>% .$bransch)` den största branschen. Jämfört med Dalarna som helhet har Borlänge en klart lägre andel som arbetade inom tillverknings- och utvinningsbranschen, medan en klart större andel arbetar inom handel. Detta kan tillskrivas stora handelsområden såsom Norra Backa och Kupolen. I Borlänge finns även huvudkontoret för Trafikverket, delar av Transportstyrelsen samt en del av Högskolan Dalarna, vilket gör att andelen som arbetar inom offentlig förvaltning är klart högre i Borlänge än i Dalarna.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch_Borlänge
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Borlänge.png"))
 
 ```
-<br>
 
 Den största branschgruppen i Borlänge är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Borlänge") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)`, baserat på branschens andel av lönesumman genererad av det privata näringslivet. Dessa står för `r bransch_kommun %>% filter(AstKommun_namn == "Borlänge") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av privata företags totala lönesumma. Utbildningsnivån bland de anställda inom `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Borlänge") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` i Borlänge är generellt ganska hög (`r bransch_kommun %>% filter(AstKommun_namn == "Borlänge") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_utbildning` procent har eftergymnasial utbildning), den högsta andelen högutbildade i denna bransch i jämförelse med Dalarnas andra kommuner. Ungefär `r bransch_kommun %>% filter(AstKommun_namn == "Borlänge") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_bakgrund` i branschen är utrikes födda. Andra viktiga branschgrupper som står för cirka 15 procent vardera av lönesumman är parti- och detaljhandeln, som är en bransch med en jämställd representation av kvinnor och män, och byggindustrin, som i motsats har den lägsta andelen kvinnor, endast `r bransch_kommun %>% filter(AstKommun_namn == "Borlänge",AstSNI_raps == "Byggindustri") %>% .$andel_kon` procent. Den högsta andelen utrikes födda bland de anställda, `r bransch_kommun %>% filter(AstKommun_namn == "Borlänge") %>% filter(andel_bakgrund == max(as.integer(andel_bakgrund))) %>% .$andel_bakgrund` procent, finns inom branschgruppen `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Borlänge") %>% filter(andel_bakgrund == max(as.integer(andel_bakgrund))) %>% .$AstSNI_raps)`.
 
@@ -364,12 +353,11 @@ gt_tabell$storsta_branscher_Borlänge
 Den största arbetsgivaren i Borlänge var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Borlänge") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade SSAB flest anställda med ca `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge",Arbetsgivare == "SSAB Emea AB") %>% .$antal_anstallda,100),big.mark =" ")`. Även Trafikverket är en viktig arbetsgivare med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Borlänge",Arbetsgivare == "Trafikverket") %>% .$antal_anstallda,100),big.mark =" ")` anställda på sitt huvudkontor i Borlänge.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Borlänge
 
 ```
-<br>
 
 Såväl antalet privata arbetsställen, som antalet nystartade företag (per 1000 invånare) i Borlänge är under genomsnittet för Dalarna. Borlänge är dessutom den kommun där näst minst antal personer per 1 000 invånare räknas som företagssamma. Positivt ur sårbarhetssynvinkel är dock att Borlänge är näst bäst i Dalarna vad gäller såväl branschbredd som antal företag som står för minst 50 procent av lönesumman, något som delvis kan tillskrivas kommunens storlek (Dalarnas största kommun näst efter Falun). Noterbart är dock att Borlänge har ett par stora företag inom det privata näringslivet, exempelvis SSAB, vilket ses som en potentiell riskfaktor enligt denna modell.
 
@@ -381,13 +369,12 @@ Falun är Dalarnas största kommun med ungefär 60 000 invånare. Befolkningen, 
 Falun har en lång historia kopplad till framförallt gruvindustrin, men arvet efter detta lever idag framförallt kvar i världsarvet Falu Gruva. Idag arbetar den största andelen av kommunens invånare, mer än var fjärde, inom vård och omsorg, vilket återigen delvis kan tillskrivas Falu lasarett.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch_Falun
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Falun.png"))
 
 ```
-<br>
 
 Baserat på andelen av lönesumman genererad av privata företag är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Falun") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största branschgruppen i Falun, med `r bransch_kommun %>% filter(AstKommun_namn == "Falun") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Anställda inom `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Falun") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` är generellt högt utbildade (`r bransch_kommun %>% filter(AstKommun_namn == "Falun") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_utbildning` procent), medan ca `r bransch_kommun %>% filter(AstKommun_namn == "Falun") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_bakgrund` procent är utrikes födda. Andra viktiga branschgrupper är parti- och detaljhandeln som har en jämn fördelning av kvinnor och män, men med lägre utbildningsnivå. Även byggindustrin är viktig för näringslivet i Falun. Företag inom dessa branschgrupper står tillsammans för över 20 procent av den totala lönesumman. I Falun är även privata företag inom hälso- och sjukvård viktiga. Inom denna branschgrupp är dessutom relativt många, ungefär var femte, utrikes född. Anmärkningsvärt är att den totala lönesumman inom hälso- och sjukvård, ca `r bransch_kommun %>% filter(AstKommun_namn == "Falun", AstSNI_raps == "Hälso- o sjukvård omsorg") %>% .$andel_lonesumma` procent av lönesumman inom det privata näringslivet, är låg i förhållande till antalet anställda i branschgruppen. Detta kan vara en indikation på att många inom hälso- och sjukvård arbetar deltid, vilket ger lägre lönesumma per anställd.
 
@@ -401,7 +388,7 @@ gt_tabell$storsta_branscher_Falun
 Den största arbetsgivaren i Falun år `r unique(storsta_arbetsgivare$år)` var `r storsta_arbetsgivare %>% filter(Kommun == "Falun") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare`, som hade `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Falun") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Även Falu kommun är en stor arbetsgivare med nästan lika många anställda. Bland privata arbetsgivare var Libra assistans störst, med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Falun",Arbetsgivare == "Libra Assistans AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Falun
 
@@ -417,12 +404,11 @@ Gagnef tillhör Dalarnas minsta kommuner, med ungefär 10 500 invånare år 2022
 Den största branschen i Gagnef är `r tolower(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef") %>% filter(andel == max(andel)) %>% .$bransch)`, med ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande. Även utbildning och offentlig förvaltning står för en större andel av de förvärvsarbetande i Gagnef än vad genomsnittet för Dalarna är. Tillverknings- och utvinningsbranschen är också viktig för Gagnef, med ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Gagnef",bransch == "Tillverkning och utvinning") %>% .$andel,0)` procent av de förvärvsarbetande.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_andel_forv$andel_per_bransch_Gagnef
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Gagnef.png"))
 
 ```
-<br>
 
 Baserat på andelen av lönesumman inom det privata näringslivet i Gagnef är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Gagnef") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största branschgruppen med `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Byggindustrin i Gagnef speglar byggindustrin generellt, i form av en mansdominerad bransch med en låg representation av utrikes födda. Andra viktiga branschgrupper är övrig tillverkningsindustri samt parti- och detaljhandel, vars företag står för närmare 25 procent av den totala lönesumman. Precis som var fallet med Falun, är även privata företag inom hälso- och sjukvård viktiga i Gagnef. Bland de anställda i denna branschgrupp är dessutom väldigt många, `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef", AstSNI_raps == "Hälso- o sjukvård omsorg") %>% .$andel_bakgrund` procent, utrikes födda. I Sverige är en majoritet av dem som jobbar inom hälso- och sjukvård kvinnor, och det återspeglas  även i branschen i Gagnef, där `r bransch_kommun %>% filter(AstKommun_namn == "Gagnef", AstSNI_raps == "Hälso- o sjukvård omsorg") %>% .$andel_kon` procent av de anställda är kvinnor.
 
@@ -437,12 +423,11 @@ gt_tabell$storsta_branscher_Gagnef
 I Gagnef är den klart största arbetsgivaren `r storsta_arbetsgivare %>% filter(Kommun == "Gagnef") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med drygt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Gagnef") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata näringslivet har Shamsen Omsorg och 3m flest anställda, med ungefär `r format(storsta_arbetsgivare %>% filter(Kommun == "Gagnef",Arbetsgivare == "Shamsen Omsorg AB") %>% .$antal_anstallda,big.mark =" ")` vardera.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Gagnef
 
 ```
-<br>
 
 Gagnef har relativt få arbetsställen per 1 000 invånare (3:e lägsta värdet i Dalarna) och dessutom få nystartade företag. Antal nystartade företag (per 1 000 invånare) minskade dessutom kraftigt mellan 2021 och 2022. Antalet konkurser (per 1 000 invånare) är dock något under genomsnittet i Dalarna.
 
@@ -456,12 +441,11 @@ Hedemoras befolkningsstorlek, drygt 15 400 invånare år 2022, är något under 
 Hedemora är Dalarnas äldsta stad och fick stadsrättigheter redan på 1400-talet. Idag är arbetsgivare inom `r tolower(andel_forvarvsarbetande_bransch %>% filter(region == "Hedemora") %>% filter(andel == max(andel)) %>% .$bransch)` de viktigaste i Hedemora kommun, då nästan var fjärde förvärvsarbetande arbetar inom denna sektor. Även företag inom tillverknings- och utvinningsbranschen är viktiga, bland annat ingår gruvindustrin i Garpenberg här.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_andel_forv$andel_per_bransch_Hedemora
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Hedemora.png"))
 
 ```
-<br>
 
 Baserat på andelen av lönesumman inom det privata näringslivet i Hedemora är `r tolower(sub(" o ", " och ", bransch_kommun %>% mutate(AstSNI_raps) %>% filter(AstKommun_namn == "Hedemora") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps))` den största branschgruppen, med ca `r bransch_kommun %>% mutate(AstSNI_raps) %>% filter(AstKommun_namn == "Hedemora") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Det illustrerar att Hedemora är relativt beroende av gruvan i Garpenberg. Få utrikes födda och få kvinnor jobbar inom denna branschgrupp. Även byggindustrin och parti- och detaljhandeln är viktiga branschgrupper, och står för ungefär en femtedel av den totala lönesumman. Den sistnämnda branschgruppen har en mer eller mindre jämn könsfördelning, men relativt få utrikes födda.
 
@@ -476,12 +460,11 @@ gt_tabell$storsta_branscher_Hedemora
 Den största arbetsgivaren i Hedemora var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Hedemora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Hedemora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade Boliden mineral flest anställda med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Hedemora",Arbetsgivare == "Boliden Mineral AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda. I övrigt finns ett antal arbetsgivare med mellan 100 och 300 anställda.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Hedemora
 
 ```
-<br>
 
 Antal nystartade företag (per 1000 invånare) i Hedemora ligger är i linje med genomsnittet i Dalarna. Negativt är att antalet konkurser (per 1000 invånare) har ökat avsevärt mellan 2021 och 2022 och tillhör Dalarnas högsta.
 
@@ -495,12 +478,11 @@ Leksands kommun är Dalarnas sjätte största sett till befolkning och hade 2022
 Leksand har gamla anor med boplatser från stenåldern och idag är kommunen, vid sidan om sitt hockeylag, i första hand förknippat med företag inom handel, då framförallt Clas Ohlson i Insjön. Mer än var femte förvärvsarbetar inom handel, vilket är klart högre än genomsnittet i Dalarna.  
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_andel_forv$andel_per_bransch_Leksand
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Leksand.png"))
 
 ```
-<br>
 
 De största privata arbetsgivarna i Leksand finns inom branschgruppen parti- och detaljhandel, varav många jobbar på Clas Ohlsons huvudkontor i Insjön. Företag inom den branschgruppen står för `r bransch_kommun %>% filter(AstKommun_namn == "Leksand") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman inom det privata näringslivet i kommunen, vilket är en av de högsta andelarna för en branschgrupp i någon av Dalarnas kommuner. Branschgruppen parti- och detaljhandel kan sägas ha en jämställd representation av kvinnor och män, men relativt få utrikes födda. Bland övriga viktiga branschgrupper återfinns byggindustri, med ungefär `r bransch_kommun  %>% filter(AstKommun_namn == "Leksand",AstSNI_raps == "Byggindustri") %>% .$andel_lonesumma` procent av den totala lönesumman och ungefär `r plyr::round_any(bransch_kommun  %>% filter(AstKommun_namn == "Leksand",AstSNI_raps == "Byggindustri") %>% .$antal_syss,10)` anställda. Anmärkningsvärt är att bara ca `r bransch_kommun  %>% filter(AstKommun_namn == "Leksand",AstSNI_raps == "Byggindustri") %>% .$andel_bakgrund` procent av de sysselsatta i branschgruppen är utrikes födda. I Leksand är även hotell och restaurang en viktig branschgrupp, med många anställda (ca `r bransch_kommun  %>% filter(AstKommun_namn == "Leksand",AstSNI_raps == "Hotell o restaurang") %>% .$antal_syss`) men relativt låg lönesumma. Detta indikerar en låg lönenivå, men även att många sannolikt jobbar deltid inom hotell och restaurang. Noterbart är även att många utrikes födda jobbar inom hotell- och restaurangbranschen, `r bransch_kommun  %>% filter(AstKommun_namn == "Leksand",AstSNI_raps == "Hotell o restaurang") %>% .$andel_bakgrund` procent av de sysselsatta.
 
@@ -510,17 +492,15 @@ gt_tabell$storsta_branscher_Leksand
 #knitr::include_graphics(here("Diagram","storsta_branscher_Leksand.png"))
 
 ```
-<br>
 
 Den största arbetsgivaren i Leksand var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Leksand") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Leksand") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare är Clas Ohlson, med säte i Insjön, klart störst med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Leksand",Arbetsgivare == "Clas Ohlson AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Leksand
 
 ```
-<br>
 
 Såväl vad gäller antal nystartade företag, som personer som beskrivs som företagssamma, tillhör Leksand Dalarnas bättre kommuner. Samtidigt är dock konkurserna något högre än genomsnittet i länet.
 
@@ -534,13 +514,12 @@ Ludvika kommun är Dalarnas tredje största sett till befolkning och hade år 20
 Ludvika är ett traditionellt brukssamhälle med bruk som dateras till 1500-talet. Idag är tillverkning och utvinning den totalt dominerande branschen och anställer mer än var tredje av Ludvikas förvärvsarbetande. I övrigt är det ingen bransch som sticker ut nämnvärt jämfört med snittet i Dalarna, även om relativt få jobbar inom offentlig förvaltning.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch_Ludvika
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Ludvika.png"))
 
 ```
-<br>
 
 Bland arbetsgivare inom det privata näringslivet är branschgruppen `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den överlägset största, såväl vad gäller sysselsatta som andel av den totala lönesumman (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent). Detta är helt förknippat med Hitachi, tidigare ABB, som är den klart största arbetsgivaren i kommunen. Inom branschgruppen arbetar många utrikes födda (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_bakgrund` procent) och högutbildade (`r bransch_kommun %>% filter(AstKommun_namn == "Ludvika") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_utbildning` procent). Även branschgruppen företagsservicefirmor är viktig med `r bransch_kommun %>% filter(AstKommun_namn == "Ludvika",AstSNI_raps == "Företagsservicefirmor") %>% .$andel_lonesumma` procent av den totala lönesumman och en relativt stor andel av såväl kvinnor som högutbildade. Gissningsvis är flera av företagen inom den branschgruppen kopplade till Hitachi.  
 
@@ -554,12 +533,11 @@ gt_tabell$storsta_branscher_Ludvika
 Den största arbetsgivaren i Ludvika var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Ludvika") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Ludvika") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Nästan lika många anställda hade Ludvika kommun. Bland andra stora arbetsgivare finns Spendrups, med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Ludvika",Arbetsgivare == "Spendrups Bryggeriaktiebolag") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Ludvika
 
 ```
-<br>
 
 Ludvika har såväl få antalet arbetsställen , som få antal nystartade företag (per 1000 invånare). Detta gäller även antalet konkurser (per 1000 invånare), som tillhör Dalarnas lägsta och har minskat kraftigt mellan 2021 och 2022.
 
@@ -573,13 +551,12 @@ Malung-Sälen är Dalarnas fjärde minsta kommun sett till folkmängd och hade �
 I Malung-Sälen står turismindustrin i Sälenfjällen för en stor andel av sysselsättningen, men trots detta arbetar den största andelen av de förvärvsarbetande inom vård och omsorg. Detta kan delvis förklaras av att turism är en svår bransch att definiera. Exempelvis ryms sannolikt en stor del av Sälenfjällens anställda inom branschgruppen "kultur, fritid och nöje" i figuren, som tillsammans med hotell- och restaurangbranschen räknas till turismindustrin.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$`andel_per_bransch_Malung-Sälen`
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Malung-Sälen.png"))
 
 ```
-<br>
 
 Baserat på andelen av lönesumman inom det privata näringslivet är renhållning, kultur, sport m.m. den största branschgruppen, med drygt `r bransch_kommun %>% filter(AstKommun_namn == "Malung-Sälen",AstSNI_raps == "Renhållning kultur sport m.m.") %>% .$andel_lonesumma` procent av den totala lönesumman. Att renhållning ingår i namnet på branschgruppen behöver man inte fästa någon större vikt vid, det handlar primärt om arbetsgivare inom turism. Branschgruppen utgörs av en jämställd representation av kvinnor och män, men har relativt få utrikes födda och få högutbildade. I övrigt är företag inom byggindustri viktiga i Malung-Sälen, branschgruppen står för `r bransch_kommun %>% filter(AstKommun_namn == "Malung-Sälen",AstSNI_raps == "Byggindustri") %>% .$andel_lonesumma` procent av den totala lönesumman, vilket illustrerar effekterna av den "byggboom" som skett i Dalarnas fjällvärld på senare år som en expanderande turismindustrin bidragit till. Representationen bland de sysselsatta i byggindustrin i Malung-Sälen följer mönstret för Sverige med relativt få kvinnor, få utrikes födda, såväl som få med högre utbildning. Viktigt att notera när det gäller Malung-Sälens kommun är att anställda inom många olika branschgrupper kan vara kopplade till Sälenfjällens ekonomi. Om de som städar hotell och stugor inte arbetar för företaget som driver anläggningen, återfinns de sannolikt inom branschgruppen företagsservicefirmor. I Malung-Sälen är `r bransch_kommun %>% filter(AstKommun_namn == "Malung-Sälen",AstSNI_raps == "Företagsservicefirmor") %>% .$andel_bakgrund` procent av de anställda inom den branschgruppen utrikes födda, vilket är en väldigt stor andel.
 
@@ -593,12 +570,11 @@ gt_tabell$`storsta_branscher_Malung-Sälen`
 Den största arbetsgivaren i Malung-Sälen var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Skistar är den största privata arbetsgivaren med strax över `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Malung-Sälen",Arbetsgivare == "Skistar AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.  
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$`Malung-Sälen`
 
 ```
-<br>
 
 Malung-Sälen är den kommun i Dalarna som har klart störst antal privata arbetsställen per 1000 invånare, vilket är en indikator på ett bra företagsklimat. Det startas dessutom många företag i Malung-Sälen, men samtidigt är antalet konkurser per 1000 invånare bland de högsta i länet.
 
@@ -612,13 +588,12 @@ Mora kommun är Dalarnas femte största sett till folkmängd och hade år 2022 d
 Mora har ursprung från medeltiden och är idag kanske mest känt för Vasaloppet och Anders Zorn. Mer än var fjärde förvärvsarbetande arbetar inom vård och omsorg, vilket är en klart högre andel än genomsnittet i Dalarna. Detta beror till stor del på att ett av Dalarnas centralsjukhus, Mora lasarett, ligger i kommunen. I övrigt är andelen förvärvsarbetande per bransch ungefär i linje med snittet för Dalarna.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch_Mora
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Mora.png"))
 
 ```
-<br>
 
 Bland arbetsgivare inom det privata näringslivet är branschgruppen `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Mora") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största, såväl vad gäller sysselsatta som andel av den totala lönesumman (`r bransch_kommun %>% filter(AstKommun_namn == "Mora") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent). Även företag inom metallvaruindustri, parti- och detaljhandel samt företagsservicefirmor är viktiga arbetsgivare, med närmare 40 procent av den totala lönesumman tillsammans. Av dessa branschgrupper har parti och detaljhandel en jämnställd könsfördelning, medan många inom företagsservicefirmor (`r bransch_kommun %>% filter(AstKommun_namn == "Mora",AstSNI_raps == "Företagsservicefirmor") %>% .$andel_utbildning` procent) har eftergymnasial utbildning.
 
@@ -632,12 +607,11 @@ gt_tabell$storsta_branscher_Mora
 Den största arbetsgivaren i Mora var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Mora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Mora") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Många i Mora jobbar även för Region Dalarna, medan FM Mattsson är den största privata arbetsgivaren med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Mora",Arbetsgivare == "Fm Mattsson Mora Group AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Mora
 
 ```
-<br>
 
 Precis som många andra kommuner i norra Dalarna har Mora ett stort antal arbetsställen i förhållande till sin befolkning, vilket är en indikation på ett väl fungerande företagande i kommunen.
 
@@ -651,13 +625,12 @@ Orsa kommun, med ca 7 000 invånare, var Dalarnas näst minsta kommun år 2022. 
 Av de som förvärvsarbetar i Orsa gör mer än var femte det inom vård och omsorg, vilket är en större andel än genomsnittet för Dalarna. I jämförelse med Dalarna sticker även byggindustrin ut, med runt `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Orsa",bransch == "Bygg") %>% .$andel,0)` procent av de förvärvsarbetande, även jord- och skogsbruk (`r round(andel_forvarvsarbetande_bransch %>% filter(region == "Orsa",bransch == "Jord- och skogsbruk") %>% .$andel,0)` procent) och kultur m.m. (ca `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Orsa",bransch == "Kultur, fritid och nöje") %>% .$andel,0)` procent) står för en stor andel av de sysselsatta. Den sistnämnda branschen innefattar sannolikt många personer som arbetar inom turism (Orsa-Grönklitt).
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch_Orsa
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Orsa.png"))
 
 ```
-<br>
 
 Inom det privata näringslivet utgör företag inom `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Orsa") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den klart största andelen, och står för `r bransch_kommun %>% filter(AstKommun_namn == "Orsa") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Anmärkningsvärt är att bara `r bransch_kommun %>% filter(AstKommun_namn == "Orsa") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_bakgrund`  procent av de ca `r plyr::round_any(bransch_kommun %>% filter(AstKommun_namn == "Orsa") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$antal_syss,10)` anställda är utrikes födda. Bland övriga större branscher återfinns bland annat renhållning, kultur och sport m.m., vilken innefattar företag i turismindustrin, och då framförallt Orsa-Grönklitt. 
 
@@ -671,12 +644,11 @@ gt_tabell$storsta_branscher_Orsa
 Den största arbetsgivaren i Orsa var  `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Orsa") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Orsa") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare hade Transdev, som under 2021 köpte Siljans buss, flest anställda med drygt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Orsa",Arbetsgivare == "Transdev Nord AB") %>% .$antal_anstallda,100),big.mark =" ")`.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Orsa
 
 ```
-<br>
 
 Orsa är som sagt en av Dalarnas minsta kommuner sett till folkmängd och har följaktligen en relativt låg branschbredd. Samtidigt är antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman (inom det privata näringslivet) högre än ett par befolkningsmässigt större kommuner i Dalarna. Vidare startas det relativt få nya företag i Orsa och antalet konkurser har ökat stadigt på senare år.
 
@@ -688,12 +660,11 @@ Rättviks kommun hade en folkmängd på drygt 11 000 år 2022. Befolkningen mins
 Rättvik har länge varit en populär turistort, vilket märks genom att dubbelt så stor andel jobbar inom hotell- och restaurangbranschen jämfört med genomsnittet i Dalarna. Även bygg samt kultur, fritid och nöje är branscher inom vilka en klart större andel av de förvärvsarbetande i Rättvik är sysselsatta.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_andel_forv$andel_per_bransch_Rättvik
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Rättvik.png"))
 
 ```
-<br>
 
 Baserat på branschgruppens andel av lönesumman inom det privata näringslivet i Rättvik är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Rättvik") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` störst, med ca `r bransch_kommun %>% filter(AstKommun_namn == "Rättvik") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor finns bland de sysselsatta inom branschgruppen. Även parti- och detaljhandel samt hotell och restaurang är viktiga branschgrupper, med tillsammans strax över 20 procent av den totala lönesumman. Den sistnämnda branschgruppen har en övervikt av kvinnor bland de sysselsatta, samt relativt många utrikes födda.
 
@@ -708,12 +679,11 @@ gt_tabell$storsta_branscher_Rättvik
 Den klart största arbetsgivaren i Rättvik var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Rättvik") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Rättvik") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland övriga arbetsgivare är de flesta avsevärt mindre. 
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Rättvik
 
 ```
-<br>
 
 Rättvik tillhör Dalarnas bästa kommuner vad gäller antalet privata arbetsställen per 1000 invånare och har dessutom relativt få konkurser.
 
@@ -727,13 +697,12 @@ Smedjebackens kommun hade ca 11 000 invånare år 2022. Befolkningen minskade ga
 Som namnet antyder har Smedjebacken en lång historia kopplad till smedjor, men fungerade även länge som knutpunkt för land- och vattentransporter. Än idag är företag inom tillverkning och utvinning dominerande inom kommunen, ungefär var fjärde förvärvsarbetande arbetar inom sådana företag. Även arbetsgivare inom vård och omsorg är viktiga, med ca `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Smedjebacken",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande i kommunen.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch_Smedjebacken
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Smedjebacken.png"))
 
 ```
-<br>
 
 Den största privata arbetsgivaren i Smedjebacken finns inom branschgruppen `r tolower(sub(" o "," och ",bransch_kommun %>% filter(AstKommun_namn == "Smedjebacken") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps))` . Branschens företag står för `r bransch_kommun %>% filter(AstKommun_namn == "Smedjebacken") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Inom branschgruppen jobbar få utrikes födda och få kvinnor, och dessutom relativt få högutbildade. Även byggindustri och metallvaruindustri är viktiga branschgrupper sett till andel av lönesumman, och tillsammans med stål- och metallverk står dessa för ungefär halva lönesumman inom det privata näringslivet. Även företag inom branschgruppen företagsservicefirmor anställer relativt många men här återfinns en ganska stor andel kvinnor, högutbildade och utrikes födda.
 
@@ -747,12 +716,11 @@ gt_tabell$storsta_branscher_Smedjebacken
 Den största arbetsgivaren i Smedjebacken var `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med runt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Bland privata arbetsgivare var Ovako störst, med bortåt `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Smedjebacken",Arbetsgivare == "Ovako Bar AB") %>% .$antal_anstallda,100),big.mark =" ")` anställda.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Smedjebacken
 
 ```
-<br>
 
 Smedjebacken har Dalarnas näst lägsta antal privata arbetsställen per 1 000 invånare och dessutom relativt många konkurser, vilka även har ökat på senare år.
 
@@ -766,13 +734,12 @@ Säter tillhör en grupp med fem kommuner i Dalarna som har en folkmängd på me
 Säter fick stadsprivilegier redan på 1600-talet och är bland annat känt för Säters sjukhus, som under en period var Sveriges största mentalsjukshus. Idag arbetar en stor andel av de sysselsatta inom vård och omsorg, ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Säter",bransch == "Vård och omsorg") %>% .$andel,0)` procent av de förvärvsarbetande, vilket är den högsta andelen bland Dalarnas kommuner. 
 
 <br> 
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch_Säter
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Säter.png"))
 
 ```
-<br>
 
 Baserat på andelen av lönesumman inom det privata näringslivet i Säter är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Säter") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största branschgruppen, med `r bransch_kommun %>% filter(AstKommun_namn == "Säter") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor är sysselsatta inom byggbranschen. Även parti- och detaljhandeln samt företagsservicefirmor är viktiga branschgrupper. I dessa båda finns en klart större andel kvinnor, högutbildade och utrikes födda bland de sysselsatta.
 
@@ -786,12 +753,11 @@ gt_tabell$storsta_branscher_Säter
 Den största arbetsgivaren i Säter var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Säter") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med strax under `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Säter") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Även Region Dalarna är en stor arbetsgivare, medan det inom det privata näringslivet bara finns ett företag med mer än 50 anställda (Gustafs Scandinavia).
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Säter
 
 ```
-<br>
 
 Antalet arbetsställen per 1 000 invånare i Säter är bland det lägsta i Dalarna, men samtidigt har antalet nystartade företag (per 1 000 invånare) ökat under en längre period och ligger idag över genomsnittet i Dalarna. Branschbredden i Säter är i linje med många andra kommuner av samma storlek, men antalet företag som krävs för att den aggregerade lönesumman skall uppgå till 50 procent av den totala lönesumman i det privata näringslivet (`r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Säter") %>% .$cnum`) är avsevärt mycket större än många jämförbara kommuner. Säter kan därför sägas vara en kommun med relativt litet beroende. Samtidigt skall man vara medveten om att andelen som arbetar inom vård och omsorg i Säter (där många arbetsgivare tillhör det offentliga) är högst i Dalarna, vilket är ett annat typ av beroende.
 
@@ -803,12 +769,11 @@ Vansbro är, med sina 6 800 invånare år 2022, Dalarnas minsta kommun. Befolkni
 Idag är Vansbro i första hand förknippat med ett antal större företag, såsom Lyko och Orkla, som står för en stor andel av de sysselsatta i kommunen. Detta återspeglas i figuren nedan, som visar att mer än 40 procent av Vansbros förvärvsarbetande arbetar inom tillverknings- och utvinningsbranschen samt handel.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_andel_forv$andel_per_bransch_Vansbro
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Vansbro.png"))
 
 ```
-<br>
 
 De största privata arbetsgivarna i Vansbro finns inom branschgruppen parti- och detaljhandel, vars företag står för drygt `r bransch_kommun %>% filter(AstKommun_namn == "Vansbro",AstSNI_raps == "Parti- o detaljhandel rep av hushållsartiklar") %>% .$andel_lonesumma` procent av den totala lönesumman. Inom branschgruppen jobbar många kvinnor (>50 procent) och, i jämförelse med genomsnittet i Vansbro, många högutbildade. Bland övriga stora branschgrupper återfinns byggindustri och livsmedelsindustri, som tillsammans står för nästan 25 procent av den totala lönesumman. Den sistnämnda branschen har även den en majoritet kvinnor bland de anställda.
 
@@ -822,12 +787,11 @@ gt_tabell$storsta_branscher_Vansbro
 Den största arbetsgivaren i Vansbro var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Vansbro") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med ungefär `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Vansbro") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata arbetslivet jobbade flest, drygt 350 fördelat på två företag, på Lyko.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Vansbro
 
 ```
-<br>
 
 Vansbro är som sagt Dalarnas minsta kommun sett till befolkning och har följaktligen också en av de minsta branschbredderna i länet. Även antalet företag som utgör 50 procent av den aggregerade lönesumman är bland de lägsta i Dalarna (`r lonesumma_andel_50proc %>% filter(LAKommun_namn == "Vansbro") %>% .$cnum`), vilket indikerar att Vansbro är en kommun med relativt högt beroende. Samtidigt är antalet arbetsställen per 1 000 invånare högre i Vansbro än genomsnittet i Dalarna, vilket är positivt.
 
@@ -839,13 +803,12 @@ Sammanfattningsvis är Vansbro en kommun som uppvisar både sårbara och inte s�
 Älvdalen är Dalarnas till ytan största kommun, mer än dubbelt så stor som Falun och Borlänge tillsammans. Kommunen är idag kanske mest känd för en omfattande turismindustri, som domineras av diverse aktörer i området kring Idre och Grövelsjön ("Kultur, fritid och nöje." i figuren nedan). Kopplad till den "boom" som skett inom turismindustrin på senare år, har även byggsektorn expanderat och står för ungefär `r round(andel_forvarvsarbetande_bransch %>% filter(region == "Älvdalen",bransch == "Bygg") %>% .$andel,0)` procent av de förvärvsarbetande. I jämförelse med Dalarna sticker även företag inom jord- och skogsbruk ut, där dubbelt så stor andel arbetar jämfört med snittet i länet.
 
 <br>
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_andel_forv$andel_per_bransch_Älvdalen
 #knitr::include_graphics(here("Figurer","andel_per_bransch_Älvdalen.png"))
 
 ```
-<br>
 
 Baserat på branschgruppens andel av lönesumman inom det privata näringslivet i Älvdalen är `r tolower(bransch_kommun %>% filter(AstKommun_namn == "Älvdalen") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$AstSNI_raps)` den största branschgruppen, med `r bransch_kommun %>% filter(AstKommun_namn == "Älvdalen") %>% filter(andel_lonesumma == max(andel_lonesumma)) %>% .$andel_lonesumma` procent av den totala lönesumman. Få utrikes födda, få högutbildade och få kvinnor är sysselsatta inom branschgruppen. Även företag inom renhållning, kultur, sport mm, som bland annat innefattar företag inom turism, har många anställda (`r bransch_kommun %>% filter(AstKommun_namn == "Älvdalen",AstSNI_raps == "Renhållning kultur sport m.m.") %>% .$antal_syss`) och en relativt stor andel av lönesumman (ca `r bransch_kommun %>% filter(AstKommun_namn == "Älvdalen",AstSNI_raps == "Renhållning kultur sport m.m.") %>% .$andel_lonesumma` procent). Inom den branschgruppen är avsevärt många fler kvinnor, högutbildade och utrikes födda. Bland övriga stora branschgrupper kan parti- och detaljhandel nämnas, vars företag har ca `r plyr::round_any(bransch_kommun %>% filter(AstKommun_namn == "Älvdalen",AstSNI_raps == "Parti- o detaljhandel rep av hushållsartiklar") %>% .$antal_syss,10)` anställda och står för `r bransch_kommun %>% filter(AstKommun_namn == "Älvdalen",AstSNI_raps == "Parti- o detaljhandel rep av hushållsartiklar") %>% .$andel_lonesumma` procent av den totala lönesumman.
 
@@ -860,16 +823,17 @@ gt_tabell$storsta_branscher_Älvdalen
 Den största arbetsgivaren i Älvdalen var år `r unique(storsta_arbetsgivare$år)` `r storsta_arbetsgivare %>% filter(Kommun == "Älvdalen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$Arbetsgivare` med närmare `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Älvdalen") %>% filter(antal_anstallda == max(antal_anstallda)) %>% .$antal_anstallda,100),big.mark =" ")` anställda. Inom det privata näringslivet hade Idre Fjäll flest anställda, med strax över `r format(plyr::round_any(storsta_arbetsgivare %>% filter(Kommun == "Älvdalen",Arbetsgivare == "Stiftelsen Idre Fjäll") %>% .$antal_anstallda,100),big.mark =" ")`.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 
 gg_storsta_foretag$Älvdalen
 
 ```
-<br>
 
 Befolkningsmässigt är Älvdalen en liten kommun och har följaktligen en låg branschbredd (ungefär en fjärdedel av branscherna finns representerade i kommunen). Dock är antalet företag som utgör 50 procent av den aggregerade lönesumman högre än i många jämförbara kommuner, vilket indikerar att Älvdalen inte är en kommun med överdrivet stort beroende. Älvdalen är dessutom den kommun i Dalarna där de startas flest nya företag per 1 000 invånare och kommunen har dessutom näst flest antal arbetsställen per 1 000 invånare. Baksidan är att Älvdalen samtidigt är den kommun som har flest antal konkurser per 1 000 invånare i Dalarna.
 
 Sammanfattningsvis är Älvdalen en kommun som uppvisar låg sårbarhet på flera områden. Arbetslösheten är relativt låg samtidigt som beroendet av enskilda företag eller branscher inte är överdrivet stort. Det startas dessutom många företag i Älvdalens kommun, men samtidigt går relativt många företag i konkurs.
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
 
 ```{r, include = FALSE}
 
