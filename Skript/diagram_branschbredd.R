@@ -54,6 +54,7 @@ diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,ta
                                manual_x_axis_text_vjust=1,
                                manual_x_axis_text_hjust=1,
                                manual_color = valda_farger,
+                               stodlinjer_avrunda_fem = TRUE,
                                x_axis_sort_value = TRUE,
                                x_axis_sort_grp = 2,
                                vand_sortering = TRUE,

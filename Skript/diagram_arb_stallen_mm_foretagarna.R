@@ -142,7 +142,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
       assign("Nyföretagssamma", nyforetagsamma_df_utskrift, envir = .GlobalEnv)
     }
 
-    if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
+    if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Nyforetagsamma" = nyforetagsamma_df_utskrift))
     }
     
@@ -161,6 +161,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt[2],
                                  manual_y_axis_title = "Antal nyföretagsamma per 1000 invånare",
+                                 stodlinjer_avrunda_fem = TRUE,
                                  diagram_facet = FALSE,
                                  x_axis_lutning = 45,
                                  x_var_fokus = "fokus",
@@ -191,7 +192,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
       assign("företagssamma", foretagsamma_df_kommun, envir = .GlobalEnv)
     }
 
-    if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
+    if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
       list_data <- c(list_data,list("Foretagsamma" = foretagsamma_df_kommun))
     }
     
@@ -207,6 +208,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                                  manual_color = valda_farger_foretagssamma,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt[3],
+                                 stodlinjer_avrunda_fem = TRUE,
                                  manual_y_axis_title = "procent",
                                  diagram_facet = FALSE,
                                  x_axis_lutning = 45,
@@ -220,7 +222,7 @@ diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
   }
   
   # Sparar data
-  if(!is.na(output_mapp_figur) & !is.na(filnamn_data)){
+  if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
     write.xlsx(list_data,paste0(output_mapp_data,filnamn_data))
   }
 

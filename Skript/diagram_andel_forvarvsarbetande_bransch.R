@@ -112,6 +112,7 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
                                    x_axis_sort_grp = 2,
                                    vand_sortering = TRUE,
                                    manual_y_axis_title = "procent",
+                                   stodlinjer_avrunda_fem = TRUE,
                                    diagram_titel = diagram_titel,
                                    diagram_capt = diagram_capt,
                                    output_mapp = output_mapp_figur,

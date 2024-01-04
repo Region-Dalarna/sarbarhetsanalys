@@ -92,6 +92,7 @@ diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedr
                                diagram_facet = FALSE,
                                x_axis_sort_value = TRUE,
                                x_axis_lutning = 45,
+                               stodlinjer_avrunda_fem = TRUE,
                                x_var_fokus = ifelse(uppdelning_kon == TRUE,NA,"fokus"),
                                legend_vand_ordning = FALSE,
                                manual_y_axis_title = "procent",

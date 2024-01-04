@@ -44,6 +44,7 @@ diag_50proc_lonesumma <- function(output_mapp = "G:/Samhällsanalys/Statistik/N�
                                diagram_titel = diagramtitel,
                                diagram_capt =  diagram_capt_kommun,
                                manual_y_axis_title = "Antal företag",
+                               stodlinjer_avrunda_fem = TRUE,
                                dataetiketter = TRUE,
                                x_axis_lutning = 45,
                                x_axis_sort_value = TRUE,

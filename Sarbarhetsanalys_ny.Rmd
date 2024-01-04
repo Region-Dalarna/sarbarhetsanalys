@@ -25,14 +25,9 @@ p_load(sf,
 
 # Läser in funktioner
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
-#source("https://raw.githubusercontent.com/FaluPeppe/func/main/func_API.R")
-
-# Skall figurer sparas
-# spara_figur <- TRUE
-# output_mapp <- here("Figurer","/")
 
 # Om man vill uppdatera den externa hemsidan sätts denna variabel till TRUE
-uppdatera_hemsida = FALSE
+uppdatera_hemsida = TRUE
 
 # Läser in data
 #arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
@@ -55,7 +50,7 @@ i=1
 Senast uppdaterad: `r Sys.Date()`</i>
 </p>
 
-Sverige och Dalarna har under en längre period befunnit sig i vad som kan beskrivas som en högkonjunktur. Mellan 2010 och 2021 växte Dalarnas ekonomi, mätt i löpande priser, med närmare 40 procent per invånare. Samhället tenderar dock från tid till annan att drabbas av kriser av olika omfattning, vilket blivit extra påtagligt i och med Rysslands invasion av Ukraina. I slutet av 2022 påpekade finansminister Elisabeth Svantesson att Sverige går in i en lågkonjunktur 2023, vilken bedöms hålla i sig till 2025 [(Regeringskansliet, 2022)](https://www.regeringen.se/pressmeddelanden/2022/12/svantesson-utdragen-lagkonjunktur-star-for-dorren/){target="_blank"}. 
+Sverige och Dalarna befann sig länge i vad som kan beskrivas som en högkonjunktur. Mellan 2010 och 2021 växte Dalarnas ekonomi, mätt i löpande priser, med närmare 40 procent per invånare. Samhället tenderar dock från tid till annan att drabbas av kriser av olika omfattning, vilket blivit extra påtagligt i och med Rysslands invasion av Ukraina. I slutet av 2022 påpekade finansminister Elisabeth Svantesson att Sverige går in i en lågkonjunktur 2023, vilken bedöms hålla i sig till 2025 [(Regeringskansliet, 2022)](https://www.regeringen.se/pressmeddelanden/2022/12/svantesson-utdragen-lagkonjunktur-star-for-dorren/){target="_blank"}. 
 
 Syftet med denna rapport, som tagits fram inom ramen för projektet [K.R.O.K](https://www.regiondalarna.se/regionalutveckling/vart-uppdrag/projektverksamhet/k.r.o.k/){target="_blank"}, är att studera Dalarnas motståndskraft mot kriser av olika slag, såväl regionalt som kommunalt. Med motståndskraft menas i den här rapporten hur arbetsmarknadens funktionalitet och företagsklimatet i kommunen kan bära ekonomiska kriser i större företag eller branscher. Rapporten tar sin utgångspunkt i en analys som Tillväxtverket gör regelbundet, där Sveriges kommuners sårbarhet rankas baserat på hur de förväntas stå emot större företagsnedläggningar [(Tillväxtverket, 2022)](https://tillvaxtverket.se/tillvaxtverket/publikationer/publikationer2022/kommunerssarbarhet2022.1448.html){target="_blank"}.
 
@@ -69,7 +64,7 @@ I början av 2020 drabbades Sverige av pandemin orsakad av Covid-19. Krisen ledd
 
 När denna rapport skrivs pågår ytterligare en kris kopplad till Rysslands invasion av Ukraina och dess effekter på bland annat tillgången till råvaror. Denna kris, som tog sin början i februari 2022, kommer sannolikt att få stora effekter på Sveriges ekonomi över en längre tid, även om den ännu inte syns i arbetslöshetsstatistiken för Dalarna i någon större utsträckning.
 
-```{r, echo=FALSE, fig.width=10, fig.align='Left'}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
 gg_arb_76$arbetsloshet_region
 ```
 
@@ -308,7 +303,7 @@ gg_andel_forv$andel_per_bransch_Avesta
 Stål- och metalltillverkning är den största branschgruppen i Avesta, baserat på företagens andel av lönesumman inom det privata näringslivet. Därefter följer byggindustrin storleksmässigt. Gemensamt för dessa branschgrupper är att relativt få av de sysselsatta är utrikes födda och därtill är det en tydlig övervikt av män. Bland övriga viktiga branschgrupper i Avesta finns pappersindustrin och parti- och detaljhandel, vars företag tillsammans står för över 20 procent av näringslivets totala lönesumma. Även inom pappersindustrin är representationen av utrikes födda långt under andelen i befolkningen. Männen i Avesta arbetar som synes i hög grad i tillverknings- och byggbranscherna medan de kvinnor som arbetar i privat sektor (en stor andel kvinnor arbetar i offentlig sektor) i stor utsträckning arbetar i företag inom parti- och detaljhandelsbranschen.
 
 <br>
-```{r, echo=FALSE, fig.width=8, fig.align='Left',include= FALSE}
+```{r, echo=FALSE, fig.width=8, fig.align='Left',include= TRUE}
 gt_tabell$storsta_branscher_Avesta
 #knitr::include_graphics(here("Diagram","storsta_branscher_Avesta.png"))
 
@@ -837,12 +832,11 @@ Sammanfattningsvis är Älvdalen en kommun som uppvisar låg sårbarhet på fler
 
 ```{r, include = FALSE}
 
-# kopiera html-filen till 
-#file.copy(from = "Sarbarhetsanalys.html", to = "docs/index.html", overwrite = TRUE)
-#file.copy(from = "Sarbarhetsanalys_ny.Rmd", to = "docs/index.Rmd", overwrite = TRUE)
-
-# ska vi ta bort html-filen i projektmappen eller ha dubbelt, både där och i docs-mappen?
-#file.remove("laget_i_Dalarna.html")
+if(uppdatera_hemsida == TRUE){
+# kopiera html-filen för att hemsidan skall uppdateras. Sker när projektet pushas till Git-Hub
+file.copy(from = "Sarbarhetsanalys.html", to = "docs/index.html", overwrite = TRUE)
+file.copy(from = "Sarbarhetsanalys_ny.Rmd", to = "docs/index.Rmd", overwrite = TRUE)
+}
 
 ```
 

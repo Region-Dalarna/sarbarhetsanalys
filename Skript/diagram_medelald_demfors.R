@@ -134,6 +134,7 @@ diag_demografi <-function(region = hamtakommuner("20",tamedlan = TRUE,tamedriket
                                  manual_color = diag_farger,
                                  x_axis_sort_value = TRUE,
                                  dataetiketter = FALSE,
+                                 stodlinjer_avrunda_fem = TRUE,
                                  dataetiketter_antal_dec = 1,
                                  manual_y_axis_title="Medelålder",
                                  diagram_titel = diagram_titel,
