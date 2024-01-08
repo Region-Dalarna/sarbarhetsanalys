@@ -137,7 +137,8 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
     df_kon <- df %>%
       rename("Antal" = `sysselsatta efter arbetsställets belägenhet`) %>% 
         mutate(region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE)) %>%
-          select(år, månad_år, region, kön, bransch, Antal) 
+          select(år, månad_år, region, kön, bransch, Antal) %>% 
+            filter(region == vald_region)
     
     if(returnera_data == TRUE){
       assign("antal_forvarvsarbetande_bransch", df_kon, envir = .GlobalEnv)
@@ -152,7 +153,7 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
     objektnamn <- c(objektnamn,"antal_per_bransch")
     
     gg_obj <- SkapaStapelDiagram(skickad_df = df_kon %>% 
-                                   filter(region%in%c(vald_region),bransch != "Okänt") %>% 
+                                   filter(bransch != "Okänt") %>% 
                                    mutate(bransch = str_wrap(bransch,20)),
                                  skickad_x_var = "bransch", 
                                  skickad_y_var = "Antal", 
