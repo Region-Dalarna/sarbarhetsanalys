@@ -7,7 +7,7 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
                                          vald_farg = diagramfarger("rus_sex"), # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
                                          spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                          returnera_figur = TRUE, # Om man vill att figuren skall returneras från funktionen
-                                         returnera_data = TRUE,
+                                         returnera_data = TRUE, # Om man vill att data skall returneras
                                          cont_cod = c("N00999","N00926") # "N00999" om man vill ha nystartade, "N00926" om man vill ha konkurser
 ){
   

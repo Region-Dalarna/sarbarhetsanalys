@@ -1,4 +1,4 @@
-#test_list <- diag_sysselsatta_andel(region_vekt = "25",spara_figur = FALSE)
+#test_list <- diag_sysselsatta_andel(region_vekt = "20",spara_figur = FALSE,returnera_data = TRUE,diag_lan_antal = TRUE,diag_kommun = FALSE)
 
 diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intresserade av. 
                                   output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Här hamnar sparad figur
@@ -8,6 +8,7 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
                                   spara_figur = TRUE, # Om true sparas figuren till output_mapp
                                   diag_lan = TRUE, # Skapar ett diagram där län jämförs med riket
                                   diag_kommun = TRUE, # Motsvarande diagram där kommuner jämförs med länet
+                                  diag_lan_antal = FALSE, # Antal för länet, uppdelat på kvinnor och män
                                   returnera_figur = TRUE,
                                   returnera_data = FALSE){ 
   
@@ -32,6 +33,8 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
   gg_list <- list()  # skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
   # Skapar en tom vektor som skall innehålla objektnamn
   objektnamn <- c() 
+  # Lista som används för att lägg till dataset till Excelfil (som sparas)
+  list_data <- lst()
 
   vald_region = skapa_kortnamn_lan(hamtaregion_kod_namn(region_vekt)$region)
 
@@ -49,17 +52,20 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
       mutate(andel = (Antal/sum(Antal))*100,
              region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE))
   
-  if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
-    write.xlsx(df_sum,paste0(output_mapp_data,filnamn_data))
+  if(diag_lan == TRUE | diag_kommun == TRUE){
+    if(returnera_data == TRUE){
+      assign("andel_forvarvsarbetande_bransch", df_sum, envir = .GlobalEnv)
+    }
+    
+    if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
+      list_data <- c(list_data,list("Andel per bransch" = df_sum))
+    }
+    
   }
-  
-  if(returnera_data == TRUE){
-    assign("andel_forvarvsarbetande_bransch", df_sum, envir = .GlobalEnv)
-  }
-  
+
   if(diag_lan==TRUE){
     
-    diagram_titel <- paste0("Andel förvärvsarbetande (16-74) år per bransch ",unique(df_sum$månad_år))
+    diagram_titel <- paste0("Andel förvärvsarbetande (16-74 år) per bransch ",unique(df_sum$månad_år))
     diagramfil <- "andel_per_bransch.png"
     objektnamn <- c(objektnamn,"andel_per_bransch")
     
@@ -92,7 +98,7 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
   j=1
   if(diag_kommun==TRUE){
     while(j <= length(kommun_vektor$region)){
-      diagram_titel <- paste0("Andel förvärvsarbetande (16-74) år per bransch ",unique(df_sum$månad_år))
+      diagram_titel <- paste0("Andel förvärvsarbetande (16-74 år) per bransch ",unique(df_sum$månad_år))
       diagram_typ <- paste0("andel_per_bransch","_",kommun_vektor$region[j])
       diagramfil <- paste0(diagram_typ,".png")
       objektnamn <- c(objektnamn,diagram_typ)
@@ -124,8 +130,53 @@ diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intressera
     }
     
   }
+  
+  if(diag_lan_antal==TRUE){
+    
+    # Summerar på region och sektor
+    df_kon <- df %>%
+      rename("Antal" = `sysselsatta efter arbetsställets belägenhet`) %>% 
+        mutate(region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE)) %>%
+          select(år, månad_år, region, kön, bransch, Antal) 
+    
+    if(returnera_data == TRUE){
+      assign("antal_forvarvsarbetande_bransch", df_kon, envir = .GlobalEnv)
+    }
+    
+    if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
+      list_data <- c(list_data,list("Antal per bransch" = df_kon))
+    }
+    
+    diagram_titel <- paste0("Antal förvärvsarbetande (16-74 år) per bransch i ",vald_region," ",unique(df_sum$månad_år))
+    diagramfil <- "antal_per_bransch.png"
+    objektnamn <- c(objektnamn,"antal_per_bransch")
+    
+    gg_obj <- SkapaStapelDiagram(skickad_df = df_kon %>% 
+                                   filter(region%in%c(vald_region),bransch != "Okänt") %>% 
+                                   mutate(bransch = str_wrap(bransch,20)),
+                                 skickad_x_var = "bransch", 
+                                 skickad_y_var = "Antal", 
+                                 skickad_x_grupp = "kön",
+                                 manual_x_axis_text_vjust=1,
+                                 manual_x_axis_text_hjust=1,
+                                 manual_color = diagramfarger("kon"),
+                                 x_axis_sort_value = TRUE,
+                                 manual_y_axis_title = "",
+                                 stodlinjer_avrunda_fem = TRUE,
+                                 diagram_titel = diagram_titel,
+                                 diagram_capt = diagram_capt,
+                                 output_mapp = output_mapp_figur,
+                                 filnamn_diagram = diagramfil,
+                                 skriv_till_diagramfil = spara_figur)
+    
+    gg_list <- c(gg_list, list(gg_obj))
+  }
 
   names(gg_list) <- c(objektnamn)
   if(returnera_figur == TRUE) return(gg_list)
+  
+  if(!is.na(output_mapp_data) & !is.na(filnamn_data)){
+    write.xlsx(list_data,paste0(output_mapp_data,filnamn_data))
+  }
   
 }
