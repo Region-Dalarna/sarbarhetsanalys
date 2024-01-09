@@ -28,7 +28,7 @@ diag_branschbredd <-function(region_vekt = hamtakommuner("20",tamedlan = TRUE,ta
   # =============================================== API-uttag ===============================================
   
   # Hämtar data
-  source(here("Skript","hamta_data_branschbredd_kolada.R"), encoding="UTF-8")
+  source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/main/hamta_data_branschbredd_kolada.R")
   df <- hamta_data_branschbredd (region = region_vekt,
                                  output_mapp = output_mapp_data,
                                  filnamn = filnamn_data, 

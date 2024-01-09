@@ -1,16 +1,16 @@
 #test_list <- diag_sysselsatta_andel(region_vekt = "20",spara_figur = FALSE,returnera_data = TRUE,diag_lan_antal = TRUE,diag_kommun = FALSE)
 
-diag_sysselsatta_andel <-function(region_vekt = "20", # Region vi är intresserade av. 
-                                  output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Här hamnar sparad figur
-                                  output_mapp_data = NA, # Här hamnar sparad data
-                                  filnamn_data = "andel_forvarvsarbetande.xlsx",
-                                  valda_farger = diagramfarger("rus_sex"), # Vilka färger skall användas i diagram
-                                  spara_figur = TRUE, # Om true sparas figuren till output_mapp
-                                  diag_lan = TRUE, # Skapar ett diagram där län jämförs med riket
-                                  diag_kommun = TRUE, # Motsvarande diagram där kommuner jämförs med länet
-                                  diag_lan_antal = FALSE, # Antal för länet, uppdelat på kvinnor och män
-                                  returnera_figur = TRUE,
-                                  returnera_data = FALSE){ 
+diag_sysselsatta_andel <- function(region_vekt = "20", # Region vi är intresserade av. 
+                                   output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Här hamnar sparad figur
+                                   output_mapp_data = NA, # Här hamnar sparad data
+                                   filnamn_data = "andel_forvarvsarbetande.xlsx",
+                                   valda_farger = diagramfarger("rus_sex"), # Vilka färger skall användas i diagram
+                                   spara_figur = TRUE, # Om true sparas figuren till output_mapp
+                                   diag_lan = TRUE, # Skapar ett diagram där län jämförs med riket
+                                   diag_kommun = TRUE, # Motsvarande diagram där kommuner jämförs med länet
+                                   diag_lan_antal = FALSE, # Antal för länet, uppdelat på kvinnor och män
+                                   returnera_figur = TRUE,
+                                   returnera_data = FALSE){ 
   
   # ========================================== Allmän info ============================================
   

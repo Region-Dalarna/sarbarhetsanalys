@@ -14,6 +14,7 @@ hamta_data_branschbredd <-function(region = hamtakommuner("20",tamedlan = TRUE,t
   # Skript som hämtar data för branschbredd från Kolada. Tabellen finns inte uppdelad på kön
   # Skapad av Jon Frank
   # Senast ändrad: 2023-12-20
+  # Ej helt uppdaterat. Funktionen byt_namn_lan_kolada skall flyttas från mitt privata skript till func_API (Jon)
   # ===========================================================================================================
   
   # Paket som används
