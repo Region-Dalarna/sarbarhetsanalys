@@ -13,7 +13,7 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                                diag_arbetslosthet = TRUE, # True för figur för arbetsloshet
                                                diag_arbetskraftsdeltagande = TRUE, # "" arbetskraftsdeltagande
                                                diag_sysselsattningsgrad = TRUE,
-                                               returnera_data = TRUE){ # "" sysselsättningsgrad
+                                               returnera_data = FALSE){ # "" sysselsättningsgrad
   
   ## =================================================================================================================
   # Diagram för arbetslöshet, sysselsättningsgrad och arbetskraftsdeltagande för senaste år. Går för tillfället inte att dela upp på kön
@@ -36,7 +36,7 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                                      alder_vekt_klartext = alder_klartext,
                                                      fodelseregion_klartext_vekt = "totalt",
                                                      cont_klartext_vekt = c("arbetslöshet","arbetskraftsdeltagande", "sysselsättningsgrad"),
-                                                     tid_vekt = "99") 
+                                                     tid_koder = "9999") 
   
 
   # Län att fokusera på
