@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "Sårbarhetsanalys"
 author: ""
 date: ""
 output: 
@@ -27,7 +27,7 @@ p_load(sf,
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
 
 # Om man vill uppdatera den externa hemsidan sätts denna variabel till TRUE
-uppdatera_hemsida = FALSE
+uppdatera_hemsida = TRUE
 
 # Läser in data
 #arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
@@ -111,7 +111,7 @@ gg_arbetsmarknadsstatus$sysselsattningsgrad_senastear
 
 ```
 
-I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde,1)` procent jämfört med ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Sverige") %>% .$varde,1)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,1)` procent), medan `r last(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region)` har lägst arbetslöshet med ca `r last(round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,1))` procent.
+I Dalarna var arbetslösheten i `r last(arbetsmarknadsstatus$månad)` `r max(arbetsmarknadsstatus$år)`  något lägre än i Sverige, ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde,1)` procent jämfört med ca `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Sverige") %>% .$varde,1)` procent i Sverige. Arbetslösheten i Dalarna varierar dock avsevärt mellan länets kommuner, där `r arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region` har högst arbetslöshet (ungefär `r round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)` procent), medan `r last(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region)` har lägst arbetslöshet med ca `r last(round(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0))` procent.
 
 <br>
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}

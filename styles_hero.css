@@ -7,6 +7,10 @@ html {
 
 }
 
+.title{
+  display:none;
+}
+
 /* Det som gäller för dokumentet generellt, typografi m.m.*/
 body {
   border-top: 5px solid #158daf;
