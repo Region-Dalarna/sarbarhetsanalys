@@ -24,7 +24,7 @@ diag_50proc_lonesumma <- function(output_mapp = "G:/Samhällsanalys/Statistik/N�
   gg_list <- list()  # skapa en tom lista att lägga flera ggplot-objekt i (om man skapar flera diagram)
   
   # ========================================== Läser in data ============================================
-  # Läser in data från Excel (ursprung arbetsförmedlingen)
+  # Läser in data från Excel (ursprung NMS-databasen)
   kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_50_procent_lonesumma.xlsx",sheet=1)
   
   if(returnera_data == TRUE){

@@ -142,7 +142,7 @@ gg_foretagssamma <- diag_foretagarna(region_vekt = "20",
                                      diag_foretagsamma = TRUE)
 
 # Antal företag som utgör 50 procent av den totala lönesumman (NMS)
-source(here("Skript","diagram_50_proc_lonesumma_NMS.R"), encoding="UTF-8")
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_50_proc_lonesumma_NMS.R", encoding="UTF-8")
 gg_50proc_lonesumma <- diag_50proc_lonesumma(output_mapp = Output_mapp_figur,
                                             spara_figur = TRUE,
                                             returnera_data = TRUE)
