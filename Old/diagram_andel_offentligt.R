@@ -1,22 +1,20 @@
-#test = diagram_andel_offentligt(spara_figur = FALSE, diag_totalt = FALSE)
-
 diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Val av kommuner
                                      alder_klartext = "*", # Ålder. Andra val: 16-19 år, 20-24 år, 25-34 år, 35-44 år, 45-54 år, 55-59 år, 60-64 år, 65+ år. Max 1 åt gången
                                      output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Vart hamnar figur om den skall sparas
-                                     output_mapp_data = NA, # Vart hamnar data om den skall sparas
-                                     filnamn_data = "andel_offentligt.xlsx",
+                                     output_mapp_data = NA, # Vart hamnar data om den skall sparas. NA medför att data inte sparas
+                                     filnamn_data = "andel_offentligt.xlsx", # Filnamn för sparad data
                                      vald_farg = diagramfarger("rus_sex"), # Vilken färgvektor vill man ha. Blir alltid "kon" när man väljer det diagrammet
                                      spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                      returnera_figur = TRUE, # Om man vill att figuren skall returneras från funktionen
-                                     returnera_data = TRUE,
+                                     returnera_data = FALSE, # True om användaren vill returnera data från funktionen
                                      diag_totalt = TRUE, # Skriver ut diagram för kön totalt
                                      diag_kon = TRUE # Skriver ut diagram uppdelat på kön
 ){
   
   # ===========================================================================================================
   #
-  # Skript för skapar diagram för andelar som arbetar inom offentlig sektor. Funkar med och utan kön men enbart för senaste år
-  # Om funktion används i region_vekt krävs att man laddat source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R") innan
+  # Skript som skapar diagram för andelen som arbetar inom offentlig sektor. Funkar med och utan könsuppdelning men enbart för senaste år
+  # Går även att använda olika åldersspann
   # ===========================================================================================================
   
   if (!require("pacman")) install.packages("pacman")
@@ -42,7 +40,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
                                      returnera_data = TRUE,
                                      tid = "9999")
   
-  
+  if(alder_klartext == "*") alder_klartext <- ("16-74 år")
   
   if(diag_totalt == TRUE){
   
@@ -71,7 +69,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
       assign("andel_offentligt", andel_totalt_utskrift, envir = .GlobalEnv)
     }
       
-    diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_totalt_utskrift$år))
+    diagram_titel <- paste0("Andel offentligt anställda (",alder_klartext,")" ," år ",unique(andel_totalt_utskrift$år))
     diagramfilnamn <- "andel_offentligt_totalt.png"
     diagram_capt <- "Källa: SCB:s öppna statistikdatabas.\nBearbetning: Samhällsanalys, Region Dalarna."
     objektnamn = c(objektnamn,"andel_off_totalt")
@@ -128,7 +126,7 @@ diagram_andel_offentligt <- function(region_vekt = hamtakommuner("20",tamedlan =
       assign("andel_offentligt_kon", andel_kon_utskrift, envir = .GlobalEnv)
     }
     
-    diagram_titel <- paste0("Andel offentligt anställda år ",unique(andel_kon_utskrift$år))
+    diagram_titel <- paste0("Andel offentligt anställda (",alder_klartext,")" ," år ",unique(andel_kon_utskrift$år))
     diagramfilnamn <- "andel_offentligt_kon.png"
     diagram_capt <- "Källa: SCB:s öppna statistikdatabas.\nBearbetning: Samhällsanalys, Region Dalarna."
     objektnamn = c(objektnamn,"andel_off_kon")

@@ -46,7 +46,7 @@ gg_langtidsarbetsloshet <- diagram_langtidsarb(region = hamtakommuner("20",tamed
                                                 vald_farg = diagramfarger("rus_sex"))
 
 # Andel som jobbar i offentlig sektor
-source(here("Skript","diagram_andel_offentligt.R"), encoding="UTF-8")
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_andel_offentligt.R", encoding="UTF-8")
 gg_andel_offentligt <- diagram_andel_offentligt(output_mapp_figur= Output_mapp_figur,
                                                output_mapp_data = Output_mapp_data,
                                                diag_totalt = TRUE,
