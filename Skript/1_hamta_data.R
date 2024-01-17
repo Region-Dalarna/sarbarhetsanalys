@@ -57,7 +57,7 @@ gg_andel_offentligt <- diagram_andel_offentligt(output_mapp_figur= Output_mapp_f
                                                returnera_data = TRUE)
 
 # Andel pendling i kommun  
-source("G:/skript/diagram/diag_pendlare_over_kommungrans.R")
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diag_pendlare_over_kommungrans.R")
 gg_pendling <- diag_pendling_over_kommungrans(output_mapp_figur = Output_mapp_figur,
                                              output_mapp_data = Output_mapp_data,
                                              skapa_fil = TRUE, 
