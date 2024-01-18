@@ -1,17 +1,15 @@
-
-#test_list=diag_foretagarna(spara_figur=FALSE,region_vekt = "22")
 diag_foretagarna <- function(region_vekt = "20", # Vilken region skall vi välja
                              output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                             output_mapp_data = NA, 
-                             filnamn_data = "data_foretagarna_ut.xlsx",
-                             returnera_figur = TRUE,
+                             output_mapp_data = NA, # Här hamnar data som sparas
+                             filnamn_data = "data_foretagarna_ut.xlsx", # Filnamn Excel
+                             returnera_figur = TRUE, # Skall en figur returneras
                              spara_figur = TRUE, # Skall figuren sparas
                              valda_farger = diagramfarger("rus_tre_fokus"),
                              valda_farger_foretagssamma = diagramfarger("rus_sex")[1],
                              diag_arbetsstallen = TRUE, # Figur över arbetsstälen
                              diag_nyforetagsamma = TRUE, # Nyförtagssamma 
-                             diag_foretagsamma = TRUE,
-                             returnera_data = TRUE){ # Skall data läggas i R-studios globala miljö
+                             diag_foretagsamma = TRUE, # Företagssamma
+                             returnera_data = FALSE){ # Skall data läggas i R-studios globala miljö
   
   # ========================================== Allmän info ============================================
   

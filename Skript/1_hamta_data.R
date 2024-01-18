@@ -46,7 +46,7 @@ gg_langtidsarbetsloshet <- diagram_langtidsarb(region = hamtakommuner("20",tamed
                                                 vald_farg = diagramfarger("rus_sex"))
 
 # Andel som jobbar i offentlig sektor
-source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_andel_offentligt.R", encoding="UTF-8")
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_andel_offentligt.R")
 gg_andel_offentligt <- diagram_andel_offentligt(output_mapp_figur= Output_mapp_figur,
                                                output_mapp_data = Output_mapp_data,
                                                diag_totalt = TRUE,
@@ -69,7 +69,7 @@ gg_pendling <- diag_pendling_over_kommungrans(output_mapp_figur = Output_mapp_fi
                                              returnera_data = TRUE)
 
 # Antal arbetsställen 
-source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_arb_stallen_mm_ejAPI.R", encoding="UTF-8")
 gg_arbetsstallen <- diag_foretagarna(output_mapp_figur = Output_mapp_figur,
                                      output_mapp_data = Output_mapp_data,
                                      spara_figur = TRUE,
@@ -90,7 +90,7 @@ gg_nyst_konk <- diagram_nystartade_konkurser(output_mapp_figur = Output_mapp_fig
                                            cont_cod = c("N00999","N00926"))
 
 # Andel förvärvsarbetande i olika branscher (såväl län som kommun)
-source(here("Skript","diagram_andel_forvarvsarbetande_bransch.R"), encoding="UTF-8")
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_andel_forvarvsarbetande_bransch.R", encoding="UTF-8")
 gg_andel_forv <- diag_sysselsatta_andel(output_mapp_figur = Output_mapp_figur,
                                         output_mapp_data = Output_mapp_data,
                                         returnera_figur = TRUE,

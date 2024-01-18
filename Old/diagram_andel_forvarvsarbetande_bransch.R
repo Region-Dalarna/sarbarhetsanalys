@@ -1,5 +1,3 @@
-#test_list <- diag_sysselsatta_andel(region_vekt = "20",spara_figur = FALSE,returnera_data = TRUE,diag_lan_antal = TRUE,diag_kommun = FALSE)
-
 diag_sysselsatta_andel <- function(region_vekt = "20", # Region vi är intresserade av. 
                                    output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Här hamnar sparad figur
                                    output_mapp_data = NA, # Här hamnar sparad data
@@ -9,14 +7,14 @@ diag_sysselsatta_andel <- function(region_vekt = "20", # Region vi är intresser
                                    diag_lan = TRUE, # Skapar ett diagram där län jämförs med riket
                                    diag_kommun = TRUE, # Motsvarande diagram där kommuner jämförs med länet
                                    diag_lan_antal = FALSE, # Antal för länet, uppdelat på kvinnor och män
-                                   returnera_figur = TRUE,
-                                   returnera_data = FALSE){ 
+                                   returnera_figur = TRUE, # Skall figur returneras (i en lista)
+                                   returnera_data = FALSE){ # Skall data returneras (till R-studios globla miljö)
   
   # ========================================== Allmän info ============================================
   
-  # Skapar diagram för andelen förvärvsarbetande inom olika branscher, dels på länsnivå, dels på kommunnivå
-  # Enbart senaste år och ingen uppdelning på kön
-  
+  # 1: Skapar diagram för andelen förvärvsarbetande inom olika branscher, dels på länsnivå, dels på kommunnivå. Enbart senaste år och ingen uppdelning på kön
+  # 1: Antal förvärvsarbetande senaste observation uppdelat på kön
+  # Senast uppdaterad: Jon 2024-01-18
   # ========================================== Inställningar ============================================
   # Nödvändiga bibliotek och funktioner
   if (!require("pacman")) install.packages("pacman")
