@@ -107,11 +107,10 @@ gg_branschbredd = diag_branschbredd(output_mapp_figur = Output_mapp_figur,
                                     returnera_data = TRUE)
 
 # Medelålder och demografisk försörjningskvot
-source(here("Skript","diagram_medelald_demfors.R"), encoding="UTF-8")
-gg_medel_demo <- diag_demografi(outputmapp = Output_mapp_figur,
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_medelald_demfors.R", encoding="UTF-8")
+gg_medel_demo <- diag_demografi(outputmapp_figur = Output_mapp_figur,
                                 diag_demo_forsorjning = TRUE, 
-                                diag_demo_medelalder = TRUE, 
-                                valda_farger = "rus_sex",
+                                diag_demo_medelalder = TRUE,
                                 spara_figur = TRUE,
                                 returnera_data = TRUE)
 
