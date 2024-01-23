@@ -25,7 +25,7 @@ gg_arb_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
                                           returnera_data = TRUE)
 
 # Arbetslöshet och sysselsättningsgrad
-source(here("Skript","diagram_arbetsmarknadsstatus_kommun.R"), encoding="UTF-8")
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_arbetsmarknadsstatus_senastear.R", encoding="UTF-8")
 gg_arbetsmarknadsstatus <- diagram_arbetsmarknadsstatus_kommun(output_mapp_data = Output_mapp_data,
                                                                output_mapp_figur = Output_mapp_figur,
                                                                diag_arbetskraftsdeltagande = FALSE,

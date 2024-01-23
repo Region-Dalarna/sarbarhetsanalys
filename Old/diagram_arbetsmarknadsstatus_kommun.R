@@ -1,24 +1,26 @@
-
-#test = diagram_arbetsmarknadsstatus_kommun(spara_figur = FALSE,diag_arbetskraftsdeltagande = FALSE,kon_klartext = c("kvinnor", "män"),diag_farger = "kon")
 diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20"), # Använd förslagsvis hamtakommuner och hamtaallalan
-                                               fokus_lan = "20", # Måste väljas. Det län som, vid sidan om riket, fokuseras i figuren
+                                               fokus_lan = "20", # Måste väljas. Det län som, vid sidan om riket, fokuseras i figuren. Gäller inte vid könsuppdelat
                                                output_mapp_data = NA, # Outputmapp för data
                                                filnamn_data = "arbetsmarknadsstatus.xlsx", # Filnamn för datafil
                                                output_mapp_figur = "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/", # Outputmapp för figur
                                                spara_figur = TRUE, # Sparar figuren till output_mapp_figur
                                                returnera_figur = TRUE, # Returnerar en figur
                                                kon_klartext = "totalt", # Finns även c("kvinnor","män") om man vill ha könsuppdelat
+                                               fodelseregion_klartext_vekt = "totalt", # Finns även c("inrikes född", "utrikes född"). Då skapas ett facet diagram. Ej uppdelat
                                                alder_klartext = "20-64 år", # finns: 15-19 år, 16-19 år, 20-24 år, 25-29 år, 30-34 år, 35-39 år, 40-44 år, 45-49 år, 50-54 år, 55-59 år, 60-64 år, 65-69 år, 70-74 år, 15-74 år, 16-64 år, 16-65 år, 20-64 år, 20-65 år
                                                valda_farger = diagramfarger("rus_tre_fokus"), # Ändra till kon om man vill ha de färgerna
-                                               diag_arbetslosthet = TRUE, # True för figur för arbetsloshet
-                                               diag_arbetskraftsdeltagande = TRUE, # "" arbetskraftsdeltagande
-                                               diag_sysselsattningsgrad = TRUE,
+                                               diag_arbetslosthet = TRUE, # TRUE för figur för arbetslöshet
+                                               diag_arbetskraftsdeltagande = TRUE, #  arbetskraftsdeltagande
+                                               diag_sysselsattningsgrad = TRUE, # "" sysselsättningsgrad
                                                returnera_data = FALSE){ # "" sysselsättningsgrad
   
   ## =================================================================================================================
-  # Diagram för arbetslöshet, sysselsättningsgrad och arbetskraftsdeltagande för senaste år. Går för tillfället inte att dela upp på kön
-  # Det är även möjligt att ändra åldersgrupper. OBS: max 1 åt gången
+  # Diagram för arbetslöshet, sysselsättningsgrad och arbetskraftsdeltagande för senaste observation. 
+  # Går att dela upp på kön och ändra åldersgrupp (max 1 åt gången). Det går även att dela upp på utrikes/inrikes födda, vilket ger ett facet-diagram
+  # Funkar både för län och kommuner, men bara senaste år
   # diag_arbetsloshet, diag_arbetskraftsdeltagande och diag_sysselsattningsgrad sätts till TRUE baserat på vilka variabler man vill ha
+  # Senast uppdaterad av Jon Frank (2024-01-23)
+  # Potentiell förbättring: Ändra så att man kan köra för utrikes/inrikes separat. Funkar nu, men diagramtitel hänger inte med.
   # =================================================================================================================
   if (!require("pacman")) install.packages("pacman")
   p_load(openxlsx)
@@ -34,7 +36,7 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
   arbetsmarknadsstatus_df = hamta_bas_arbmarknstatus(region_vekt = region_vekt,
                                                      kon_klartext_vekt = kon_klartext,
                                                      alder_vekt_klartext = alder_klartext,
-                                                     fodelseregion_klartext_vekt = "totalt",
+                                                     fodelseregion_klartext_vekt = fodelseregion_klartext_vekt,
                                                      cont_klartext_vekt = c("arbetslöshet","arbetskraftsdeltagande", "sysselsättningsgrad"),
                                                      tid_koder = "9999") 
   
@@ -72,6 +74,8 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  manual_y_axis_title = "procent",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
+                                 diagram_facet = ifelse(all(c("inrikes född","utrikes född")==fodelseregion_klartext_vekt),TRUE,FALSE),
+                                 facet_grp = "födelseregion",
                                  manual_color = valda_farger,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,
@@ -104,6 +108,8 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
                                  manual_color = valda_farger,
+                                 diagram_facet = ifelse(all(c("inrikes född","utrikes född")==fodelseregion_klartext_vekt),TRUE,FALSE),
+                                 facet_grp = "födelseregion",
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,
                                  x_var_fokus = ifelse("totalt" %in% kon_klartext,"fokus",NA),
@@ -134,6 +140,8 @@ diagram_arbetsmarknadsstatus_kommun <-function(region_vekt = hamtakommuner("20")
                                  manual_y_axis_title = "procent",
                                  manual_x_axis_text_vjust = 1,
                                  manual_x_axis_text_hjust = 1,
+                                 diagram_facet = ifelse(all(c("inrikes född","utrikes född")==fodelseregion_klartext_vekt),TRUE,FALSE),
+                                 facet_grp = "födelseregion",
                                  manual_color = valda_farger,
                                  diagram_titel = diagramtitel,
                                  diagram_capt =  diagram_capt,

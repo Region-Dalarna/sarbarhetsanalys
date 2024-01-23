@@ -7,7 +7,7 @@ diagram_langtidsarb = function(region = hamtakommuner("20",tamedlan = TRUE,tamed
                                spara_figur = TRUE, # Vill man spara figur
                                returnera_figur = TRUE, # Skall figuren returneras som ett ggplot-objekt
                                returnera_data = FALSE,
-                               tid = 2011:2100){# Vilken tidsperiod vill vi fokusera på
+                               tid = 2011:2100){# Vilken tidsperiod vill vi fokusera på. 
   
   # =================================================================================================================
   # Diagram för långtidsarbetlöshet (15-74 år) på kommunal nivå. Går att jämföra första och sista år eller bara ta med sista år
