@@ -26,13 +26,13 @@ gg_arb_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
 
 # Arbetslöshet och sysselsättningsgrad
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_arbetsmarknadsstatus_senastear.R", encoding="UTF-8")
-gg_arbetsmarknadsstatus <- diagram_arbetsmarknadsstatus_kommun(output_mapp_data = Output_mapp_data,
-                                                               output_mapp_figur = Output_mapp_figur,
-                                                               diag_arbetskraftsdeltagande = FALSE,
-                                                               valda_farger = diagramfarger("rus_tre_fokus"),
-                                                               spara_figur = TRUE,
-                                                               returnera_figur = TRUE,
-                                                               returnera_data = TRUE)
+gg_arbetsmarknadsstatus <- diagram_arbetsmarknadsstatus(output_mapp_data = Output_mapp_data,
+                                                        output_mapp_figur = Output_mapp_figur,
+                                                        diag_arbetskraftsdeltagande = FALSE,
+                                                        valda_farger = diagramfarger("rus_tre_fokus"),
+                                                        spara_figur = TRUE,
+                                                        returnera_figur = TRUE,
+                                                        returnera_data = TRUE)
 
 # Långtidsarbetslöshet
 source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")
@@ -109,8 +109,8 @@ gg_branschbredd = diag_branschbredd(output_mapp_figur = Output_mapp_figur,
 # Medelålder och demografisk försörjningskvot
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_medelald_demfors.R", encoding="UTF-8")
 gg_medel_demo <- diag_demografi(outputmapp_figur = Output_mapp_figur,
-                                diag_demo_forsorjning = TRUE, 
-                                diag_demo_medelalder = TRUE,
+                                diag_forsorjningskvot = TRUE, 
+                                diag_medelalder = TRUE,
                                 spara_figur = TRUE,
                                 returnera_data = TRUE)
 
@@ -125,20 +125,22 @@ source("G:/skript/diagram/diag_storsta_arbetsgivare_kommun.R", encoding = "utf-8
 gg_storsta_foretag <- diag_storsta_arbetsgivare_kommun(valda_kommuner = hamtakommuner("20",tamedlan=FALSE,tamedriket=FALSE),
                                                       skriv_fil = FALSE,
                                                       output_mapp = Output_mapp_figur,
-                                                      returnera_data = TRUE)
+                                                      returnera_data = TRUE,
+                                                      valda_farger = diagramfarger("rus_sex"))
 
 #####################
 ##### Inte API #####
 ####################
 
-# Diverse från företagarna. Data uppdaterades senaste i mitten av november 2023
-source(here("Skript","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
+# Diverse från företagarna. Data uppdaterades senaste i mitten av november 2023. Ligger för tillfället under old.
+source(here("Old","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
 gg_foretagssamma <- diag_foretagarna(region_vekt = "20",
                                      output_mapp_figur = Output_mapp_figur,
                                      spara_figur = TRUE,
                                      diag_arbetsstallen = FALSE,
                                      diag_nyforetagsamma = FALSE,
-                                     diag_foretagsamma = TRUE)
+                                     diag_foretagsamma = TRUE,
+                                     returnera_data = TRUE)
 
 # Antal företag som utgör 50 procent av den totala lönesumman (NMS)
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_50_proc_lonesumma_NMS.R", encoding="UTF-8")

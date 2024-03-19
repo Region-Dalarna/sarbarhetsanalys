@@ -90,7 +90,7 @@ li{
 
 /*Ytan som rymmer "Mer info om statistiken*/
 details{
-  background-color: #f1f1f1;
+  background-color: #cff4fc
   font-size: 0.9rem;
   padding: 10px 10px;
   border-radius: 3px 3px 3px 3px;
@@ -130,10 +130,10 @@ top: 5px;
   content: "";
   display: block;
   height: 40px;
-  padding: 5px 5px 5px 5px;
-  background: rgba(239,41,60);
+  background: rgba(22,141,175);
+  /*background: rgba(239,41,60);*/
   /*background: #db3747;*/
-  background-image: url(logo_liggande_platta_farg.png);
+  background-image: url(logga_korrekt.png);
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -155,7 +155,7 @@ top: 5px;
 }
 
 .nav-pills>li>a:hover, .nav-pills>li>a:focus, .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
-     background-color: #db3747;
+     background-color: rgba(22,141,175);
      color: #fff
      border-color: #000000;
 }
