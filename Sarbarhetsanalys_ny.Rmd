@@ -27,7 +27,7 @@ p_load(sf,
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
 
 # Om man vill uppdatera den externa hemsidan sätts denna variabel till TRUE
-uppdatera_hemsida = TRUE
+uppdatera_hemsida = FALSE
 
 # Läser in data
 #arbetsloshet_76_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/arbetsloshet_76.xlsx")
