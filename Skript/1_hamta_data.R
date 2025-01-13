@@ -118,6 +118,13 @@ gg_storsta_foretag <- diag_storsta_arbetsgivare_kommun(valda_kommuner = hamtakom
                                                       returnera_data = TRUE,
                                                       valda_farger = diagramfarger("rus_sex"))
 
+# Folkmängd - enbart för att slippa skriva folkmängden under kommunfördjupningarna
+
+source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/refs/heads/main/hamta_bef_folkmangd_alder_kon_manad_scb.R")
+befolkning_df <- hamta_bef_folkmangd_alder_kon_manad_scb(hamtakommuner("20",F,F),
+                                                          tid_koder = "9999",
+                                                          kon_klartext = NA)
+
 #####################
 ##### Inte API #####
 ####################
