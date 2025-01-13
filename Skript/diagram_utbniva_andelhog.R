@@ -62,7 +62,7 @@ diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedr
   df_utskrift <- df %>%
     filter(utbildningsnivå != "Uppgift saknas") %>% 
       group_by(across(all_of(variabler))) %>%
-        summarize(antal = sum(Befolkning)) %>%
+        summarize(antal = sum(Antal)) %>%
           mutate(andel = (antal/sum(antal))*100) %>% 
             mutate(region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE)) %>% 
               ungroup()

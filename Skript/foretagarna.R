@@ -7,7 +7,9 @@ hamta_data_foretagarna <- function(region_vekt="20",
   # Tar fram diverse olika diagram kopplat till företagande
   # https://www.foretagsklimat.se/downloads
   # Välj variabel av intresse under "gör dina urval per faktor"
-  # Senast uppdaterad (data) - 20231116
+  # Senast uppdaterad (data) - 20250113
+  # Data för företagssamma, fortfarande 2022 som max
+  
   
   pacman::p_load(openxlsx,here,tidyverse)
   
@@ -18,9 +20,9 @@ hamta_data_foretagarna <- function(region_vekt="20",
   # ========================================== Läser in data ============================================
   # Läser in data från Excel (ursprung Företagarna (se ovan för länk till nedladdning))
   
-  arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Arbetsställen_2002-2023.xlsx",startRow=5)
-  nyforetagsamma_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Nyföretagsamhet_2002-2023.xlsx",startRow=5)
-  foretagsamma_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Företagsamhet_2002-2023.xlsx",startRow=5)
+  arbetsstallen_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Arbetsställen_2002-2025.xlsx",startRow=5)
+  nyforetagsamma_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Nyföretagsamhet_2002-2025.xlsx",startRow=5)
+  foretagsamma_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/Företagsamhet_2002-2025.xlsx",startRow=5)
   
   # ARBETSSTÄLLEN
   
