@@ -125,6 +125,25 @@ befolkning_df <- hamta_bef_folkmangd_alder_kon_manad_scb(hamtakommuner("20",F,F)
                                                           tid_koder = "9999",
                                                           kon_klartext = NA)
 
+bef_manad <- unique(befolkning_df$månad)
+bef_ar <- unique(befolkning_df$år)
+bef_avesta <- format(plyr::round_any(befolkning_df %>% filter(region == "Avesta") %>% .$Antal,100),big.mark=" ")
+bef_borlänge <- format(plyr::round_any(befolkning_df %>% filter(region == "Borlänge") %>% .$Antal,100),big.mark=" ")
+bef_falun <- format(plyr::round_any(befolkning_df %>% filter(region == "Falun") %>% .$Antal,100),big.mark=" ")
+bef_gagnef <- format(plyr::round_any(befolkning_df %>% filter(region == "Gagnef") %>% .$Antal,100),big.mark=" ")
+bef_hedemora <- format(plyr::round_any(befolkning_df %>% filter(region == "Hedemora") %>% .$Antal,100),big.mark=" ")
+bef_leksand <- format(plyr::round_any(befolkning_df %>% filter(region == "Leksand") %>% .$Antal,100),big.mark=" ")
+bef_ludvika <- format(plyr::round_any(befolkning_df %>% filter(region == "Ludvika") %>% .$Antal,100),big.mark=" ")
+bef_malung_salen <- format(plyr::round_any(befolkning_df %>% filter(region == "Malung-Sälen") %>% .$Antal,100),big.mark=" ")
+bef_mora <- format(plyr::round_any(befolkning_df %>% filter(region == "Mora") %>% .$Antal,100),big.mark=" ")
+bef_orsa <- format(plyr::round_any(befolkning_df %>% filter(region == "Orsa") %>% .$Antal,100),big.mark=" ")
+bef_rattvik <- format(plyr::round_any(befolkning_df %>% filter(region == "Rättvik") %>% .$Antal,100),big.mark=" ")
+bef_smedjebacken <- format(plyr::round_any(befolkning_df %>% filter(region == "Smedjebacken") %>% .$Antal,100),big.mark=" ")
+bef_sater <- format(plyr::round_any(befolkning_df %>% filter(region == "Säter") %>% .$Antal,100),big.mark=" ")
+bef_vansbro <- format(plyr::round_any(befolkning_df %>% filter(region == "Vansbro") %>% .$Antal,100),big.mark=" ")
+bef_alvdalen <- format(plyr::round_any(befolkning_df %>% filter(region == "Älvdalen") %>% .$Antal,100),big.mark=" ")
+
+
 #####################
 ##### Inte API #####
 ####################
