@@ -1,5 +1,6 @@
 # Hur många företag krävs för att lönesumman i en kommun skall uppgå till 50 % (kumulativt)
 # R-skript som skapar data finns på MONA under P1079_Gem/Jon/Sårbarhetsanalys/viktigaste_branscher_lan_Raps_ny_variant
+# Senast uppdaterad (data): 20250114 - data för 2022
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(openxlsx,here,tidyverse,gt,webshot2)
 
@@ -15,9 +16,18 @@ diag_50proc_lonesumma <- function(region_vekt="20",
   # fil_lan<-paste0(output_mapp,filnamn)
   
   # ========================================== Läser in data ============================================
+  input_mapp <- "G:/skript/projekt/data/sarbarhetsanalys/"
+  files <- list.files(input_mapp, pattern = "*ranking_branscher_lonesumma", full.names = TRUE)
+  
+  file_info <- file.info(files)
+  latest_file <- rownames(file_info)[which.max(file_info$mtime)]
+  
+  bransch_lan_df <- read.xlsx(latest_file,sheet=1)
+  bransch_kommun_df <- read.xlsx(latest_file,sheet=2)
+  
   # Läser in data från Excel (ursprung arbetsförmedlingen)
-  bransch_lan_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/22_dec_23_ranking_branscher_lonesumma.xlsx",sheet=1)
-  bransch_kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/22_dec_23_ranking_branscher_lonesumma.xlsx",sheet=2)
+  # bransch_lan_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/22_dec_23_ranking_branscher_lonesumma.xlsx",sheet=1)
+  # bransch_kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/22_dec_23_ranking_branscher_lonesumma.xlsx",sheet=2)
   #foretag_kommun_df <- read.xlsx("G:/skript/projekt/data/sarbarhetsanalys/1_nov_23_ranking_branscher_lonesumma.xlsx",sheet=3)
   
   bransch_lan_df <- bransch_lan_df %>% 
@@ -65,7 +75,7 @@ diag_50proc_lonesumma <- function(region_vekt="20",
       select(Bransch,"Sysselsatta","Lönesumma (%)","Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)") %>% 
       gt() %>%
       tab_header(
-        title = "De fem största branscherna i Dalarna 2021 inom det privata näringslivet") %>% 
+        title = "De fem största branscherna i Dalarna 2022 inom det privata näringslivet") %>% 
       cols_align(align=c("center"),columns = (2:5)) %>% 
       tab_options(heading.padding=20,
                   heading.background.color = diagramfarger("rus_sex")[5],
@@ -119,7 +129,7 @@ diag_50proc_lonesumma <- function(region_vekt="20",
         select(Bransch,"Sysselsatta","Lönesumma (%)","Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)") %>% 
         gt() %>%
         tab_header(
-          title = paste0("De fem största branscherna i ", kommuner[i] ," 2021 inom det privata näringslivet")) %>% 
+          title = paste0("De fem största branscherna i ", kommuner[i] ," 2022 inom det privata näringslivet")) %>% 
         cols_align(align=c("center"),columns = (2:5)) %>% 
         tab_options(heading.padding=20,
                     heading.background.color = diagramfarger("rus_sex")[5],
