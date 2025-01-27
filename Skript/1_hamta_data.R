@@ -140,8 +140,8 @@ bef_orsa <- format(plyr::round_any(befolkning_df %>% filter(region == "Orsa") %>
 bef_rattvik <- format(plyr::round_any(befolkning_df %>% filter(region == "Rättvik") %>% .$Antal,100),big.mark=" ")
 bef_smedjebacken <- format(plyr::round_any(befolkning_df %>% filter(region == "Smedjebacken") %>% .$Antal,100),big.mark=" ")
 bef_sater <- format(plyr::round_any(befolkning_df %>% filter(region == "Säter") %>% .$Antal,100),big.mark=" ")
-bef_vansbro <- format(plyr::round_any(befolkning_df %>% filter(region == "Vansbro") %>% .$Antal,100),big.mark=" ")
-bef_alvdalen <- format(plyr::round_any(befolkning_df %>% filter(region == "Älvdalen") %>% .$Antal,100),big.mark=" ")
+bef_vansbro <- format(plyr::round_any(befolkning_df %>% filter(region == "Vansbro") %>% .$Antal,50),big.mark=" ")
+bef_alvdalen <- format(plyr::round_any(befolkning_df %>% filter(region == "Älvdalen") %>% .$Antal,50),big.mark=" ")
 
 
 #####################
