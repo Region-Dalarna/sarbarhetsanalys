@@ -142,7 +142,7 @@ För att förstå arbetslösheten bättre är det relevant att beakta hur lång 
 
 Långtidsarbetslöshet mäts på lite olika sätt av olika myndigheter. Denna rapport utgår från Arbetsförmedlingens definition, det vill säga att vara öppet arbetslös eller i program med aktivitetsstöd under minst sex månader. Anledningen till valet av data från Arbetsförmedlingen är att de tillhandahåller arbetslöshetssiffror även på regional nivå.
 
-I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt. Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i `r langtidsarbetsloshet %>% filter(year == max(year),gender == "T") %>% filter(value == min(value)) %>% .$municipality`. Långtidsarbetslösheten ökade i alla Dalarnas kommuner mellan `r min(langtidsarbetsloshet$year)` och `r max(langtidsarbetsloshet$year)`.
+I Dalarnas kommuner följer långtidsarbetslösheten i mångt och mycket samma mönster som arbetslösheten generellt. Arbetslösheten är högst i kommunerna Avesta, Borlänge och Ludvika, och det är också i dessa kommuner som andelen långtidsarbetslösa är högst. Lägst andel långtidsarbetslösa finns i `r langtidsarbetsloshet %>% filter(year == max(year),gender == "T") %>% filter(value == min(value)) %>% .$municipality`. Glädjande nog minskade långtidsarbetslösheten i de flesta av Dalarnas kommuner mellan `r max(langtidsarbetsloshet$year)-1` och `r max(langtidsarbetsloshet$year)`.
 
 <br>
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, fig.width=8, fig.align='center'}
