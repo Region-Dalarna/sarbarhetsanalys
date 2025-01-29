@@ -37,7 +37,7 @@ diagram_langtidsarb = function(region = hamtakommuner("20",tamedlan = TRUE,tamed
   
   if(jmf_ar == TRUE){
     utskrift_df = langtidsarbetsloshet_df %>% 
-      filter(gender == "T",year%in%c(min(langtidsarbetsloshet_df$year),max(langtidsarbetsloshet_df$year)))
+      filter(gender == "T",year%in%c(min(langtidsarbetsloshet_df$year),max(langtidsarbetsloshet_df$year)-1,max(langtidsarbetsloshet_df$year)))
     vand_sortering = TRUE
     diagram_titel <- paste0("Långtidsarbetslöshet (15-74 år)")
   } else{
@@ -60,7 +60,7 @@ diagram_langtidsarb = function(region = hamtakommuner("20",tamedlan = TRUE,tamed
                                     manual_x_axis_text_hjust=1,
                                     manual_color = vald_farg,
                                     x_axis_sort_value = TRUE,
-                                    x_axis_sort_grp = ifelse(jmf_ar == TRUE,4,NA),
+                                    x_axis_sort_grp = ifelse(jmf_ar == TRUE,3,NA),
                                     vand_sortering = vand_sortering,
                                     dataetiketter = FALSE,
                                     manual_y_axis_title="procent",
