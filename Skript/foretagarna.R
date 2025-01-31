@@ -7,8 +7,8 @@ hamta_data_foretagarna <- function(region_vekt="20",
   # Tar fram diverse olika diagram kopplat till företagande
   # https://www.foretagsklimat.se/downloads
   # Välj variabel av intresse under "gör dina urval per faktor"
-  # Senast uppdaterad (data) - 20250113
-  # Data för företagssamma, fortfarande 2022 som max
+  # Data kontrollerad senast - 20250130
+  # Ingen ny data (2023 är senaste observation för samtliga variabler)
   
   
   pacman::p_load(openxlsx,here,tidyverse)
