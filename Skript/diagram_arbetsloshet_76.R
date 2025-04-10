@@ -30,7 +30,8 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
   objektnamn <- c() # Används för att namnge
   
   source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
-  source(here("Skript","arbetsloshet_76.R"), encoding="UTF-8")
+  #source(here("Skript","arbetsloshet_76.R"), encoding="UTF-8")
+  source("https://raw.githubusercontent.com/Region-Dalarna/sarbarhetsanalys/refs/heads/main/Skript/arbetsloshet_76.R")
   
   # Sourcar data för arbetslöshet
   df <-  hamta_data_arbetsloshet_76(region_vekt = region_vekt,
