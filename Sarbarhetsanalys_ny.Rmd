@@ -860,11 +860,11 @@ Sammanfattningsvis är Älvdalen en kommun som uppvisar låg sårbarhet på fler
 
 ```{r, include = FALSE}
 
-if(uppdatera_hemsida == TRUE){
-# kopiera html-filen för att hemsidan skall uppdateras. Sker när projektet pushas till Git-Hub
-file.copy(from = "Sarbarhetsanalys.html", to = "docs/index.html", overwrite = TRUE)
-file.copy(from = "Sarbarhetsanalys_ny.Rmd", to = "docs/index.Rmd", overwrite = TRUE)
-}
+# if(uppdatera_hemsida == TRUE){
+# # kopiera html-filen för att hemsidan skall uppdateras. Sker när projektet pushas till Git-Hub
+# file.copy(from = "Sarbarhetsanalys.html", to = "docs/index.html", overwrite = TRUE)
+# file.copy(from = "Sarbarhetsanalys_ny.Rmd", to = "docs/index.Rmd", overwrite = TRUE)
+# }
 
 ```
 
