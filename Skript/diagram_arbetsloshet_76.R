@@ -1,5 +1,5 @@
 
-#test = diagram_data_arbetsloshet_76(region_vekt = "20",spara_figur = FALSE,diag_kon = TRUE)
+test = diagram_data_arbetsloshet_76(spara_figur = FALSE,diag_kon = TRUE)
 diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka regioner vill man ha. Jämförs (ej kommuner). Om man vill jämföra kön får bara 1 väljas
                                          output_mapp_data = NA, # Om man vill spara data. Används primärt i Rmarkdown-rapporter.
                                          output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
@@ -51,8 +51,8 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
                     "arbetslösa" = sum(arbetslösa)) %>% 
       mutate(arbetsloshet = (arbetslösa/(sysselsatta+arbetslösa))*100)
     
-    diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nFrån och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa"
-    diagramtitel <- paste0("Arbetslöshet")
+    diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nFrån och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa.\nFram till 2004, arbetslöshet i åldersgruppen 16-64 år, därefter 15-74 år."
+    diagramtitel <- paste0("Arbetslöshet i ",glue_collapse(unique(unique(df_utskrift$region)),sep = ", ", last = " och "))
     objektnamn <- c(objektnamn,"arbetsloshet_region")
     
     gg_obj <- SkapaLinjeDiagram(skickad_df = df_utskrift,
@@ -77,7 +77,7 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
   
   if(diag_kon == TRUE && length(region_vekt)== 1){  
     # Fungerar enbart om man bara har valt ett län.
-    diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nDiagramförklaring: Från och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa"
+    diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nFrån och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa.\nFram till 2004, arbetslöshet i åldersgruppen 16-64 år, därefter 15-74 år."
     diagramtitel <- paste0("Arbetslöshet i ",hamtaregion_kod_namn(region_vekt)$region)
     objektnamn <- c(objektnamn,"arbetsloshet_kon")
     
@@ -90,7 +90,7 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
                                 diagram_capt =  diagram_capt,
                                 manual_y_axis_title = "procent",
                                 x_axis_lutning = 45,
-                                visa_var_x_xlabel = 4,
+                                x_axis_visa_var_xe_etikett = 4,
                                 stodlinjer_avrunda_fem = TRUE,
                                 output_mapp = output_mapp_figur,
                                 filnamn_diagram = filnamn_figur,
