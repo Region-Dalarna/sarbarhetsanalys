@@ -1,5 +1,3 @@
-
-test = diagram_data_arbetsloshet_76(spara_figur = FALSE,diag_kon = TRUE)
 diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka regioner vill man ha. Jämförs (ej kommuner). Om man vill jämföra kön får bara 1 väljas
                                          output_mapp_data = NA, # Om man vill spara data. Används primärt i Rmarkdown-rapporter.
                                          output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
@@ -52,7 +50,7 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
       mutate(arbetsloshet = (arbetslösa/(sysselsatta+arbetslösa))*100)
     
     diagram_capt <- "Källa: SCB, arbetskraftsundersökningarna (AKU).\nBearbetning: Samhällsanalys, Region Dalarna.\nFrån och med oktober 2007 räknas även studenter som aktivt söker ett arbete och är villiga att ta jobb som arbetslösa.\nFram till 2004, arbetslöshet i åldersgruppen 16-64 år, därefter 15-74 år."
-    diagramtitel <- paste0("Arbetslöshet i ",glue_collapse(unique(unique(df_utskrift$region)),sep = ", ", last = " och "))
+    diagramtitel <- paste0("Arbetslöshet i ",glue_collapse(unique(unique(df_utskrift$region)),sep = ", ", last = " och ")," ",min(df_utskrift$år),"-",max(df_utskrift$år))
     objektnamn <- c(objektnamn,"arbetsloshet_region")
     
     gg_obj <- SkapaLinjeDiagram(skickad_df = df_utskrift,
