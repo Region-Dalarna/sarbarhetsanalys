@@ -116,6 +116,7 @@ diagram_nystartade_konkurser <- function(region_vekt = hamtakommuner("20",tamedl
       assign("Konkurser", konkurser_utskrift, envir = .GlobalEnv)
     }
     
+    diagram_capt <- "Källa: SCB (via Kolada/RKA)\nBearbetning: Samhällsanalys, Region Dalarna"
     diagram_titel <- paste0("Antal konkurser per 1000 invånare (16-64 år)")
     diagramfil <- "konkurser.png"
     objektnamn <- c(objektnamn,"konkurser")
