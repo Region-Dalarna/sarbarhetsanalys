@@ -11,6 +11,9 @@ hamta_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Enbart för
   # Notera även att det inte går att välja arbetskraftstillhörighet. Detta eftersom kategorierna varierar över tiden
   # Källa  https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0210__AM0210A/ArbStatusM/
   # pxvardelist("https://api.scb.se/OV0104/v1/doris/sv/ssd/START/AM/AM0402/AM0402F/AKUABefolkningL", "Kon")
+  
+  # Källor: https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0401__AM0401L/NAKUBefolkningLAr/
+  #  https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0402__AM0402F/AKUABefolkningL/
   # =================================================================================================================
   
   if (!require("pacman")) install.packages("pacman")

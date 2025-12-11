@@ -52,6 +52,7 @@ gg_langtidsarbetsloshet <- diagram_langtidsarb(region = hamtakommuner("20",tamed
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_andel_offentligt_BAS.R")
 gg_andel_offentligt <- diagram_andel_offentligt(output_mapp_figur= Output_mapp_figur,
                                                output_mapp_data = Output_mapp_data,
+                                               stodlinjer_avrunda_fem = FALSE,
                                                spara_figur = spara_figurer,
                                                returnera_figur = TRUE,
                                                returnera_data = TRUE)
@@ -99,7 +100,8 @@ gg_branschbredd = diag_branschbredd(output_mapp_figur = Output_mapp_figur,
 # Medelålder och demografisk försörjningskvot 
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_medelald_demfors.R", encoding="UTF-8")
 gg_medel_demo <- diag_demografi(outputmapp_figur = Output_mapp_figur,
-                                diag_forsorjningskvot = TRUE, 
+                                diag_forsorjningskvot = TRUE,
+                                stodlinjer_avrunda_fem = FALSE,
                                 diag_medelalder = TRUE,
                                 spara_figur = spara_figurer,
                                 returnera_data = TRUE)
@@ -125,23 +127,23 @@ befolkning_df <- hamta_bef_folkmangd_alder_kon_manad_scb(hamtakommuner("20",F,F)
                                                           tid_koder = "9999",
                                                           kon_klartext = NA)
 
-bef_manad <- unique(befolkning_df$månad)
-bef_ar <- unique(befolkning_df$år)
-bef_avesta <- format(befolkning_df %>% filter(region == "Avesta") %>% .$Antal,big.mark=" ")
-bef_borlänge <- format(befolkning_df %>% filter(region == "Borlänge") %>% .$Antal,big.mark=" ")
-bef_falun <- format(befolkning_df %>% filter(region == "Falun") %>% .$Antal,big.mark=" ")
-bef_gagnef <- format(befolkning_df %>% filter(region == "Gagnef") %>% .$Antal,big.mark=" ")
-bef_hedemora <- format(befolkning_df %>% filter(region == "Hedemora") %>% .$Antal,big.mark=" ")
-bef_leksand <- format(befolkning_df %>% filter(region == "Leksand") %>% .$Antal,big.mark=" ")
-bef_ludvika <- format(befolkning_df %>% filter(region == "Ludvika") %>% .$Antal,big.mark=" ")
-bef_malung_salen <- format(befolkning_df %>% filter(region == "Malung-Sälen") %>% .$Antal,big.mark=" ")
-bef_mora <- format(befolkning_df %>% filter(region == "Mora") %>% .$Antal,big.mark=" ")
-bef_orsa <- format(befolkning_df %>% filter(region == "Orsa") %>% .$Antal,big.mark=" ")
-bef_rattvik <- format(befolkning_df %>% filter(region == "Rättvik") %>% .$Antal,big.mark=" ")
-bef_smedjebacken <- format(befolkning_df %>% filter(region == "Smedjebacken") %>% .$Antal,big.mark=" ")
-bef_sater <- format(befolkning_df %>% filter(region == "Säter") %>% .$Antal,big.mark=" ")
-bef_vansbro <- format(befolkning_df %>% filter(region == "Vansbro") %>% .$Antal,big.mark=" ")
-bef_alvdalen <- format(befolkning_df %>% filter(region == "Älvdalen") %>% .$Antal,big.mark=" ")
+bef_manad <- last(befolkning_df$månad)
+bef_ar <- last(befolkning_df$år)
+bef_avesta <- format(befolkning_df %>% filter(region == "Avesta",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_borlänge <- format(befolkning_df %>% filter(region == "Borlänge",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_falun <- format(befolkning_df %>% filter(region == "Falun",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_gagnef <- format(befolkning_df %>% filter(region == "Gagnef",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_hedemora <- format(befolkning_df %>% filter(region == "Hedemora",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_leksand <- format(befolkning_df %>% filter(region == "Leksand",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_ludvika <- format(befolkning_df %>% filter(region == "Ludvika",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_malung_salen <- format(befolkning_df %>% filter(region == "Malung-Sälen",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_mora <- format(befolkning_df %>% filter(region == "Mora",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_orsa <- format(befolkning_df %>% filter(region == "Orsa",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_rattvik <- format(befolkning_df %>% filter(region == "Rättvik",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_smedjebacken <- format(befolkning_df %>% filter(region == "Smedjebacken",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_sater <- format(befolkning_df %>% filter(region == "Säter",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_vansbro <- format(befolkning_df %>% filter(region == "Vansbro",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
+bef_alvdalen <- format(befolkning_df %>% filter(region == "Älvdalen",ålder == "totalt, samtliga åldrar") %>% .$Antal,big.mark=" ")
 
 
 #####################
