@@ -37,6 +37,26 @@ gg_arbetsmarknadsstatus <- diagram_arbetsmarknadsstatus(output_mapp_data = Outpu
                                                         returnera_figur = TRUE,
                                                         returnera_data = TRUE)
 
+
+senaste_manad_arb <- unique(arbetsmarknadsstatus$manad_long)
+senaste_ar_arb <- unique(arbetsmarknadsstatus$ar)
+
+# Sysselsättningsgrad
+syss_dalarna <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(region == "Dalarna") %>% .$varde)
+syss_Sverige <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(region == "Sverige") %>% .$varde)
+hogst_sysselsattning_dalarna <- arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region %>% glue_collapse(sep = ", ", last = " och ")
+hogst_sysselsattning_dalarna_varde <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde)
+lagst_sysselsattning_dalarna <- arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region %>% glue_collapse(sep = ", ", last = " och ")
+lagst_sysselsattning_dalarna_varde <- gsub("\\.",",",last(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde))
+
+# Arbetslöshet
+arb_dalarna <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde)
+arb_Sverige <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Sverige") %>% .$varde)
+hogst_arbetsloshet_dalarna <- arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region %>% glue_collapse(sep = ", ", last = " och ") 
+hogst_arbetsloshet_dalarna_varde <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde)
+lagst_arbetsloshet_dalarna <- arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region %>% glue_collapse(sep = ", ", last = " och ")
+lagst_arbetsloshet_dalarna_varde <- gsub("\\.",",",last(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde))
+
 # Långtidsarbetslöshet
 source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")
 gg_langtidsarbetsloshet <- diagram_langtidsarb(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = FALSE),
@@ -105,6 +125,24 @@ gg_medel_demo <- diag_demografi(outputmapp_figur = Output_mapp_figur,
                                 diag_medelalder = TRUE,
                                 spara_figur = spara_figurer,
                                 returnera_data = TRUE)
+
+# Medelålder
+medelalder_avesta <- round(medelalder %>% filter(region == "Avesta",ar == max(ar)) %>% .$varde,0)
+medelalder_borlange <- round(medelalder %>% filter(region == "Borlänge",ar == max(ar)) %>% .$varde,0)
+medelalder_falun <- round(medelalder %>% filter(region == "Falun",ar == max(ar)) %>% .$varde,0)
+medelalder_gagnef <- round(medelalder %>% filter(region == "Gagnef",ar == max(ar)) %>% .$varde,0)
+medelalder_hedemora <- round(medelalder %>% filter(region == "Hedemora",ar == max (ar)) %>% .$varde,0)
+medelalder_leksand <- round(medelalder %>% filter(region == "Leksand",ar == max(ar)) %>% .$varde,0)
+medelalder_ludvika <- round(medelalder %>% filter(region == "Ludvika",ar == max(ar)) %>% .$varde,0)
+medelalder_malung_salen <- round(medelalder %>% filter(region == "Malung-Sälen",ar == max(ar)) %>% .$varde,0)
+medelalder_mora <- round(medelalder %>% filter(region == "Mora",ar == max(ar)) %>% .$varde,0)
+medelalder_orsa <- round(medelalder %>% filter(region == "Orsa",ar == max(ar)) %>% .$varde,0)
+medelalder_rattvik <- round(medelalder %>% filter(region == "Rättvik",ar == max(ar)) %>% .$varde,0)
+medelalder_smedjebacken <- round(medelalder %>% filter(region == "Smedjebacken",ar == max(ar)) %>% .$varde,0)
+medelalder_sater <- round(medelalder %>% filter(region == "Säter",ar == max(ar)) %>% .$varde,0)
+medelalder_vansbro <- round(medelalder %>% filter(region == "Vansbro",ar == max(ar)) %>% .$varde,0)
+medelalder_alvdalen <- round(medelalder %>% filter(region == "Älvdalen",ar == max(ar)) %>% .$varde,0)
+
 
 # Andel av befolkningen med eftergymnasial utbildning (3 år)
 source(here("Skript","diagram_utbniva_andelhog.R"), encoding="UTF-8")

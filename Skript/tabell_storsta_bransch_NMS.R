@@ -75,7 +75,7 @@ diag_50proc_lonesumma <- function(region_vekt="20",
       select(Bransch,"Sysselsatta","Lönesumma (%)","Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)") %>% 
       gt() %>%
       tab_header(
-        title = "De fem största branscherna i Dalarna 2022 inom det privata näringslivet") %>% 
+        title = paste0("De fem största branscherna i Dalarna " ,unique(bransch_lan_df$Ar), " inom det privata näringslivet")) %>% 
       cols_align(align=c("center"),columns = (2:5)) %>% 
       tab_options(heading.padding=20,
                   heading.background.color = diagramfarger("rus_sex")[5],
@@ -129,7 +129,7 @@ diag_50proc_lonesumma <- function(region_vekt="20",
         select(Bransch,"Sysselsatta","Lönesumma (%)","Kvinnor (%)","Högutbildade (%)","Utrikes födda (%)") %>% 
         gt() %>%
         tab_header(
-          title = paste0("De fem största branscherna i ", kommuner[i] ," 2022 inom det privata näringslivet")) %>% 
+          title = paste0("De fem största branscherna i ", kommuner[i] ," " ,unique(bransch_kommun_df$Ar), " inom det privata näringslivet")) %>% 
         cols_align(align=c("center"),columns = (2:5)) %>% 
         tab_options(heading.padding=20,
                     heading.background.color = diagramfarger("rus_sex")[5],
