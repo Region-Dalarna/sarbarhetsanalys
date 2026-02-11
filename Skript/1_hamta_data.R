@@ -45,9 +45,9 @@ senaste_ar_arb <- unique(arbetsmarknadsstatus$ar)
 syss_dalarna <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(region == "Dalarna") %>% .$varde)
 syss_Sverige <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(region == "Sverige") %>% .$varde)
 hogst_sysselsattning_dalarna <- arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region %>% glue_collapse(sep = ", ", last = " och ")
-hogst_sysselsattning_dalarna_varde <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde)
+hogst_sysselsattning_dalarna_varde <- round(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == max(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0)
 lagst_sysselsattning_dalarna <- arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region %>% glue_collapse(sep = ", ", last = " och ")
-lagst_sysselsattning_dalarna_varde <- gsub("\\.",",",last(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde))
+lagst_sysselsattning_dalarna_varde <- round(last(arbetsmarknadsstatus %>% filter(variabel == "sysselsättningsgrad") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde,0))
 
 # Arbetslöshet
 arb_dalarna <- gsub("\\.",",",arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(region == "Dalarna") %>% .$varde)

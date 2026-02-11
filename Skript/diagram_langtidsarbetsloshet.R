@@ -47,7 +47,7 @@ diagram_langtidsarb = function(region = hamtakommuner("20",tamedlan = TRUE,tamed
     vand_sortering = FALSE
   } 
   
-  diagram_capt <- "Källa: Arbetsförmedlingen (via Kolada).\nBearbetning: Samhällsanalys, Region Dalarna\nDiagramförklaring: Antal invånare 15-74 år som varit öppet arbetslösa eller i program med aktivitetsstöd i minst sex månader,\ndividerat med totalt antal invånare 15-74 år som är öppet arbetslösa eller i program med aktivitetsstöd." 
+  diagram_capt <- "Källa: Arbetsförmedlingen (via Kolada).\nBearbetning: Samhällsanalys, Region Dalarna\nDiagramförklaring: Antal invånare 15-74 år som varit öppet arbetslösa eller i program med aktivitetsstöd\ni minst sex månader, dividerat med totalt antal invånare 15-74 år som är öppet arbetslösa eller i program\nmed aktivitetsstöd." 
   
   diagramfil <- "langtidsarbetsloshet.png"
   objektnamn <- c(objektnamn,"langtidsarbetsloshet")
