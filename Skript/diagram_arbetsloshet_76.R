@@ -63,6 +63,7 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
                                 manual_y_axis_title = "procent",
                                 x_axis_lutning = 45,
                                 x_axis_visa_var_xe_etikett = 4,
+                                x_axis_var_xe_etikett_ta_bort_nast_sista_vardet = TRUE,
                                 stodlinjer_avrunda_fem = TRUE,
                                 output_mapp = output_mapp_figur,
                                 filnamn_diagram = filnamn_figur,

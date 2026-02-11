@@ -88,7 +88,7 @@ diag_50proc_lonesumma <- function(region_vekt="20",
                   #Make text bold
                   cell_text(weight = "bold")
                 )) %>% 
-      tab_source_note(source_note = c("Källa: NMS-databasen (SCB), bearbetning: Samhällsanalys, Region Dalarna")) %>% 
+      tab_source_note(source_note = c("Källa: SCB, bearbetning: Samhällsanalys, Region Dalarna")) %>% 
       tab_footnote(
         footnote = "Andel av total lönesumma inom det privata näringslivet",
         locations = cells_column_labels(
@@ -142,7 +142,7 @@ diag_50proc_lonesumma <- function(region_vekt="20",
                     #Make text bold
                     cell_text(weight = "bold")
                   )) %>% 
-        tab_source_note(source_note = c("Källa: NMS-databasen (SCB), bearbetning: Samhällsanalys, Region Dalarna, * -> för litet tal")) %>% 
+        tab_source_note(source_note = c("Källa: SCB, bearbetning: Samhällsanalys, Region Dalarna, * -> för litet tal")) %>% 
         tab_footnote(
           footnote = "Andel av total lönesumma inom det privata näringslivet",
           locations = cells_column_labels(
