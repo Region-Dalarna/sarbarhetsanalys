@@ -1,6 +1,6 @@
 # Hur många företag krävs för att lönesumman i en kommun skall uppgå till 50 % (kumulativt)
-# R-skript som skapar data finns på MONA under P1079_Gem/Jon/Sårbarhetsanalys/viktigaste_branscher_lan_Raps_ny_variant
-# Senast uppdaterad (data): 20250114 - data för 2022
+# R-skript som skapar data finns på MONA under /Jon/Sårbarhetsanalys/Nya databasen/viktigaste_branscher_lan_Raps_ny_databas
+# Senast uppdaterad (data): 202502 - data för 2023
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(openxlsx,here,tidyverse,gt,webshot2)
 
