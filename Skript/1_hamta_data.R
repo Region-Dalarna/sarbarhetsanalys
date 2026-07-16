@@ -1,11 +1,16 @@
 # Skript som hämtar data som används i rapporten "Sårbarhetsanalys av näringslivet i Dalarna".
 # Notera att data som hämtas är sådan som finns tillgänglig via API. Övrig data (NMS-databasen eller källor utan API) hämtas direkt i markdownfilen.
 
+# Återstår PXweb2:
+# Pendling: Komplicerat skript
+# Andel av befolkningen med eftergymnasial utbildning (3 år): Lite oklart hur det blir med CKM
+
 # Nödvändiga bibliotek
 if (!require("pacman")) install.packages("pacman")
 p_load(here)
 
 source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
+source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_pxweb2.R")
 
 # Här hamnar Excelfilerna
 Output_mapp_data = "G:/skript/projekt/data/sarbarhetsanalys/"
@@ -17,17 +22,16 @@ spara_figurer <- FALSE
 ##### Arbetsmarknaden ######
 ############################
 
-# Arbetslöshet 76
-source(here("Skript","diagram_arbetsloshet_76.R"), encoding="UTF-8")
+# Arbetslöshet 76 - upp med nya PXweb
+source(here("Skript","diagram_arbetsloshet_76_ny.R"), encoding="UTF-8")
 gg_arb_76 <- diagram_data_arbetsloshet_76(region_vekt =c("00","20"),
-                                          output_mapp_data = Output_mapp_data,
+                                          #output_mapp_data = Output_mapp_data,
                                           output_mapp_figur = Output_mapp_figur,
                                           vald_farg = diagramfarger("rus_sex"),
                                           spara_figur = spara_figurer,
-                                          returnera_figur = TRUE,
                                           returnera_data = TRUE)
 
-# Arbetslöshet och sysselsättningsgrad
+# Arbetslöshet och sysselsättningsgrad - upp med senaste versionen av PXweb
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_arbetsmarknadsstatus_senastear.R", encoding="UTF-8")
 gg_arbetsmarknadsstatus <- diagram_arbetsmarknadsstatus(output_mapp_data = Output_mapp_data,
                                                         output_mapp_figur = Output_mapp_figur,
@@ -57,27 +61,44 @@ hogst_arbetsloshet_dalarna_varde <- gsub("\\.",",",arbetsmarknadsstatus %>% filt
 lagst_arbetsloshet_dalarna <- arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$region %>% glue_collapse(sep = ", ", last = " och ")
 lagst_arbetsloshet_dalarna_varde <- gsub("\\.",",",last(arbetsmarknadsstatus %>% filter(variabel == "arbetslöshet") %>% filter(varde == min(varde),!(region%in%c("Sverige","Dalarna"))) %>% .$varde))
 
-# Långtidsarbetslöshet
-source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")
-gg_langtidsarbetsloshet <- diagram_langtidsarb(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = FALSE),
-                                                outputmapp_figur = Output_mapp_figur,
-                                                outputmapp_data = Output_mapp_data,
-                                                jmf_ar = TRUE,
-                                                returnera_figur = TRUE,
-                                                returnera_data = TRUE,
-                                                spara_figur = spara_figurer,
-                                                vald_farg = diagramfarger("rus_sex"))
+# Långtidsarbetslöshet - ej pxweb
+# source(here("Skript","diagram_langtidsarbetsloshet.R"), encoding="UTF-8")
+# gg_langtidsarbetsloshet <- diagram_langtidsarb(region = hamtakommuner("20",tamedlan = TRUE,tamedriket = FALSE),
+#                                                 outputmapp_figur = Output_mapp_figur,
+#                                                 outputmapp_data = Output_mapp_data,
+#                                                 jmf_ar = TRUE,
+#                                                 returnera_figur = TRUE,
+#                                                 returnera_data = TRUE,
+#                                                 spara_figur = spara_figurer,
+#                                                 vald_farg = diagramfarger("rus_sex"))
 
-# Andel som jobbar i offentlig sektor 
+# Långtidsarbetslöshet - ej pxweb
+source(here("Skript","diagram_langtidsarbetsloshet_ny.R"), encoding="UTF-8")
+gg_langtidsarbetsloshet <- diagram_langtidsarb(region = "Dalarna",
+                                               outputmapp_figur = Output_mapp_figur,
+                                               jmf_ar = TRUE,
+                                               returnera_data = TRUE,
+                                               spara_figur = spara_figurer,
+                                               vald_farg = diagramfarger("rus_sex"))
+
+lantidsarbetsloshet_min_ar <- min(langtidsarbetsloshet_kommun_df$Ar)
+lantidsarbetsloshet_max_ar <- max(langtidsarbetsloshet_kommun_df$Ar)
+langtidsarbetsloshet_max_kommun <- langtidsarbetsloshet_kommun_df %>% filter(Ar == max(Ar)) %>% filter(andel_langtidsarbetslos == max(andel_langtidsarbetslos)) %>% .$KOMMUN
+langtidsarbetsloshet_max_kommun_varde <- round(langtidsarbetsloshet_kommun_df %>% filter(Ar == max(Ar)) %>% filter(andel_langtidsarbetslos == max(andel_langtidsarbetslos)) %>% .$andel_langtidsarbetslos,0)
+langtidsarbetsloshet_min_kommun <- langtidsarbetsloshet_kommun_df %>% filter(Ar == max(Ar)) %>% filter(andel_langtidsarbetslos == min(andel_langtidsarbetslos)) %>% .$KOMMUN
+langtidsarbetsloshet_min_kommun_varde <- round(langtidsarbetsloshet_kommun_df %>% filter(Ar == max(Ar)) %>% filter(andel_langtidsarbetslos == min(andel_langtidsarbetslos)) %>% .$andel_langtidsarbetslos,0)
+
+
+# Andel som jobbar i offentlig sektor - upp med ny version av PXweb
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_andel_offentligt_BAS.R")
 gg_andel_offentligt <- diagram_andel_offentligt(output_mapp_figur= Output_mapp_figur,
-                                               output_mapp_data = Output_mapp_data,
+                                               #output_mapp_data = Output_mapp_data,
                                                stodlinjer_avrunda_fem = FALSE,
                                                spara_figur = spara_figurer,
                                                returnera_figur = TRUE,
                                                returnera_data = TRUE)
 
-# Andel pendling i kommun  
+# Andel pendling i kommun  - Avvakta med. Extremt komplicerat skript
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diag_pendling_over_kommungrans.R")
 gg_pendling <- diag_pendling_over_kommungrans(output_mapp_figur = Output_mapp_figur,
                                              output_mapp_data = Output_mapp_data,
@@ -100,7 +121,7 @@ gg_nyst_konk <- diagram_nystartade_konkurser(output_mapp_figur = Output_mapp_fig
                                            vald_farg = diagramfarger("rus_sex"),
                                            cont_cod = c("N00999","N00926"))
 
-# Andel förvärvsarbetande i olika branscher (såväl län som kommun)
+# Andel förvärvsarbetande i olika branscher (såväl län som kommun) - upp med ny version av PXweb
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_andel_forvarvsarbetande_bransch.R", encoding="UTF-8")
 gg_andel_forv <- diag_sysselsatta_andel(output_mapp_figur = Output_mapp_figur,
                                         output_mapp_data = Output_mapp_data,
@@ -110,14 +131,14 @@ gg_andel_forv <- diag_sysselsatta_andel(output_mapp_figur = Output_mapp_figur,
                                         diag_kommun = TRUE,
                                         returnera_data = TRUE)
 
-# Branschbredd
+# Branschbredd - ej PXweb
 source(here("Skript","diagram_branschbredd.R"), encoding="UTF-8")
 gg_branschbredd = diag_branschbredd(output_mapp_figur = Output_mapp_figur,
                                     valda_farger = diagramfarger("rus_sex"),
                                     spara_figur = spara_figurer,
                                     returnera_data = TRUE)
 
-# Medelålder och demografisk försörjningskvot 
+# Medelålder och demografisk försörjningskvot - ej PXweb
 source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_medelald_demfors.R", encoding="UTF-8")
 gg_medel_demo <- diag_demografi(outputmapp_figur = Output_mapp_figur,
                                 diag_forsorjningskvot = TRUE,
@@ -144,28 +165,35 @@ medelalder_vansbro <- round(medelalder %>% filter(region == "Vansbro",ar == max(
 medelalder_alvdalen <- round(medelalder %>% filter(region == "Älvdalen",ar == max(ar)) %>% .$varde,0)
 
 
-# Andel av befolkningen med eftergymnasial utbildning (3 år)
+# Andel av befolkningen med eftergymnasial utbildning (3 år) - Avvaktar med. Oklart hur det blir med CKM då det bara verkar gå att få ut på 1-årsgrupper (eller totalt) från PXweb2-skriptet.
 source(here("Skript","diagram_utbniva_andelhog.R"), encoding="UTF-8")
 gg_utbniva <- diag_utbniva(output_mapp = Output_mapp_figur,
                            spara_figur = spara_figurer,
                            returnera_data = TRUE)
 
-# De största företagen i varje kommun
-source("G:/skript/diagram/diag_storsta_arbetsgivare_kommun.R", encoding = "utf-8", echo = FALSE)
-gg_storsta_foretag <- diag_storsta_arbetsgivare_kommun(valda_kommuner = hamtakommuner("20",tamedlan=FALSE,tamedriket=FALSE),
-                                                      skriv_fil = spara_figurer,
-                                                      output_mapp = Output_mapp_figur,
-                                                      returnera_data = TRUE,
-                                                      valda_farger = diagramfarger("rus_sex"))
 
 # Folkmängd - enbart för att slippa skriva folkmängden under kommunfördjupningarna
 
-source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/refs/heads/main/hamta_bef_folkmangd_alder_kon_manad_SCB_CKM_2025.R")
-#source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/refs/heads/main/hamta_bef_folkmangd_alder_kon_manad_scb.R")
-befolkning_df <- hamta_folkmangd_region_alder_kon_manad_scb_CKM(hamtakommuner("20",F,F),
-                                                             alder_koder = "TotSA",
-                                                             tid_koder = "9999",
-                                                             kon_klartext = NA) 
+# source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/refs/heads/main/hamta_bef_folkmangd_alder_kon_manad_SCB_CKM_2025.R")
+# #source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/refs/heads/main/hamta_bef_folkmangd_alder_kon_manad_scb.R")
+# befolkning_df <- hamta_folkmangd_region_alder_kon_manad_scb_CKM(hamtakommuner("20",F,F),
+#                                                              alder_koder = "TotSA",
+#                                                              tid_koder = "9999",
+#                                                              kon_klartext = NA) 
+
+befolkning_df <- pxweb2_hamta_data(
+  tabell = "TAB6471",
+  query = list(
+    Region = hamtakommuner("20",F,F),
+    Alder = "TotSA",
+    Kon = NA,
+    ContentsCode = "*",
+    Tid = "9999"
+  )) %>%  
+  manader_bearbeta_scbtabeller() %>% 
+    rename(Antal = value,
+           regionkod = region_kod) %>%
+     select(-tabellinnehåll)
 
 bef_manad <- unique(befolkning_df$månad)
 bef_ar <- unique(befolkning_df$år)
@@ -185,31 +213,68 @@ bef_sater <- format(befolkning_df %>% filter(region == "Säter") %>% .$Antal,big
 bef_vansbro <- format(befolkning_df %>% filter(region == "Vansbro") %>% .$Antal,big.mark=" ")
 bef_alvdalen <- format(befolkning_df %>% filter(region == "Älvdalen") %>% .$Antal,big.mark=" ")
 
+# Diverse från företagarna. Data uppdaterades senaste i mitten av januari 2024.
+
+# Antal arbetsställen och antal företagssamma (www.foretagsklimat.se - Företagarna)
+source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_arb_stallen_mm_foretagarna.R", encoding="UTF-8")
+gg_foretagarna <- diag_foretagarna(output_mapp_figur = Output_mapp_figur,
+                                     output_mapp_data = Output_mapp_data,
+                                     spara_figur = spara_figurer,
+                                     returnera_data = TRUE,
+                                     diag_arbetsstallen = TRUE,
+                                     diag_nyforetagsamma = FALSE,
+                                     diag_foretagsamma = TRUE)
+
+# Arbetsställen
+arbetsstallen_ar_max <- max(Arbetsstallen$year)
+arbetsstallen_ar_max_Dalarna <- round(Arbetsstallen %>% filter(Kommun == "Dalarna") %>% .$Arb_stallen,0)
+arbetsstallen_ar_max_Sverige <- round(Arbetsstallen %>% filter(Kommun == "Sverige") %>% .$Arb_stallen,0)
+arbetsstallen_ar_max_kommun <- Arbetsstallen %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Kommun
+arbetsstallen_ar_max_kommun_varde <- round(Arbetsstallen %>% filter(Arb_stallen == max(Arb_stallen)) %>% .$Arb_stallen,0)
+arbetsstallen_ar_min_kommun <- Arbetsstallen %>% filter(Arb_stallen == min(Arb_stallen)) %>% .$Kommun
+arbetsstallen_ar_min_kommun_varde <- round(Arbetsstallen %>% filter(Arb_stallen == min(Arb_stallen)) %>% .$Arb_stallen,0)
+
+# Företagssamma
+foretagssamma_ar_max <- max(företagssamma$year)
+foretagssamma_ar_max_Dalarna <- round(företagssamma %>% filter(Kommun == "Dalarna") %>% .$Andel_foretagsamma,0)
+foretagssamma_ar_max_Sverige <- round(företagssamma %>% filter(Kommun == "Sverige") %>% .$Andel_foretagsamma,0)
+foretagssamma_ar_max_kommun <- företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Kommun
+foretagssamma_ar_max_kommun_varde <- round(företagssamma %>% filter(Andel_foretagsamma == max(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)
+foretagssamma_ar_min_kommun <- företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Kommun
+foretagssamma_ar_min_kommun_varde <- round(företagssamma %>% filter(Andel_foretagsamma == min(Andel_foretagsamma)) %>% .$Andel_foretagsamma,0)
 
 #####################
 ##### Inte API #####
 ####################
 
+# De största företagen i varje kommun - Företagarna ej API
+source("G:/skript/diagram/diag_storsta_arbetsgivare_kommun.R", encoding = "utf-8", echo = FALSE)
+gg_storsta_foretag <- diag_storsta_arbetsgivare_kommun(valda_kommuner = hamtakommuner("20",tamedlan=FALSE,tamedriket=FALSE),
+                                                       skriv_fil = spara_figurer,
+                                                       output_mapp = Output_mapp_figur,
+                                                       returnera_data = TRUE,
+                                                       valda_farger = diagramfarger("rus_sex"))
+
 # Diverse från företagarna. Data uppdaterades senaste i mitten av januari 2024.
 
-# Antal arbetsställen 
-source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_arb_stallen_mm_ejAPI.R", encoding="UTF-8")
-gg_arbetsstallen <- diag_foretagarna(output_mapp_figur = Output_mapp_figur,
-                                     output_mapp_data = Output_mapp_data,
-                                     spara_figur = spara_figurer,
-                                     returnera_figur = TRUE,
-                                     returnera_data = TRUE,
-                                     diag_arbetsstallen = TRUE,
-                                     diag_nyforetagsamma = FALSE,
-                                     diag_foretagsamma = FALSE)
-
-gg_foretagssamma <- diag_foretagarna(region_vekt = "20",
-                                     output_mapp_figur = Output_mapp_figur,
-                                     spara_figur = spara_figurer,
-                                     diag_arbetsstallen = FALSE,
-                                     diag_nyforetagsamma = FALSE,
-                                     diag_foretagsamma = TRUE,
-                                     returnera_data = TRUE)
+# Antal arbetsställen - Tidigare innan 
+# source("https://raw.githubusercontent.com/Region-Dalarna/diagram/main/diagram_arb_stallen_mm_ejAPI.R", encoding="UTF-8")
+# gg_arbetsstallen <- diag_foretagarna(output_mapp_figur = Output_mapp_figur,
+#                                      output_mapp_data = Output_mapp_data,
+#                                      spara_figur = spara_figurer,
+#                                      returnera_figur = TRUE,
+#                                      returnera_data = TRUE,
+#                                      diag_arbetsstallen = TRUE,
+#                                      diag_nyforetagsamma = FALSE,
+#                                      diag_foretagsamma = FALSE)
+# 
+# gg_foretagssamma <- diag_foretagarna(region_vekt = "20",
+#                                      output_mapp_figur = Output_mapp_figur,
+#                                      spara_figur = spara_figurer,
+#                                      diag_arbetsstallen = FALSE,
+#                                      diag_nyforetagsamma = FALSE,
+#                                      diag_foretagsamma = TRUE,
+#                                      returnera_data = TRUE)
 
 # source(here("Old","diagram_arb_stallen_mm_foretagarna.R"), encoding="UTF-8")
 # gg_foretagssamma <- diag_foretagarna(region_vekt = "20",

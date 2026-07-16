@@ -1,7 +1,3 @@
-
-# Funktioner som sourcas från Region Dalarna
-source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
-
 #test_list=diag_utbniva(spara_figur = FALSE,uppdelning_kon = TRUE)
 diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedriket = TRUE), # Använd förslagsvis hamtakommuner eller hamtaallalan
                          lan_fokus = "20", # Vilket län vill man fokusera på (i diagrammet)
@@ -29,13 +25,31 @@ diag_utbniva <- function(region_vekt = hamtakommuner("20",tamedlan = TRUE,tamedr
   if (!require("pacman")) install.packages("pacman")
   p_load(tidyverse)
   
+  source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
   source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
   source("https://raw.githubusercontent.com/Region-Dalarna/hamta_data/main/hamta_utbniva_SCB.R")
+  source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_pxweb2.R")
+  
   df <- hamta_data_utbniva (region = region_vekt,
                             alder = alder,
                             utbildningsniva_klartext = "*",
                             tid = "9999", # "Om man enbart vill ha senaste år"9999" om man enbart vill ha senaste år. Välj ett högt värde som sista värde om alla år skall vara med. 
                             returnera_data = TRUE)
+  
+  
+  # Låter vara tillsvidare. Oklart hur det funkar med CKM
+  
+  # df_2 <- pxweb2_hamta_data(
+  #   tabell = "TAB3981",
+  #   query = list(
+  #     Region = region_vekt,
+  #     Alder = "*",
+  #     UtbildningsNiva = "*",
+  #     Kon = c("män","kvinnor"),
+  #     ContentsCode = "*",
+  #     Tid = "9999"
+  #   ))
+  
   
   df <- df %>% 
     mutate(utbildningsnivå = case_when(

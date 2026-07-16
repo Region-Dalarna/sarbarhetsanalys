@@ -1,7 +1,7 @@
 diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka regioner vill man ha. Jämförs (ej kommuner). Om man vill jämföra kön får bara 1 väljas
-                                         output_mapp_data = NA, # Om man vill spara data. Används primärt i Rmarkdown-rapporter.
+                                         #output_mapp_data = NA, # Om man vill spara data. Används primärt i Rmarkdown-rapporter.
                                          output_mapp_figur= "G:/Samhällsanalys/Statistik/Näringsliv/basfakta/",
-                                         filnamn_data = "arbetsloshet_76.xlsx", # Filnamn på sparad data
+                                         #filnamn_data = "arbetsloshet_76.xlsx", # Filnamn på sparad data
                                          vald_farg = diagramfarger("rus_sex"), # Val av diagramfärger
                                          filnamn_figur = "arbetsloshet_76.png", # Filnamn
                                          spara_figur = TRUE, # Sparar figuren till output_mapp_figur
@@ -15,7 +15,11 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
   # Diagram för arbetslöshet från 1974 till senaste år (AKU - SCB). 
   # Finns för tillfället i två varianter, det ena visar en jämförelse mellan län (alternativt län och riket)
   # Det andra visar en jämförelse mellan kön inom ett län (eller riket).
-  # Källa  https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0210__AM0210A/ArbStatusM/
+  # Källor för data: 
+  # https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0401__AM0401L/NAKUBefolkningLAr/
+  # https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0402__AM0402F/AKUABefolkningL/
+  #
+  # Uppdaterad med nya PXweb - Jon 2026-07-02  #
   # =================================================================================================================
 
   # Skript som behövs
@@ -29,13 +33,59 @@ diagram_data_arbetsloshet_76 <- function(region_vekt = c("00","20"), # Vilka reg
   
   source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_SkapaDiagram.R")
   #source(here("Skript","arbetsloshet_76.R"), encoding="UTF-8")
-  source("https://raw.githubusercontent.com/Region-Dalarna/sarbarhetsanalys/refs/heads/main/Skript/arbetsloshet_76.R")
+  #source("https://raw.githubusercontent.com/Region-Dalarna/sarbarhetsanalys/refs/heads/main/Skript/arbetsloshet_76_ny.R")
+  
+  if (!require("pacman")) install.packages("pacman")
+  p_load(pxweb,
+         tidyverse,
+         openxlsx)
+  
+  # Funktioner som behövs
+  source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_API.R")
+  source("https://raw.githubusercontent.com/Region-Dalarna/funktioner/main/func_pxweb2.R")
+  
+  ###############
+  # Hämtar data #
+  ###############
+  
+  # Till och med 04
+  df_76_04 <- pxweb2_hamta_data(
+    tabell = "TAB88",
+    query = list(
+      Region = region_vekt,
+      Kon = c("män","kvinnor"),
+      Arbetskraftstillh = c("SYS","ALÖS"),
+      ContentsCode = "*",
+      Tid = "*")) %>% 
+    rename(Antal = value) %>% 
+    pivot_wider(names_from = arbetskraftstillhörighet,values_from=Antal ) %>% 
+    mutate(arbetsloshet = (arbetslösa/(arbetslösa+sysselsatta))*100) %>% 
+    select(-tabellinnehåll,-region_kod)
+  
+  # Från 05
+  df_05_ <- pxweb2_hamta_data(
+    tabell = "TAB2922",
+    query = list(
+      Region = region_vekt,
+      Arbetskraftstillh = c("ALÖS","SYS"),
+      Kon = c("män","kvinnor"),
+      ContentsCode = "1000-tal",
+      Tid = "*"
+    )) %>% 
+    rename(Antal = value) %>% 
+    pivot_wider(names_from = arbetskraftstillhörighet,values_from=Antal ) %>% 
+    mutate(arbetsloshet = (arbetslösa/(arbetslösa+sysselsatta))*100) %>% 
+    select(-tabellinnehåll,-region_kod)
+  
+  df <- rbind(df_76_04,df_05_) %>% 
+    mutate(region = skapa_kortnamn_lan(region,byt_ut_riket_mot_sverige = TRUE))
+  
   
   # Sourcar data för arbetslöshet
-  df <-  hamta_data_arbetsloshet_76(region_vekt = region_vekt,
-                                                  output_mapp = output_mapp_data,
-                                                  filnamn = filnamn_data,
-                                                  returnera_data = TRUE) 
+  # df <-  hamta_data_arbetsloshet_76(region_vekt = region_vekt,
+  #                                                 output_mapp = output_mapp_data,
+  #                                                 filnamn = filnamn_data,
+  #                                                 returnera_data = TRUE) 
   
   if(returnera_data == TRUE){
     assign("arbetsloshet_76", df, envir = .GlobalEnv)
