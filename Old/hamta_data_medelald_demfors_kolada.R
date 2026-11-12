@@ -55,6 +55,7 @@ hamta_data_nystartade_konkurser = function(region = c("0020"), # Val av region. 
     medelalder_df <- hamta_kolada_df(kpi_id = cont,
                                       valda_kommuner = region,
                                       valda_ar = tid,
+                                      dop_om_kolumner = FALSE,
                                       konsuppdelat = konsuppdelat)
     
     medelalder_df <- medelalder_df %>% 
@@ -80,6 +81,7 @@ hamta_data_nystartade_konkurser = function(region = c("0020"), # Val av region. 
     demo_df <- hamta_kolada_df(kpi_id = cont,
                                valda_kommuner = region,
                                valda_ar = tid,
+                               dop_om_kolumner = FALSE,
                                konsuppdelat = konsuppdelat)
     
     # Konkurser
